@@ -3,31 +3,31 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import { CustomButton } from './comps/CustomButton'
+import { CustomForm } from './comps/CustomForm'
+import { CustomInput } from './comps/CustomInput'
+
 function App() {
   const [count, setCount] = useState(0)
+  function Auth(){}
+
+  function input(e: React.ChangeEvent<HTMLInputElement>){
+    console.log(e) //placeholder sålänge
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <CustomForm 
+        onSubmit={Auth} children={
+        <>
+        <CustomInput onChange={input} value='username'/>
+        <CustomInput onChange={input} value='password'/>
+        </>}      
+        />
+
+      
+      <CustomButton label='LOG IN' />
+      <CustomButton label='REGISTER' />
     </>
   )
 }
