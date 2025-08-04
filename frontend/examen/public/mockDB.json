@@ -1,10 +1,59 @@
-[{
-  "username": "alexanderjsn",
-  "password": "password123!",
-  "fName": "Alexander",
-  "lName": "Jansson",
-  "role": ["Fotograf"],
-  "yoe": [14],
-  "moe": [5],
-  "available": false
-}]
+{ "users":
+    [
+      {
+      "username": "1",
+      "password": "1",
+      "fName": "Alexander",
+      "lName": "Jansson",
+      "role": ["Fotograf"],
+      "yoe": [14],
+      "moe": [5],
+      "available": false,
+      "uid": 10
+    },
+    {
+      "username": "Arne123",
+      "password": "arne1!",
+      "fName": "Arne",
+      "lName": "Johansson",
+      "role": ["Regissör"],
+      "yoe": [1],
+      "moe": [0],
+      "available": true,
+      "uid": 1
+    }],
+
+  "projects":
+    [
+    {
+      "projectName": "Apan som äter för mycket banan",
+      "projectDescription": "En kortfilm om en arg apa som äter banan tills han spricker!",
+      "startDate": "2026-01-01",
+      "endDate": "2026-05-05",
+      "created": "2025-08-08",
+      "hiring": ["Fotograf", "Kameraman"],
+      "visibility": true,
+      "createdBy": "Arne123",
+      "genre": "Komedi",
+      "salary": false,
+      "runtime": 1.56,
+      "id": 1,
+      "userId": [10,1]
+    },
+    {
+      "projectName": "Elefant som äter för mycket kokosnöt",
+      "projectDescription": "En kortfilm om en arg Elefant som äter kokosnöt tills han spricker!",
+      "startDate": "2026-01-01",
+      "endDate": "2026-05-05",
+      "created": "2025-08-08",
+      "hiring": [],
+      "visibility": false,
+      "createdBy": "Arne123",
+      "genre": "Skräck",
+      "salary": false,
+      "runtime": 0.56,
+      "id": 2,
+      "userId": [1]
+    }
+    ]
+}
