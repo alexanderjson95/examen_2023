@@ -21,7 +21,7 @@ import { CustomInput } from '../comps/CustomInput'
             <CustomInput onChange={input} value='age'/>
             <CustomInput onChange={input} value='city'/>
             <CustomInput onChange={input} value='past experience (role)'/>
-            <CustomInput onChange={input} value='years/month of experience'/>
+            <CustomInput onChange={input} value='years/month of experience (at role)'/>
             </>
             </CustomForm>
           <CustomButton label='LOG IN' />

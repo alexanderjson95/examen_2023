@@ -1,0 +1,4 @@
+- gör färdigt login/auth utan DB
+- gör färdigt user schedule utan DB (user projects är lista i schedule tills uppskalning)
+- gör färdigt public projects screen (lista + knappar för ansökning)
+- gör färdigt user chat/messages screen

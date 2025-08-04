@@ -1,0 +1,10 @@
+[{
+  "username": "alexanderjsn",
+  "password": "password123!",
+  "fName": "Alexander",
+  "lName": "Jansson",
+  "role": ["Fotograf"],
+  "yoe": [14],
+  "moe": [5],
+  "available": false
+}]
