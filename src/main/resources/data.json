@@ -1,0 +1,58 @@
+{
+  "users": [
+    {
+      "uid": 1,
+      "username": "jdoe",
+      "password": "hashed_password_1",
+      "fName": "Johan",
+      "lName": "Doe",
+      "available": 1
+    },
+    {
+      "uid": 2,
+      "username": "asmith",
+      "password": "hashed_password_2",
+      "fName": "Anna",
+      "lName": "Svensson",
+      "available": 0
+    }
+  ],
+  "projects": [
+    {
+      "id": 101,
+      "projectName": "Sista Sommaren",
+      "projectDescription": "Ett romantiskt drama om två ungdomar under deras sista sommar i småstaden.",
+      "startDate": "2023-05-01",
+      "endDate": "2023-09-01",
+      "visibility": 1,
+      "createdBy": "jdoe",
+      "genre": "Drama",
+      "salary": 1,
+      "runtime": 112.50
+    },
+    {
+      "id": 102,
+      "projectName": "Kodnamn: Varg",
+      "projectDescription": "En spännande thriller om en underrättelseofficer på flykt.",
+      "startDate": "2023-02-10",
+      "endDate": "2023-07-30",
+      "visibility": 1,
+      "createdBy": "asmith",
+      "genre": "Thriller",
+      "salary": 0,
+      "runtime": 98.00
+    },
+    {
+      "id": 103,
+      "projectName": "Rymdresan",
+      "projectDescription": "En svensk sci-fi film om mänsklighetens första resa till Mars.",
+      "startDate": "2024-01-01",
+      "endDate": "2024-06-15",
+      "visibility": 1,
+      "createdBy": "jdoe",
+      "genre": "Science Fiction",
+      "salary": 1,
+      "runtime": 124.75
+    }
+  ]
+}
