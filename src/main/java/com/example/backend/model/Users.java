@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -23,12 +25,17 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotEmpty(message = "Användarnamn får inte vara tomt")
+    @NotBlank(message = "Användarnamn får inte vara tomt")
     @Size(min = 5, max=15, message = "Användarnamn måste vara mellan 5 - 15 tecken" )
     private String username;
 
-    @NotEmpty(message = "Lösenordet får inte vara tomt")
+    @NotBlank(message = "Lösenordet får inte vara tomt")
     @Size(min = 7, max=30, message = "Lösenordet måste vara mellan 7 - 30 tecken")
     private String password;
+
+
+    //@NotBlank - utkommenterat under dev
+    @Email
+    private String email;
 
 }

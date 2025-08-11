@@ -19,6 +19,9 @@ public class UserService {
     public void addUser(Users nUser) {
         userRepo.findByUsername(nUser.getUsername())
                 .ifPresent(u -> { throw new DataTakenException("Användarnamnet är taget"); });
+//        userRepo.findByEmail(nUser.getUsername())
+//                        .ifPresent(u -> {  throw new DataTakenException("Mailadressen är tagen");});
+
         userRepo.save(nUser);
         System.out.println("User created: " + nUser.getUsername());
     }
@@ -34,8 +37,12 @@ public class UserService {
                 .orElseThrow(() -> new NoSuchElementException("Användaren kunde inte hittas.")); // Kollar om null, skickar  ut "NoSuchElementException" om det är, annars returnerar värdet
     };
 
-    public void authenticateUser(Users inputUser){
+    public void updateUser(Users nUser){
+        addUser(nUser);
 
+    }
+
+    public void authenticateUser(Users inputUser){
         userRepo.save(inputUser);
     };
 
