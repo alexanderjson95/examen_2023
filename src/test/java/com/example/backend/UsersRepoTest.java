@@ -1,10 +1,14 @@
 package com.example.backend;
 
+import com.example.backend.Exceptions.DataTakenException;
 import com.example.backend.model.Users;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +18,10 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
@@ -38,24 +45,39 @@ public class UsersRepoTest {
 
 
     @Autowired
-    private UserRepository uRep;
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepo;
 
 
-    // Testar GET och Create
+    /**
+     * Vi testar att skapa en användare. Vi kollar sedan att det finns i databasen.
+     * @see #throwsUsernameTakenExceptionWhenUsernameExists(String) för scenario där användare redan finns
+     */
     @Test
-    public void shouldCreateAndGetUser() {
-        Users users = new Users(0,"alex", "alex123");
-        uRep.save(users);
+        void shouldCreateAndGetUser_success() {
+        Users users = new Users(0,"Alexander", "Alexander123");
+        userService.addUser(users);
 
-        Users foundU = uRep.findByUsername(users.getUsername());
-        System.out.println("user: " + foundU.getUsername() + "password: " + foundU.getPassword());
-        Assertions.assertEquals("alex", foundU.getUsername());
+        Optional<Users> foundU = userRepo.findByUsername(users.getUsername());
+        Assertions.assertTrue(foundU.isPresent());
     }
 
-    @Test
-    public void shouldRemoveUser() {
-
+    /**
+     * Vi testar att skapa en användare med ett taget användarnamn.
+      * Att rätt {@link DataTakenException} kastas med rätt meddelande*
+     */
+        @Test
+        void throwsUsernameTakenExceptionWhenUsernameExists() {
+        Users newUser = new Users(0, "Alexander", "Alexander123");
+        userService.addUser(newUser);
+        DataTakenException e = Assertions.assertThrows(DataTakenException.class,
+                () -> userService.addUser(newUser));
+        Assertions.assertEquals("Användarnamnet är taget", e.getMessage());
     }
+
+
 
 }
 
