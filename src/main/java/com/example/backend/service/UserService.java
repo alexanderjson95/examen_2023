@@ -15,35 +15,46 @@ public class UserService {
     UserRepository userRepo;
 
 
+    /*
+      Vi gör null-checks i
+       findUserById() och findUserByUsername()
+     */
 
-    public void addUser(Users nUser) {
-        userRepo.findByUsername(nUser.getUsername())
-                .ifPresent(u -> { throw new DataTakenException("Användarnamnet är taget"); });
-//        userRepo.findByEmail(nUser.getUsername())
-//                        .ifPresent(u -> {  throw new DataTakenException("Mailadressen är tagen");});
-
-        userRepo.save(nUser);
-        System.out.println("User created: " + nUser.getUsername());
-    }
-
-    public void removeUser(int id) {
-        Users foundUser = findUserById(id);
-        userRepo.delete(foundUser);
-    }
-
-
+    /**
+     * @param id  user id
+     * @return Users objekt
+     */
     public Users findUserById(int id) {
         return userRepo.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Användaren kunde inte hittas.")); // Kollar om null, skickar  ut "NoSuchElementException" om det är, annars returnerar värdet
     };
 
+    /**
+     * @param username
+     * @return Users objekt
+     */
+    public Users findUserByUsername(String username) {
+        return userRepo.findByUsername(username)
+                .orElseThrow(() -> new NoSuchElementException("Användaren kunde inte hittas.")); // Kollar om null, skickar  ut "NoSuchElementException" om det är, annars returnerar värdet
+    };
+
+    public void addUser(Users nUser) {
+        findUserByUsername(nUser.getUsername());
+        userRepo.save(nUser);
+        System.out.println("User created: " + nUser.getUsername());
+    }
+    public void removeUser(int id) {
+        Users foundUser = findUserById(id);
+        userRepo.delete(foundUser);
+    }
     public void updateUser(Users nUser){
         addUser(nUser);
 
     }
 
-    public void authenticateUser(Users inputUser){
-        userRepo.save(inputUser);
+    public boolean authenticateUser(String username, String password){
+        Users u = findUserByUsername(username);
+        return u.getPassword().equals(password);
     };
 
 

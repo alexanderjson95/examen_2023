@@ -127,5 +127,28 @@ public class UsersRepoTest {
 
     }
 
+    @Test
+    void shouldFailToAuthenticate_login(){
+        String username = "Alexander1";
+        String password = "password123";
+        Users newUser = new Users(0, "Alexander1", "password","alexander@hotmail.com");
+        userRepo.save(newUser);
+
+        Assertions.assertFalse(userService.authenticateUser(username,password));
+    }
+
+    @Test
+    void shouldAuthenticate_login(){
+        String username = "Alexander1";
+        String password = "password123";
+        Users newUser = new Users(0, username, password,"alexander@hotmail.com");
+        userRepo.save(newUser);
+
+        Assertions.assertTrue(userService.authenticateUser(username,password));
+
+
+    }
+
+
 }
 
