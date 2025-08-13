@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -52,6 +53,8 @@ public class UsersRepoTest {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private PasswordEncoder enc;
 
     @BeforeEach
     void cleanDB(){
@@ -142,7 +145,7 @@ public class UsersRepoTest {
         String username = "Alexander1";
         String password = "password123";
         Users newUser = new Users(0, username, password,"alexander@hotmail.com");
-        userRepo.save(newUser);
+        userService.addUser(newUser);
 
         Assertions.assertTrue(userService.authenticateUser(username,password));
 

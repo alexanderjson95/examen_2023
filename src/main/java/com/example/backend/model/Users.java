@@ -30,7 +30,7 @@ public class Users {
     private String username;
 
     @NotBlank(message = "Lösenordet får inte vara tomt")
-    @Size(min = 7, max=30, message = "Lösenordet måste vara mellan 7 - 30 tecken")
+    @Size(min = 7, message = "Lösenordet måste vara minst 7 tecken")
     private String password;
 
 
