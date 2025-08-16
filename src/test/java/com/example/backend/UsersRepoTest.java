@@ -21,6 +21,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
@@ -65,8 +66,8 @@ public class UsersRepoTest {
      * @see #throwsUsernameTakenExceptionWhenUsernameExists_register() för scenario där användare redan finns
      */
     @Test
-        void shouldCreateAndGetUser_register() {
-        Users users = new Users(0,"Alexander", "Alexander123", "alexander@hotmail.com");
+        void shouldCreateAndGetUser_register() throws NoSuchAlgorithmException {
+        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
         userService.addUser(users);
 
         Optional<Users> foundU = userRepo.findByUsername(users.getUsername());
@@ -80,11 +81,11 @@ public class UsersRepoTest {
       * {@link DataTakenException} ska kastas med rätt meddelande*
      */
         @Test
-        void throwsUsernameTakenExceptionWhenUsernameExists_register() {
+        void throwsUsernameTakenExceptionWhenUsernameExists_register() throws NoSuchAlgorithmException {
 
-        userService.addUser(new Users(0, "Alexander", "Alexander123","alexander@hotmail.com"));
+        userService.addUser(new Users("Alexander", "Alexander123","alexander@hotmail.com"));
         DataTakenException e = Assertions.assertThrows(DataTakenException.class,
-                () -> userService.addUser(new Users(0, "alexander", "Alexander123","alexander@hotmail.com")));
+                () -> userService.addUser(new Users("alexander", "Alexander123","alexander@hotmail.com")));
         Assertions.assertEquals("Användarnamnet är taget", e.getMessage());
     }
 
@@ -93,11 +94,11 @@ public class UsersRepoTest {
      */
     @Test
     void throwsConstraintViolationException_register(){
-        Users newUserShort = new Users(0, "aa", "Alexander123","alexander@hotmail.com");
+        Users newUserShort = new Users("aa", "Alexander123","alexander@hotmail.com");
         Assertions.assertThrows(ConstraintViolationException.class,
                 () -> userService.addUser(newUserShort));
 
-        Users newUserLong = new Users(0, "aaaaaaaaaaaaaaaaaaaaaaaaaa", "Alexander123","alexander@hotmail.com");
+        Users newUserLong = new Users("aaaaaaaaaaaaaaaaaaaaaaaaaa", "Alexander123","alexander@hotmail.com");
         Assertions.assertThrows(ConstraintViolationException.class,
                 () -> userService.addUser(newUserLong));
 
@@ -109,7 +110,7 @@ public class UsersRepoTest {
      */
     @Test
     void shouldRemoveUser_delete(){
-        Users newUser = new Users(0, "Alexander123", "Alexander123","alexander@hotmail.com");
+        Users newUser = new Users("Alexander123", "Alexander123","alexander@hotmail.com");
         userRepo.save(newUser);
         userService.removeUser(newUser.getId());
         Optional<Users> foundU = userRepo.findById(newUser.getId());
@@ -118,7 +119,7 @@ public class UsersRepoTest {
 
     @Test
     void shouldUpdateUser_update(){
-        Users newUser = new Users(0, "Alexander123", "Alexander123","alexander@hotmail.com");
+        Users newUser = new Users("Alexander123", "Alexander123","alexander@hotmail.com");
         String newUsername = "ALEEEXANDERRRR";
         userRepo.save(newUser);
 
@@ -134,17 +135,17 @@ public class UsersRepoTest {
     void shouldFailToAuthenticate_login(){
         String username = "Alexander1";
         String password = "password123";
-        Users newUser = new Users(0, "Alexander1", "password","alexander@hotmail.com");
+        Users newUser = new Users("Alexander1", "password","alexander@hotmail.com");
         userRepo.save(newUser);
 
         Assertions.assertFalse(userService.authenticateUser(username,password));
     }
 
     @Test
-    void shouldAuthenticate_login(){
+    void shouldAuthenticate_login() throws NoSuchAlgorithmException {
         String username = "Alexander1";
         String password = "password123";
-        Users newUser = new Users(0, username, password,"alexander@hotmail.com");
+        Users newUser = new Users(username, password,"alexander@hotmail.com");
         userService.addUser(newUser);
 
         Assertions.assertTrue(userService.authenticateUser(username,password));

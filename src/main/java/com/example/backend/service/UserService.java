@@ -1,12 +1,15 @@
 package com.example.backend.service;
 
 import com.example.backend.Exceptions.DataTakenException;
+import com.example.backend.configs.KeyConfig;
 import com.example.backend.model.Users;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 import java.util.NoSuchElementException;
 
 @Service
@@ -17,6 +20,9 @@ public class UserService {
 
     @Autowired
     PasswordEncoder enc;
+
+    @Autowired
+    KeyConfig key;
 
     /*
       Vi gör null-checks i
@@ -47,13 +53,13 @@ public class UserService {
         Users foundUser = findUserById(id);
         userRepo.delete(foundUser);
     }
-    public void updateUser(Users nUser){
+    public void updateUser(Users nUser) throws NoSuchAlgorithmException {
         addUser(nUser);
 
     }
 
 
-    public void addUser(Users nUser) {
+    public void addUser(Users nUser) throws NoSuchAlgorithmException {
 
         if(userRepo.findByUsername(nUser.getUsername()).isPresent()){
             throw new DataTakenException("Användarnamnet är taget");

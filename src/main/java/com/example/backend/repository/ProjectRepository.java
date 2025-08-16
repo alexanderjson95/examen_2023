@@ -1,14 +1,17 @@
-package com.projectplatform.backend.repository;
+package com.example.backend.repository;
 
-import java.util.List;
-
+import com.example.backend.model.Project;
+import com.example.backend.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.projectplatform.backend.model.Project;
+import java.util.Optional;
+
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
-    
+    Optional<Project> findByUserId(int id);
+
+
 }

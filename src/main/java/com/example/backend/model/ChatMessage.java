@@ -1,5 +1,6 @@
-package com.projectplatform.backend.model;
+package com.example.backend.model;
 
 public class ChatMessage {
+
     
 }

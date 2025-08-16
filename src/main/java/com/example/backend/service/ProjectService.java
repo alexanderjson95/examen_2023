@@ -1,25 +1,36 @@
-package com.projectplatform.backend.service;
+package com.example.backend.service;
 
-import java.util.List;
-
+import com.example.backend.Exceptions.DataTakenException;
+import com.example.backend.model.Project;
+import com.example.backend.model.Users;
+import com.example.backend.repository.ProjectRepository;
+import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.projectplatform.backend.model.Project;
-import com.projectplatform.backend.repository.ProjectRepository;
+import java.util.NoSuchElementException;
 
 @Service
 public class ProjectService {
-    @Autowired private ProjectRepository repo;
 
-    public Project create(Project p) { return repo.save(p); }
+    @Autowired
+    ProjectRepository repo;
 
-    public Project read(int id) { return repo.findById(id).orElseThrow(); }
+    @Autowired
+    PasswordEncoder enc;
 
-    public Project update(int id, Project p) { return null;};
 
-    public void delete(int id) {  repo.deleteById(id); }
+    public Project findUserById(int id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Användaren kunde inte hittas.")); // Kollar om null, skickar  ut "NoSuchElementException" om det är, annars returnerar värdet
+    };
 
-    public List<Project> readAll() { return repo.findAll(); }
+
+
+    public void addProject(Users user, Project project) {
+        repo.save(project);
+        System.out.println("Project created");
+    }
 
 }
