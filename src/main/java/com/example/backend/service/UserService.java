@@ -1,14 +1,13 @@
 package com.example.backend.service;
 
 import com.example.backend.Exceptions.DataTakenException;
-import com.example.backend.configs.KeyConfig;
+import com.example.backend.security.configs.KeyConfig;
 import com.example.backend.model.Users;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.util.NoSuchElementException;
 

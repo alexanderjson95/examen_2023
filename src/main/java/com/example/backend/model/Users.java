@@ -9,9 +9,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,7 +23,7 @@ import javax.crypto.spec.SecretKeySpec;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class Users {
+public class Users implements UserDetails {
 
 
     @Id
@@ -40,6 +44,49 @@ public class Users {
     private String email;
 
 
-    public Users(String alexander, String alexander123, String mail) {
+    public Users(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 }

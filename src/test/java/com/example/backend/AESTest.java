@@ -1,15 +1,13 @@
 package com.example.backend;
 
 import com.example.backend.Exceptions.DecryptFailedException;
-import com.example.backend.configs.AESEncryptDecrypt;
-import com.example.backend.configs.EllipticalDiffieHellman;
-import com.example.backend.configs.KeyConfig;
-import com.example.backend.model.Users;
+import com.example.backend.security.configs.AESEncryptDecrypt;
+import com.example.backend.security.configs.EllipticalDiffieHellman;
+import com.example.backend.security.configs.KeyConfig;
 import com.example.backend.repository.ProjectRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.ProjectService;
 import com.example.backend.service.UserService;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,8 +23,7 @@ import org.testcontainers.utility.DockerImageName;
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
-import java.util.List;
-import java.util.Optional;
+
 @SpringBootTest
 @Testcontainers
 @AutoConfigureMockMvc
