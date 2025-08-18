@@ -28,7 +28,7 @@ public class Users implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @NotBlank(message = "Användarnamn får inte vara tomt")
     @Size(min = 5, max=15, message = "Användarnamn måste vara mellan 5 - 15 tecken" )

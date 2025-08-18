@@ -1,8 +1,10 @@
 package com.example.backend.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,16 +13,20 @@ import lombok.Setter;
 @Table(name="projects")
 @Getter
 @Setter
+@NoArgsConstructor
+
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private String projectName;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private Users user;
-    public Project(String projectName) {
-    }
+
+    @OneToMany(mappedBy = "project")
+    private List<UserProjectBookings> members;
+}
+
+
+
 //    private String projectDescription;
 
 //    private LocalDate startDate;
@@ -30,4 +36,4 @@ public class Project {
 //    private String genre;
 //    private boolean salary;
 //    private double runtime;
-}
+

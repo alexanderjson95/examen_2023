@@ -20,9 +20,6 @@ public class UserService {
     @Autowired
     PasswordEncoder enc;
 
-    @Autowired
-    KeyConfig key;
-
     /*
       Vi gör null-checks i
        findUserById() och findUserByUsername()
@@ -33,7 +30,7 @@ public class UserService {
      * @param id  user id
      * @return Users objekt
      */
-    public Users findUserById(int id) {
+    public Users findUserById(Long id) {
         return userRepo.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Användaren kunde inte hittas.")); // Kollar om null, skickar  ut "NoSuchElementException" om det är, annars returnerar värdet
     };
@@ -48,7 +45,7 @@ public class UserService {
     };
 
 
-    public void removeUser(int id) {
+    public void removeUser(Long id) {
         Users foundUser = findUserById(id);
         userRepo.delete(foundUser);
     }
@@ -65,10 +62,8 @@ public class UserService {
         };
 
         String hPassword = enc.encode(nUser.getPassword());
-        System.out.println("HASH TEST: " + hPassword);
         nUser.setPassword(hPassword);
         userRepo.save(nUser);
-        System.out.println("User created: " + nUser.getUsername());
     }
     public boolean authenticateUser(String username, String password){
         Users u = findUserByUsername(username);
