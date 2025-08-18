@@ -2,6 +2,7 @@ package com.example.backend;
 
 import com.example.backend.Exceptions.DecryptFailedException;
 import com.example.backend.configs.AESEncryptDecrypt;
+import com.example.backend.configs.EllipticalDiffieHellman;
 import com.example.backend.configs.KeyConfig;
 import com.example.backend.model.Users;
 import com.example.backend.repository.ProjectRepository;
@@ -22,9 +23,9 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import javax.crypto.*;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.*;
+import java.util.List;
 import java.util.Optional;
 @SpringBootTest
 @Testcontainers
@@ -51,6 +52,8 @@ public class AESTest {
         private UserService uService;
         @Autowired
         private KeyConfig keyConfig;
+        @Autowired
+        private EllipticalDiffieHellman dh;
 
 
     @Autowired
@@ -84,4 +87,60 @@ public class AESTest {
                 aes.decryptString(encoded, badKey);
             });
         }
+
+        @Test
+        void testECDHSecret() throws NoSuchAlgorithmException, InvalidKeyException {
+            // Skapar nyckelpar (private och public)
+            KeyPair aUser = dh.ECDHKeyPair();
+            KeyPair bUser = dh.ECDHKeyPair();
+
+            // Krypterar public nycklar så de säkert kan skickas
+            String aUserEncoded = EllipticalDiffieHellman.encodePublicKey(aUser.getPublic());
+            String bUserEncoded = EllipticalDiffieHellman.encodePublicKey(bUser.getPublic());
+
+            // Använder varandras nyckelpar för att skapa gemensam hemlighet
+            var abKey = EllipticalDiffieHellman.decodePublicKey(bUserEncoded);
+            var baKey = EllipticalDiffieHellman.decodePublicKey(aUserEncoded);
+
+            SecretKeySpec aSecret = EllipticalDiffieHellman.createSharedSecret(aUser.getPrivate(), abKey);
+            SecretKeySpec bSecret = EllipticalDiffieHellman.createSharedSecret(bUser.getPrivate(), baKey);
+
+            Assertions.assertNotNull(aSecret, "cant be null");
+            Assertions.assertNotNull(bSecret, "cant be null");
+
+            Assertions.assertArrayEquals(aSecret.getEncoded(), bSecret.getEncoded(), "Both should match");
+        }
+
+
+        @Test
+        void EndToEndEncryption_Chat() throws Exception {
+            // Skapar nyckelpar (private och public)
+            KeyPair aUser = dh.ECDHKeyPair();
+            KeyPair bUser = dh.ECDHKeyPair();
+
+            // Krypterar public nycklar så de säkert kan skickas
+            String aUserEncoded = EllipticalDiffieHellman.encodePublicKey(aUser.getPublic());
+            String bUserEncoded = EllipticalDiffieHellman.encodePublicKey(bUser.getPublic());
+
+            // Använder varandras nyckelpar för att skapa gemensam hemlighet
+            var abKey = EllipticalDiffieHellman.decodePublicKey(bUserEncoded);
+            var baKey = EllipticalDiffieHellman.decodePublicKey(aUserEncoded);
+
+            SecretKeySpec aSecret = EllipticalDiffieHellman.createSharedSecret(aUser.getPrivate(), abKey);
+            SecretKeySpec bSecret = EllipticalDiffieHellman.createSharedSecret(bUser.getPrivate(), baKey);
+
+            String a_message = "Hello B!";
+            String b_response = "Stop messaging me";
+            String encrypt_a = aes.encryptString(a_message, aSecret);
+            String encrypt_b = aes.encryptString(b_response, bSecret);
+
+
+            String decrypt_a = aes.decryptString(encrypt_a, bSecret);
+            String decrypt_b = aes.decryptString(encrypt_b, aSecret);
+
+            Assertions.assertEquals(a_message, decrypt_a);
+            Assertions.assertEquals(b_response, decrypt_b);
+        }
+
+
     }
