@@ -1,34 +1,32 @@
 package com.example.backend.service;
 
-import com.example.backend.model.Project;
-import com.example.backend.model.Users;
-import com.example.backend.repository.ProjectRepository;
+import com.example.backend.model.Projects.UserProject;
+import com.example.backend.repository.UserProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.NoSuchElementException;
+import java.util.List;
 
 @Service
-public class UserProjectService {
+public class UserProjectService  {
 
     @Autowired
-    ProjectRepository repo;
+    UserProjectRepository repo;
 
-    @Autowired
-    PasswordEncoder enc;
+    public List<UserProject> getProjectsByUser(long userId){
+        return repo.findByUserId(userId);
+    }
 
+    public List<UserProject> getProjectsByProject(long projectId){
+        return repo.findByProjectId(projectId);
+    }
 
-    public Project findUserById(int id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Användaren kunde inte hittas.")); // Kollar om null, skickar  ut "NoSuchElementException" om det är, annars returnerar värdet
-    };
+    public UserProject addUserToProject(UserProject userProject){
+        return repo.save(userProject);
+    }
 
-
-
-    public void addProject(Users user, Project project) {
-        repo.save(project);
-        System.out.println("Project created");
+    public void removeUserFromProject(long userId){
+         repo.deleteById(userId);
     }
 
 }

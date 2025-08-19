@@ -91,7 +91,5 @@ public class EllipticalDiffieHellman {
         }catch (Exception e){
             throw new RuntimeException("Couldnt create shared key", e);
         }
-
     }
-
 }

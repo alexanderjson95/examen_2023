@@ -1,16 +1,13 @@
 package com.example.backend;
 
 import com.example.backend.Exceptions.DataTakenException;
-import com.example.backend.model.Users;
+import com.example.backend.model.Users.Users;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.UserService;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;

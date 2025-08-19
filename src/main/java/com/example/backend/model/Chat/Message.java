@@ -1,26 +1,23 @@
-package com.example.backend.model;
+package com.example.backend.model.Chat;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedBy;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
     @Table(name="messages")
     @Getter
     @Setter
-    public class ChatMessage {
+    public class Message {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private long id;
-        private String value;
-
+        @Lob
+        private String encryptedValue;
         @CreationTimestamp
         private LocalDateTime created;
-
 
 }

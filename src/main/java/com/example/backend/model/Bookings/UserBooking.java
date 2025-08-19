@@ -1,7 +1,8 @@
-package com.example.backend.model;
+package com.example.backend.model.Bookings;
 
 
-import com.projectplatform.backend.model.Bookings;
+import com.example.backend.model.Projects.Project;
+import com.example.backend.model.Users.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +30,7 @@ public class UserBooking {
     private Users recipient;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender", nullable = false)
+    @JoinColumn(name = "sender_id", nullable = false)
     private Users sender;
 
     @ManyToOne(fetch = FetchType.LAZY)

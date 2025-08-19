@@ -1,6 +1,7 @@
-package com.example.backend.model;
+package com.example.backend.model.Chat;
 
 
+import com.example.backend.model.Users.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,13 +15,12 @@ import lombok.Setter;
 @Entity
 @Table(name = "user_messages")
 public class UserMessages {
-    private Long userMessageId;
-    private Long senderId;
-    private Long recipientId;
-    private Long messageId;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private boolean read = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id", nullable = false)
@@ -29,5 +29,11 @@ public class UserMessages {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipient_id", nullable = false)
     private Users recipient;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "message_id", nullable = false)
+    private Message message;
+
+
 
 }

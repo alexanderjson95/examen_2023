@@ -1,8 +1,7 @@
 package com.example.backend.service;
 
 import com.example.backend.Exceptions.DataTakenException;
-import com.example.backend.security.configs.KeyConfig;
-import com.example.backend.model.Users;
+import com.example.backend.model.Users.Users;
 import com.example.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

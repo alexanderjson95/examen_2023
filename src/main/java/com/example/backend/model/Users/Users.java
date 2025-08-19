@@ -1,9 +1,8 @@
-package com.example.backend.model;
+package com.example.backend.model.Users;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,8 +11,6 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 import java.util.Collection;
 import java.util.List;
 
@@ -42,7 +39,7 @@ public class Users implements UserDetails {
     //@NotBlank - utkommenterat under dev
     @Email
     private String email;
-
+    private String publicKey;
 
     public Users(String username, String password, String email) {
         this.username = username;
