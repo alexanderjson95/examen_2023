@@ -27,7 +27,6 @@ public class UserMessageService {
 
     public void sendMessage(MessageRequest req){
 
-        String encryptedMsg = crypto.encryptMessage(req.getContent())
 
 
     }

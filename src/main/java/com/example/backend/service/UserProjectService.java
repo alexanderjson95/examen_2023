@@ -14,7 +14,7 @@ public class UserProjectService  {
     UserProjectRepository repo;
 
     public List<UserProject> getProjectsByUser(long userId){
-        return repo.findByUserId(userId);
+        return repo.findAllProjectsByUserId(userId);
     }
 
     public List<UserProject> getProjectsByProject(long projectId){

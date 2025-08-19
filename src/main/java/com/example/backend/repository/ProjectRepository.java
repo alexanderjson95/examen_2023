@@ -1,16 +1,16 @@
 package com.example.backend.repository;
 
 import com.example.backend.model.Projects.Project;
+import org.apache.logging.log4j.message.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-
+// Kan senare användas för admin funktioner
 @Repository
-public interface ProjectRepository extends JpaRepository<Project, Integer> {
+public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    //Optional<Project> findByUserId(int id);
-    List<Project> findByUserId(int id);
+
 
 }
+
+
