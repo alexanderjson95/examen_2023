@@ -1,7 +1,11 @@
 package com.example.backend.model.Chat;
 
 
+import com.example.backend.model.Users.Users;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -12,12 +16,10 @@ import lombok.Setter;
 /**
  * DTO för meddelanden
  */
+@Getter
+@Setter
 public class MessageRequest {
-    @NotNull(message = "Avsändare saknas")
     private Long senderId;
-    @NotNull(message = "Mottagare saknas")
-    private Long  recipientId;
-    @NotNull(message = "Innehåll saknas")
-    @Size(max = 2000, message = "Meddelandet får max vara 2000 tecken")
-    private String content;
+    private Long recipientId;
+    private String encryptedValue;
 }
