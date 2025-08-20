@@ -21,9 +21,7 @@ public class UserProjectRequest {
     private Long userId;
     @Size(max = 15)
     private String role;
-    private boolean isCreator = false;
-    private boolean isAdmin = false;
-    private boolean joined = false;
-
-
+    private Boolean isCreator;
+    private Boolean isAdmin;
+    private Boolean joined;
 }

@@ -25,7 +25,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Size(max = 15)
+    @Size(max = 50)
     private String projectName;
     @Size(max = 100)
     private String description;

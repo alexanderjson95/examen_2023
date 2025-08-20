@@ -18,11 +18,11 @@ import java.time.LocalDateTime;
 public class ProjectRequest {
     private Long userId;
     @NotNull
-    @Size(max = 15)
+    @Size(max = 50)
     private String projectName;
     @Size(max = 100)
     private String description;
-    private boolean isPublic = false;
+    private Boolean isPublic;
     private double salary = 0.0;
     private String type;
 }

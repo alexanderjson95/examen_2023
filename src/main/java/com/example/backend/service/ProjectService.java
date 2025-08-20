@@ -7,12 +7,12 @@ import com.example.backend.model.Projects.UserProjectRequest;
 import com.example.backend.model.Users.Users;
 import com.example.backend.repository.ProjectRepository;
 import com.example.backend.repository.UserProjectRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 
 @Service
 public class ProjectService  {
@@ -31,11 +31,12 @@ public class ProjectService  {
 
     /* READ */
 
-    // Hämtar alla användare i projekt
+    // Hämtar alla användare i projekt, transactional då vi har lazy loading på entity, så vi måste kunna hämta både projects, users, och userprojects utan att db connection stängs.
+    @Transactional
     public List<UserProject> getUserProjects(UserProjectRequest req){
         // Null check sker i service
         Users user = userService.findUserById(req.getUserId());
-        return userProjectRepository.findAllProjectsByUserId(user.getId());
+        return userProjectRepository.findAllProjectsByUser_Id(user.getId());
     }
 
     // Hämtar enskilt projekt
@@ -45,6 +46,7 @@ public class ProjectService  {
     };
 
     // Hämtar projekt och användare
+    @Transactional
     public UserProject findUserAndProject(Project project, Users user) {
         return userProjectRepository.findByUserAndProject(user,project)
                 .orElseThrow(() -> new NoSuchElementException("Användaren i projektet kunde inte hittas."));
@@ -52,13 +54,15 @@ public class ProjectService  {
 
 
 
+    /* CREATE */
 
+    @Transactional
     public void createProject(ProjectRequest req){
         // Skapar projektet
         Project project = new Project();
         project.setProjectName(req.getProjectName());
         project.setDescription(req.getDescription());
-        project.setPublic(req.isPublic());
+        project.setPublic(req.getIsPublic() != null ? req.getIsPublic() : false);
         project.setSalary(req.getSalary());
         project.setType(req.getType());
         // Sparar projektet
@@ -72,6 +76,7 @@ public class ProjectService  {
         userProjectRepository.save(userProject);
     }
 
+    @Transactional
     // Skapar en användare till projekt
     public void addUserToProject(UserProjectRequest req){
         Users user = userService.findUserById(req.getUserId());
@@ -80,11 +85,16 @@ public class ProjectService  {
         newUser.setUser(user);
         newUser.setProject(project);
         newUser.setRole(req.getRole());
-        newUser.setJoined(req.isJoined());
-        newUser.setAdmin(req.isAdmin());
-        newUser.setCreator(req.isCreator());
+        newUser.setJoined(req.getJoined() != null ? req.getJoined() : false);
+        newUser.setAdmin(req.getIsAdmin() != null ? req.getIsAdmin() : false);
+        newUser.setCreator(req.getIsCreator() != null ? req.getIsCreator() : false);
         userProjectRepository.save(newUser);
     }
+
+
+    /* PUT */
+
+    @Transactional
 
     // Uppdaterar behörighet
     public void updateUserProject(UserProjectRequest req){
@@ -92,17 +102,36 @@ public class ProjectService  {
         Project project = findProjectById(req.getProjectId());
         UserProject userProject = findUserAndProject(project,user);
         userProject.setRole(req.getRole());
-        userProject.setJoined(req.isJoined());
-        userProject.setAdmin(req.isAdmin());
-        userProject.setCreator(req.isCreator());
+        userProject.setJoined(req.getJoined() != null ? req.getJoined() : false);
+        userProject.setAdmin(req.getIsAdmin() != null ? req.getIsAdmin() : false);
+        userProject.setCreator(req.getIsCreator() != null ? req.getIsCreator() : false);
         userProjectRepository.save(userProject);
     }
+    @Transactional
+    public void updateProject(Long projectId, ProjectRequest req){
+        Project project = findProjectById(projectId);
+        project.setProjectName(req.getProjectName());
+        project.setDescription(req.getDescription());
+        project.setPublic((req.getIsPublic() != null ? req.getIsPublic() : false));
+        project.setSalary(req.getSalary());
+        project.setType(req.getType());
+        projectRepository.save(project);
+    }
 
+    /* DELETE */
+    @Transactional
     public void removeUserFromProject(UserProjectRequest req){
         Users user = userService.findUserById(req.getUserId());
         Project project = findProjectById(req.getProjectId());
         UserProject userProject = findUserAndProject(project,user);
         userProjectRepository.delete(userProject);
+    }
+
+    @Transactional
+    public void removeProject(Long id){
+        Project project = findProjectById(id);
+        userProjectRepository.deleteByProjectId(id);
+        projectRepository.delete(project);
     }
 
 

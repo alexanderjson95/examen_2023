@@ -14,12 +14,12 @@ public class UserProjectService  {
     UserProjectRepository repo;
 
     public List<UserProject> getProjectsByUser(long userId){
-        return repo.findAllProjectsByUserId(userId);
+        return repo.findAllProjectsByUser_Id(userId);
     }
 
-    public List<UserProject> getProjectsByProject(long projectId){
-        return repo.findByProjectId(projectId);
-    }
+//    public List<UserProject> getProjectsByProject(long projectId){
+//        return repo.findByProjectId(projectId);
+//    }
 
     public UserProject addUserToProject(UserProject userProject){
         return repo.save(userProject);

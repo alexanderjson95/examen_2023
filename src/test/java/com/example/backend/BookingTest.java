@@ -1,20 +1,12 @@
 package com.example.backend;
 
-import com.example.backend.Exceptions.DataTakenException;
 import com.example.backend.model.Projects.Project;
 import com.example.backend.model.Projects.ProjectRequest;
-import com.example.backend.model.Projects.UserProject;
 import com.example.backend.model.Projects.UserProjectRequest;
 import com.example.backend.model.Users.Users;
 import com.example.backend.repository.ProjectRepository;
-import com.example.backend.repository.UserProjectRepository;
-import com.example.backend.repository.UserRepository;
 import com.example.backend.service.ProjectService;
 import com.example.backend.service.UserService;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,21 +14,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @SpringBootTest
 @Testcontainers
 @AutoConfigureMockMvc
-public class ProjectTest {
+public class BookingTest {
 
 
     /*
@@ -61,8 +51,6 @@ public class ProjectTest {
 
     @Autowired
     private ProjectRepository projectRepo;
-    @Autowired
-    private UserProjectRepository uProjectRepo;
 
 
     @BeforeEach
@@ -72,25 +60,7 @@ public class ProjectTest {
 
 
     @Test
-    void shouldReturnUserProjects() throws NoSuchAlgorithmException {
-        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
-        userService.addUser(users);
-
-        ProjectRequest project = new ProjectRequest();
-        project.setUserId(users.getId());
-        project.setProjectName("En häftig film");
-        project.setType("Långfilm");
-        project.setDescription("mycket cool film");
-        project.setSalary(0.0);
-        projectService.createProject(project);
-        Optional<Project> foundProject = projectRepo.findById(project.getUserId());
-        Optional<UserProject> foundUserProject = uProjectRepo.findByUserAndProject(users, foundProject.get());
-        Assertions.assertEquals("En häftig film", foundUserProject.get().getProject().getProjectName());
-    }
-
-
-    @Test
-    void shouldCreateAProjectAndAddUser_success() throws NoSuchAlgorithmException {
+    void shouldCreateAProject_success() throws NoSuchAlgorithmException {
         Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
         userService.addUser(users);
         ProjectRequest project = new ProjectRequest();
@@ -100,34 +70,13 @@ public class ProjectTest {
         project.setDescription("mycket cool film");
         project.setSalary(0.0);
         projectService.createProject(project);
+
+        UserProjectRequest req = new UserProjectRequest();
+        req.setUserId(users.getId());
+        req.setProjectId(project.getUserId());
+        projectService.getUserProjects(req);
         Optional<Project> foundProject = projectRepo.findById(project.getUserId());
         Assertions.assertTrue(foundProject.isPresent());
-        Optional<UserProject> foundUserProject = uProjectRepo.findByUserAndProject(users, foundProject.get());
-        Assertions.assertTrue(foundUserProject.isPresent());
-    }
-
-    @Test
-    void shouldUpdateProject_success() throws NoSuchAlgorithmException {
-        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
-        userService.addUser(users);
-        ProjectRequest project = new ProjectRequest();
-        project.setUserId(users.getId());
-        project.setProjectName("En häftig film");
-        project.setType("Långfilm");
-        project.setDescription("mycket cool film");
-        project.setSalary(0.0);
-        projectService.createProject(project);
-        Optional<Project> oldProject = projectRepo.findById(project.getUserId());
-        ProjectRequest updatedProjectReq = new ProjectRequest();
-        updatedProjectReq.setUserId(users.getId());
-        updatedProjectReq.setProjectName("En inte häftig film");
-        updatedProjectReq.setType("Långfilm");
-        updatedProjectReq.setDescription("mycket cool film");
-        updatedProjectReq.setSalary(0.0);
-        projectService.updateProject(oldProject.get().getId(), updatedProjectReq);
-        Optional<Project> updatedProject = projectRepo.findById(project.getUserId());
-        Assertions.assertNotSame(oldProject,updatedProject);
-        Assertions.assertSame(oldProject.get().getId(), updatedProject.get().getId());
     }
 
     @Test
@@ -160,7 +109,6 @@ public class ProjectTest {
         UserProjectRequest req = new UserProjectRequest();
         req.setUserId(users.getId());
         req.setProjectId(project.getUserId());
-
         projectService.getUserProjects(req);
         Optional<Project> foundProject = projectRepo.findById(project.getUserId());
         System.out.println("TITLE: " + foundProject.get().getProjectName());

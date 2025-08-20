@@ -14,11 +14,11 @@ public class UserBookingService  {
     UserBookingRepository repo;
 
     public List<UserBooking> getBookingsByUser(long userId){
-        return repo.findByUserId(userId);
+        return repo.findByRecipient_Id(userId);
     }
 
     public List<UserBooking> getBookingsByProject(long projectId){
-        return repo.findByProjectId(projectId);
+        return repo.findByProject_Id(projectId);
     }
 
     public UserBooking addBooking(UserBooking userBooking){

@@ -9,9 +9,5 @@ import java.util.Optional;
 @Repository
 public interface BookingRepository extends JpaRepository<Bookings, Integer> {
 
-    Optional<Bookings> findByUserId(long id);
-    Optional<Bookings> findByProjectId(long id);
-
-
 
 }

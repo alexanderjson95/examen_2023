@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface UserMessageRepository extends JpaRepository<UserMessages, Long> {
-    List<UserMessages> findByRecipientId(Long recipientId);
-    List<UserMessages> findBySenderId(Long senderId);
-    List<UserMessages> findByRecipientAndReadFalse(Long recipientId);
+    List<UserMessages> findByRecipient_Id(Long recipientId);
+    List<UserMessages> findBySender_Id(Long senderId);
+    List<UserMessages> findByRecipient_IdAndReadFalse(Long recipientId);
 }
