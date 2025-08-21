@@ -40,6 +40,8 @@ public class Users implements UserDetails {
     @Email
     private String email;
     private String publicKey;
+    private String secretKey;
+
 
     public Users(String username, String password, String email) {
         this.username = username;

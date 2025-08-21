@@ -55,6 +55,8 @@ public class ProjectTest {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository uRepo;
 
     @Autowired
     private ProjectService projectService;
@@ -64,18 +66,24 @@ public class ProjectTest {
     @Autowired
     private UserProjectRepository uProjectRepo;
 
+    String username = "Alexander";
+    String password = "Alexander123";
+    String email = "alexander123@mail.com";
+    String publicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEQGr5sZ0R0x2Xv9QeZszv9cG3WgA3dJmCw2xK0lGrg0Y0km6h8AlxV2hlYn3V6ug5pKbmI7GLTfKqkEThj9cK9A==";
 
     @BeforeEach
     void cleanDB(){
+        uProjectRepo.deleteAll();
         projectRepo.deleteAll();
+        uRepo.deleteAll();
+
     }
 
 
     @Test
     void shouldReturnUserProjects() throws NoSuchAlgorithmException {
-        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
-        userService.addUser(users);
-
+        userService.addUser(username,password,email,publicKey);
+        Users users = userService.findUserByUsername(username);
         ProjectRequest project = new ProjectRequest();
         project.setUserId(users.getId());
         project.setProjectName("En häftig film");
@@ -91,8 +99,8 @@ public class ProjectTest {
 
     @Test
     void shouldCreateAProjectAndAddUser_success() throws NoSuchAlgorithmException {
-        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
-        userService.addUser(users);
+        userService.addUser(username,password,email,publicKey);
+        Users users = userService.findUserByUsername(username);
         ProjectRequest project = new ProjectRequest();
         project.setUserId(users.getId());
         project.setProjectName("En häftig film");
@@ -100,16 +108,16 @@ public class ProjectTest {
         project.setDescription("mycket cool film");
         project.setSalary(0.0);
         projectService.createProject(project);
-        Optional<Project> foundProject = projectRepo.findById(project.getUserId());
-        Assertions.assertTrue(foundProject.isPresent());
-        Optional<UserProject> foundUserProject = uProjectRepo.findByUserAndProject(users, foundProject.get());
+        Optional<Project> oldProject = projectRepo.findById(project.getUserId());
+        Assertions.assertTrue(oldProject.isPresent());
+        Optional<UserProject> foundUserProject = uProjectRepo.findByUserAndProject(users, oldProject.get());
         Assertions.assertTrue(foundUserProject.isPresent());
     }
 
     @Test
     void shouldUpdateProject_success() throws NoSuchAlgorithmException {
-        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
-        userService.addUser(users);
+        userService.addUser(username,password,email,publicKey);
+        Users users = userService.findUserByUsername(username);
         ProjectRequest project = new ProjectRequest();
         project.setUserId(users.getId());
         project.setProjectName("En häftig film");
@@ -132,8 +140,8 @@ public class ProjectTest {
 
     @Test
     void throwsNoSuchElementException() throws NoSuchAlgorithmException {
-        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
-        userService.addUser(users);
+        userService.addUser(username,password,email,publicKey);
+        Users users = userService.findUserByUsername(username);
         ProjectRequest project = new ProjectRequest();
         project.setUserId(10L);
         project.setProjectName("En häftig film");
@@ -147,8 +155,8 @@ public class ProjectTest {
 
     @Test
     void shouldRemoveAProject_success() throws NoSuchAlgorithmException {
-        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
-        userService.addUser(users);
+        userService.addUser(username,password,email,publicKey);
+        Users users = userService.findUserByUsername(username);
         ProjectRequest project = new ProjectRequest();
         project.setUserId(users.getId());
         project.setProjectName("En häftig film");

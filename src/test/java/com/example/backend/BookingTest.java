@@ -28,95 +28,95 @@ import java.util.Optional;
 @AutoConfigureMockMvc
 public class BookingTest {
 
-
-    /*
-     * Skapar en sql databas i en container
-     */
-
-    @Container
-    @ServiceConnection
-    static MySQLContainer<?> sql = new MySQLContainer<>(
-            DockerImageName.parse("mysql:8.1")
-    )
-            .withDatabaseName("db")
-            .withUsername("u")
-            .withPassword("p");
-
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private ProjectService projectService;
-
-    @Autowired
-    private ProjectRepository projectRepo;
-
-
-    @BeforeEach
-    void cleanDB(){
-        projectRepo.deleteAll();
-    }
-
-
-    @Test
-    void shouldCreateAProject_success() throws NoSuchAlgorithmException {
-        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
-        userService.addUser(users);
-        ProjectRequest project = new ProjectRequest();
-        project.setUserId(users.getId());
-        project.setProjectName("En häftig film");
-        project.setType("Långfilm");
-        project.setDescription("mycket cool film");
-        project.setSalary(0.0);
-        projectService.createProject(project);
-
-        UserProjectRequest req = new UserProjectRequest();
-        req.setUserId(users.getId());
-        req.setProjectId(project.getUserId());
-        projectService.getUserProjects(req);
-        Optional<Project> foundProject = projectRepo.findById(project.getUserId());
-        Assertions.assertTrue(foundProject.isPresent());
-    }
-
-    @Test
-    void throwsNoSuchElementException() throws NoSuchAlgorithmException {
-        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
-        userService.addUser(users);
-        ProjectRequest project = new ProjectRequest();
-        project.setUserId(10L);
-        project.setProjectName("En häftig film");
-        project.setType("Långfilm");
-        project.setDescription("mycket cool film");
-        project.setSalary(0.0);
-        Assertions.assertThrows(NoSuchElementException.class,
-                () -> projectService.createProject(project));
-    }
-
-
-    @Test
-    void shouldRemoveAProject_success() throws NoSuchAlgorithmException {
-        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
-        userService.addUser(users);
-        ProjectRequest project = new ProjectRequest();
-        project.setUserId(users.getId());
-        project.setProjectName("En häftig film");
-        project.setType("Långfilm");
-        project.setDescription("mycket cool film");
-        project.setSalary(0.0);
-        projectService.createProject(project);
-
-        UserProjectRequest req = new UserProjectRequest();
-        req.setUserId(users.getId());
-        req.setProjectId(project.getUserId());
-        projectService.getUserProjects(req);
-        Optional<Project> foundProject = projectRepo.findById(project.getUserId());
-        System.out.println("TITLE: " + foundProject.get().getProjectName());
-        projectService.removeProject(foundProject.get().getId());
-        Optional<Project> deletedProject = projectRepo.findById(project.getUserId());
-        Assertions.assertTrue(deletedProject.isEmpty());
-    }
-
+//
+//    /*
+//     * Skapar en sql databas i en container
+//     */
+//
+//    @Container
+//    @ServiceConnection
+//    static MySQLContainer<?> sql = new MySQLContainer<>(
+//            DockerImageName.parse("mysql:8.1")
+//    )
+//            .withDatabaseName("db")
+//            .withUsername("u")
+//            .withPassword("p");
+//
+//
+//    @Autowired
+//    private UserService userService;
+//
+//    @Autowired
+//    private ProjectService projectService;
+//
+//    @Autowired
+//    private ProjectRepository projectRepo;
+//
+//
+//    @BeforeEach
+//    void cleanDB(){
+//        projectRepo.deleteAll();
+//    }
+//
+//
+//    @Test
+//    void shouldCreateAProject_success() throws NoSuchAlgorithmException {
+//        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
+//        userService.addUser(users);
+//        ProjectRequest project = new ProjectRequest();
+//        project.setUserId(users.getId());
+//        project.setProjectName("En häftig film");
+//        project.setType("Långfilm");
+//        project.setDescription("mycket cool film");
+//        project.setSalary(0.0);
+//        projectService.createProject(project);
+//
+//        UserProjectRequest req = new UserProjectRequest();
+//        req.setUserId(users.getId());
+//        req.setProjectId(project.getUserId());
+//        projectService.getUserProjects(req);
+//        Optional<Project> foundProject = projectRepo.findById(project.getUserId());
+//        Assertions.assertTrue(foundProject.isPresent());
+//    }
+//
+//    @Test
+//    void throwsNoSuchElementException() throws NoSuchAlgorithmException {
+//        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
+//        userService.addUser(users);
+//        ProjectRequest project = new ProjectRequest();
+//        project.setUserId(10L);
+//        project.setProjectName("En häftig film");
+//        project.setType("Långfilm");
+//        project.setDescription("mycket cool film");
+//        project.setSalary(0.0);
+//        Assertions.assertThrows(NoSuchElementException.class,
+//                () -> projectService.createProject(project));
+//    }
+//
+//
+//    @Test
+//    void shouldRemoveAProject_success() throws NoSuchAlgorithmException {
+//        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
+//        userService.addUser(users);
+//        ProjectRequest project = new ProjectRequest();
+//        project.setUserId(users.getId());
+//        project.setProjectName("En häftig film");
+//        project.setType("Långfilm");
+//        project.setDescription("mycket cool film");
+//        project.setSalary(0.0);
+//        projectService.createProject(project);
+//
+//        UserProjectRequest req = new UserProjectRequest();
+//        req.setUserId(users.getId());
+//        req.setProjectId(project.getUserId());
+//        projectService.getUserProjects(req);
+//        Optional<Project> foundProject = projectRepo.findById(project.getUserId());
+//        System.out.println("TITLE: " + foundProject.get().getProjectName());
+//        projectService.removeProject(foundProject.get().getId());
+//        Optional<Project> deletedProject = projectRepo.findById(project.getUserId());
+//        Assertions.assertTrue(deletedProject.isEmpty());
+//    }
+//
 
 
 

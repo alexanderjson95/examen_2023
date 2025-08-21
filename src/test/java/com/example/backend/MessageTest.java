@@ -61,22 +61,25 @@ public class MessageTest {
         private UserMessageService userMessageService;
         @Autowired
         private UserMessageRepository userMessagesRepo;
-        Users users = new Users();
-        Users userB = new Users();
 
-        @Autowired
+        String username = "Alexander";
+        String password = "Alexander123";
+        String email = "alexander123@mail.com";
+        String publicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEQGr5sZ0R0x2Xv9QeZszv9cG3WgA3dJmCw2xK0lGrg0Y0km6h8AlxV2hlYn3V6ug5pKbmI7GLTfKqkEThj9cK9A==";
+
+        String username2 = "2Alexander";
+        String password2 = "2Alexander123";
+        String email2 = "2alexander123@mail.com";
+        String publicKey2 = "2MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEQGr5sZ0R0x2Xv9QeZszv9cG3WgA3dJmCw2xK0lGrg0Y0km6h8AlxV2hlYn3V6ug5pKbmI7GLTfKqkEThj9cK9A==";
+
+    // SKApA ANDRA
+    @Autowired
         private CryptoService crypto;
 
 
         @BeforeEach
         void setupUser() {
-            users.setUsername("Alexander");
-            users.setPassword("Alexander123");
-            users.setEmail("alexander@email.com");
 
-            userB.setUsername("Pelle");
-            userB.setPassword("pelle12345");
-            userB.setEmail("pelleee@email.com");
         }
 
         @AfterEach
@@ -90,11 +93,12 @@ public class MessageTest {
         void shouldCreateAndReturnMessage_success() throws NoSuchAlgorithmException {
 
             String content = "HEJ PÅ DIG!";
-            userService.addUser(users);
-            userService.addUser(userB);
 
-            Users alexander = userService.findUserById(users.getId());
-            Users pelle = userService.findUserById(userB.getId());
+            userService.addUser(username,password,email,publicKey);
+            userService.addUser(username2,password2,email2,publicKey2);
+
+            Users alexander = userService.findUserByUsername(username);
+            Users pelle = userService.findUserByUsername(username2);
 
             MessageRequest req = new MessageRequest();
             req.setSenderId(alexander.getId());
@@ -119,12 +123,13 @@ public class MessageTest {
 
         @Test
         void usersShouldReadEachOthersMessages_Authorized() throws NoSuchAlgorithmException {
-            userService.addUser(users);
-            userService.addUser(userB);
-            // Hämtar användare
-            Users alexander = userService.findUserById(users.getId());
-            Users pelle = userService.findUserById(userB.getId());
 
+            // Hämtar användare
+            userService.addUser(username,password,email,publicKey);
+            userService.addUser(username2,password2,email2,publicKey2);
+
+            Users alexander = userService.findUserByUsername(username);
+            Users pelle = userService.findUserByUsername(username2);
             // Skapar nyckelpar
             KeyPair aKeyPair = crypto.generateKeyPair();
             KeyPair bKeyPair = crypto.generateKeyPair();
@@ -164,11 +169,11 @@ public class MessageTest {
             "Meddelandet ska först vara krypterat och sedan dekrypterat.")
     @Test
     void usersShouldReadEachOthersMessages_notAuthorized() throws NoSuchAlgorithmException {
-        userService.addUser(users);
-        userService.addUser(userB);
-        // Hämtar användare
-        Users alexander = userService.findUserById(users.getId());
-        Users pelle = userService.findUserById(userB.getId());
+        userService.addUser(username,password,email,publicKey);
+        userService.addUser(username2,password2,email2,publicKey2);
+
+        Users alexander = userService.findUserByUsername(username);
+        Users pelle = userService.findUserByUsername(username2);
 
         // Skapar nyckelpar
         KeyPair aKeyPair = crypto.generateKeyPair();

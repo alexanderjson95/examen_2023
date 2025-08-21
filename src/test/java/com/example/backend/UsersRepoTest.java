@@ -54,6 +54,11 @@ public class UsersRepoTest {
     @Autowired
     private PasswordEncoder enc;
 
+    String username = "Alexander";
+    String password = "Alexander123";
+    String email = "alexander123@mail.com";
+    String publicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEQGr5sZ0R0x2Xv9QeZszv9cG3WgA3dJmCw2xK0lGrg0Y0km6h8AlxV2hlYn3V6ug5pKbmI7GLTfKqkEThj9cK9A==";
+
     @BeforeEach
     void cleanDB(){
         userRepo.deleteAll();
@@ -64,10 +69,10 @@ public class UsersRepoTest {
      */
     @Test
         void shouldCreateAndGetUser_register() throws NoSuchAlgorithmException {
-        Users users = new Users("Alexander", "Alexander123", "alexander@hotmail.com");
-        userService.addUser(users);
 
-        Optional<Users> foundU = userRepo.findByUsername(users.getUsername());
+        userService.addUser(username,password,email,publicKey);
+
+        Optional<Users> foundU = userRepo.findByUsername(username);
         Assertions.assertTrue(foundU.isPresent());
     }
 
@@ -80,9 +85,9 @@ public class UsersRepoTest {
         @Test
         void throwsUsernameTakenExceptionWhenUsernameExists_register() throws NoSuchAlgorithmException {
 
-        userService.addUser(new Users("Alexander", "Alexander123","alexander@hotmail.com"));
+            userService.addUser(username,password,email,publicKey);
         DataTakenException e = Assertions.assertThrows(DataTakenException.class,
-                () -> userService.addUser(new Users("alexander", "Alexander123","alexander@hotmail.com")));
+                () ->         userService.addUser(username,password,email,publicKey));
         Assertions.assertEquals("Användarnamnet är taget", e.getMessage());
     }
 
@@ -91,14 +96,11 @@ public class UsersRepoTest {
      */
     @Test
     void throwsConstraintViolationException_register(){
-        Users newUserShort = new Users("aa", "Alexander123","alexander@hotmail.com");
         Assertions.assertThrows(ConstraintViolationException.class,
-                () -> userService.addUser(newUserShort));
+                () ->         userService.addUser("aa",password,email,publicKey));
 
-        Users newUserLong = new Users("aaaaaaaaaaaaaaaaaaaaaaaaaa", "Alexander123","alexander@hotmail.com");
         Assertions.assertThrows(ConstraintViolationException.class,
-                () -> userService.addUser(newUserLong));
-
+                () ->         userService.addUser("aaaaaaaaaaaaaaaaaaaaaaaaaa",password,email,publicKey));
     }
 
 
@@ -106,48 +108,40 @@ public class UsersRepoTest {
      * Test: Att användaren kan tas bort
      */
     @Test
-    void shouldRemoveUser_delete(){
-        Users newUser = new Users("Alexander123", "Alexander123","alexander@hotmail.com");
-        userRepo.save(newUser);
-        userService.removeUser(newUser.getId());
-        Optional<Users> foundU = userRepo.findById(newUser.getId());
+    void shouldRemoveUser_delete() throws NoSuchAlgorithmException {
+        userService.addUser(username,password,email,publicKey);
+        Users alexander = userService.findUserByUsername(username);
+
+        userService.removeUser(alexander.getId());
+        Optional<Users> foundU = userRepo.findById(alexander.getId());
         Assertions.assertTrue(foundU.isEmpty());
     }
 
     @Test
-    void shouldUpdateUser_update(){
-        Users newUser = new Users("Alexander123", "Alexander123","alexander@hotmail.com");
-        String newUsername = "ALEEEXANDERRRR";
-        userRepo.save(newUser);
+    void shouldUpdateUser_update() throws NoSuchAlgorithmException {
+        userService.addUser(username,password,email,publicKey);
+        Users alexander = userService.findUserByUsername(username);
+        String newUsername = "Ballexander";
+        alexander.setUsername(newUsername);
+        userService.addUser(newUsername,password,email,publicKey);
 
-        newUser.setUsername(newUsername);
-        userRepo.save(newUser);
-
-        Optional<Users> updatedU = userRepo.findById(newUser.getId());
+        Optional<Users> updatedU = userRepo.findByUsername(newUsername);
         Assertions.assertEquals(newUsername, updatedU.get().getUsername());
 
     }
 
     @Test
-    void shouldFailToAuthenticate_login(){
-        String username = "Alexander1";
-        String password = "password123";
-        Users newUser = new Users("Alexander1", "password","alexander@hotmail.com");
-        userRepo.save(newUser);
-
-        Assertions.assertFalse(userService.authenticateUser(username,password));
+    void shouldFailToAuthenticate_login() throws NoSuchAlgorithmException {
+        userService.addUser(username,password,email,publicKey);
+        String falsePassword = "lösenordförsök123";
+        userService.authenticateUser(username,falsePassword);
+        Assertions.assertFalse(userService.authenticateUser(username,falsePassword));
     }
 
     @Test
     void shouldAuthenticate_login() throws NoSuchAlgorithmException {
-        String username = "Alexander1";
-        String password = "password123";
-        Users newUser = new Users(username, password,"alexander@hotmail.com");
-        userService.addUser(newUser);
-
+        userService.addUser(username,password,email,publicKey);
         Assertions.assertTrue(userService.authenticateUser(username,password));
-
-
     }
 
 

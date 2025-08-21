@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Base64;
 
 @Service
 public class CryptoService {
@@ -35,6 +37,20 @@ public class CryptoService {
         return ecdh.ECDHKeyPair();
     }
 
+    public  String encodeBase64_secretKey(SecretKey key){
+        return Base64.getEncoder().encodeToString(key.getEncoded());
+    }
+
+    public  byte[] decodeBase64_secretKey(String key){
+        return Base64.getDecoder().decode(key.getBytes(StandardCharsets.UTF_8));
+    }
+
+    public  String encodeBase64(PublicKey key){
+        return Base64.getEncoder().encodeToString(key.getEncoded());
+    }
+    public  byte[] decodeBase64(String key){
+        return Base64.getDecoder().decode(key.getBytes(StandardCharsets.UTF_8));
+    }
 
     public SecretKeySpec createSharedSecret(PrivateKey privateKey, PublicKey publicKey){
         try {
