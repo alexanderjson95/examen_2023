@@ -38,6 +38,14 @@ public class UserService {
        findUserById() och findUserByUsername()
      */
 
+
+
+    public String getQueryById(String query){
+
+        return query;
+    }
+
+
     /**
      * Packar up optional med null check
      * @param id  user id

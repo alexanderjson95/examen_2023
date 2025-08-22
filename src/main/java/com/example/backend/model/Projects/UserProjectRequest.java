@@ -15,13 +15,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserProjectRequest {
-    @NotNull(message = "Projekt saknas")
-    private Long projectId;
-    @NotNull(message = "Ogiltlig användare")
-    private Long userId;
     @Size(max = 15)
     private String role;
-    private Boolean isCreator;
     private Boolean isAdmin;
     private Boolean joined;
 }

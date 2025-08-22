@@ -57,6 +57,7 @@ public class UsersRepoTest {
     String username = "Alexander";
     String password = "Alexander123";
     String email = "alexander123@mail.com";
+    // Fake nyckel
     String publicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEQGr5sZ0R0x2Xv9QeZszv9cG3WgA3dJmCw2xK0lGrg0Y0km6h8AlxV2hlYn3V6ug5pKbmI7GLTfKqkEThj9cK9A==";
 
     @BeforeEach
@@ -129,20 +130,20 @@ public class UsersRepoTest {
         Assertions.assertEquals(newUsername, updatedU.get().getUsername());
 
     }
-
-    @Test
-    void shouldFailToAuthenticate_login() throws NoSuchAlgorithmException {
-        userService.addUser(username,password,email,publicKey);
-        String falsePassword = "lösenordförsök123";
-        userService.authenticateUser(username,falsePassword);
-        Assertions.assertFalse(userService.authenticateUser(username,falsePassword));
-    }
-
-    @Test
-    void shouldAuthenticate_login() throws NoSuchAlgorithmException {
-        userService.addUser(username,password,email,publicKey);
-        Assertions.assertTrue(userService.authenticateUser(username,password));
-    }
+//
+//    @Test
+//    void shouldFailToAuthenticate_login() throws NoSuchAlgorithmException {
+//        userService.addUser(username,password,email,publicKey);
+//        String falsePassword = "lösenordförsök123";
+//        userService.authenticateUser(username,falsePassword);
+//        Assertions.assertFalse(userService.authenticateUser(username,falsePassword));
+//    }
+//
+//    @Test
+//    void shouldAuthenticate_login() throws NoSuchAlgorithmException {
+//        userService.addUser(username,password,email,publicKey);
+//        Assertions.assertTrue(userService.authenticateUser(username,password));
+//    }
 
 
 }

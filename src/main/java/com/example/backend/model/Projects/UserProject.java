@@ -27,17 +27,14 @@ public class UserProject {
     @Size(max = 15)
     // Roll som t.ex kamereman, skådespelare etc.
     private String role;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
-
-    private boolean isCreator = false;
-    private boolean isAdmin = false;
-
+    private Boolean isCreator ;
+    private Boolean isAdmin;
+    private Boolean hasJoined;
+    private Boolean isBlocked;
     // när medlem blir inbjuden eller bad om inbjudan
     @CreationTimestamp
-    private LocalDateTime requested;
-    // när medlem accepterades eller accepterade
-    private boolean joined = false;
+    private LocalDateTime requestedDate;
 }

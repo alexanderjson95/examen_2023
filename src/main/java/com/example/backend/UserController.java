@@ -36,10 +36,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(UserResponse.returnUser(createdUser));
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Users>  getUserById(@PathVariable Long id){
         return ResponseEntity.ok(service.findUserById(id));
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id){
@@ -58,8 +60,5 @@ public class UserController {
         );
         return ResponseEntity.ok(UserResponse.returnUser(updatedUser));
     }
-
-
-
 
 }

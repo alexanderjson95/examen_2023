@@ -222,7 +222,7 @@ public class MessageTest {
 //            projectService.createProject(project);
 //            Optional<Project> foundProject = projectRepo.findById(project.getUserId());
 //            Assertions.assertTrue(foundProject.isPresent());
-//            Optional<UserProject> foundUserProject = uProjectRepo.findByUserAndProject(users, foundProject.get());
+//            Optional<UserProject> foundUserProject = uProjectRepo.findByUserIdAndProjectId(users, foundProject.get());
 //            Assertions.assertTrue(foundUserProject.isPresent());
 //        }
 //

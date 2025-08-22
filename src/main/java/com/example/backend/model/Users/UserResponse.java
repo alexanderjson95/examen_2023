@@ -14,8 +14,6 @@ public class UserResponse {
     private String username;
     private String email;
     private String publicKey;
-
-
     public static UserResponse returnUser(Users users) {
         return new UserResponse(
                 users.getId(),

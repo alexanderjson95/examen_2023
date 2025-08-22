@@ -79,28 +79,6 @@ public class EndToEndTest {
 
 
 
-    @Test
-    void EndToEnd(){
-        Map<String, String> endpoints = new HashMap<>();
-        endpoints.put("login", "/authenticate");
-        endpoints.put("refresh", "/refresh");
-
-        endpoints.put("refresh", "/backend/register");
-        endpoints.put("login", "/authenticate");
-        endpoints.put("login", "/authenticate");
-        endpoints.put("login", "/backend/authenticate");
-
-
-        RegisterRequest regReq = new RegisterRequest();
-        regReq.setUsername(username);
-        regReq.setUsername(email);
-        regReq.setUsername(password);
-        regReq.setUsername(publicKey);
-        regReq.setUsername(username);
-
-        ResponseEntity<String> registerResponse =
-                restTemplate.postForEntity("")
-    }
 
 
 }
