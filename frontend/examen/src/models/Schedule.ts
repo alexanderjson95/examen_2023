@@ -1,6 +1,6 @@
 
-export interface User {
-    user: string;
+export interface Schedule {
+    username: string;
     password: string; //todo
     fName: string;
     lName: string;

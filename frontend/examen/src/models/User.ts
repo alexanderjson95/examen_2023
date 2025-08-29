@@ -1,11 +1,12 @@
 
 export interface User {
-    user: string;
+    username: string;
     password: string; //todo
     fName: string;
     lName: string;
     role: string[]; //associerad senare
-    yoe: number[];
-    moe: number[];
+    yoe: number[]; // role.yoe
+    moe: number[]; // role.moe
     available: false;
+    uid: number,
 }

@@ -1,0 +1,4 @@
+windows/powershell app som 
+tar in json endpoints, skapar klasser för det
+
+- kan även exportera endpoints (bibliotek i java) till json
