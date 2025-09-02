@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "frontend_android"
 include(":app")
- 
+include(":lib")

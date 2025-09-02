@@ -1,16 +1,24 @@
 package com.example.frontend_android
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.frontend_android.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
+import com.example.frontend_android.ui.registration.RegisterViewModel
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
+    private val viewModel: RegisterViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +37,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
+        viewModel.register("adfssdf", "ksdfds", "dfsdf@gmail.com")
+
+        lifecycleScope.launch {
+            viewModel.state.collect { s -> Log.d("MyTasksViewModel", "User data: ${s}")
+            }
+        }
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
