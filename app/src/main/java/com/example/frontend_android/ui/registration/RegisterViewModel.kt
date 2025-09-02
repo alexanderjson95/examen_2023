@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val repo: UserRepository
+    private val repo: UserRepository,
 ): ViewModel() {
 
     private val _status = MutableStateFlow<String?>(null)

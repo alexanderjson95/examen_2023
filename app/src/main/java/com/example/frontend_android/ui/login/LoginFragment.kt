@@ -1,4 +1,4 @@
-package com.example.frontend_android.ui.registration
+package com.example.frontend_android.ui.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.frontend_android.databinding.FragmentDashboardBinding
+import com.example.frontend_android.ui.registration.RegisterViewModel
 
 class LoginFragment : Fragment() {
 
