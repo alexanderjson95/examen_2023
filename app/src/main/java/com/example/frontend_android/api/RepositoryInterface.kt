@@ -3,11 +3,13 @@ package com.example.frontend_android.api
 /**
  * Mall för alla CRUD repos
  */
-sealed interface  RepositoryInterface <T> {
-    suspend fun addData(data: T): Result<Unit>
-    suspend fun getData(data: T): Result<T>
-    suspend fun updateData(data: T): Result<T>
-    suspend fun deleteData(data: T): Result<T>
+sealed interface  RepositoryInterface <req,resp> {
+    suspend fun addData(data: req): Result<Unit>
+
+    suspend fun getDataById(id: Long): Result<resp>
+    suspend fun updateData(data: req): Result<Unit>
+    suspend fun deleteData(id: req): Result<Unit>
+
 
 
 }

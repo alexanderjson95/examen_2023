@@ -1,26 +1,18 @@
 package com.example.frontend_android.api
 
 import com.example.frontend_android.model.Projects.ProjectRequest
-import com.example.frontend_android.model.Projects.ProjectResponse
 import com.example.frontend_android.model.Projects.UserProjectRequest
 import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.example.frontend_android.model.Users.UserRequest
 import com.example.frontend_android.model.Users.UserResponse
 import com.example.frontend_android.model.auth.AuthRequest
 import com.example.frontend_android.model.auth.AuthenticationResponse
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
-import javax.inject.Singleton
-
 
 
 interface API {
@@ -41,7 +33,7 @@ interface API {
 
     @GET("projects/{projectId}/users/{userId}")
     suspend fun getUserProject(
-        @Path("projectId") projectId: Long,
+        @Path("projectId") projectId: Long?,
         @Path("userId") userId: Long
     ): Response<UserProjectResponse>
 
@@ -52,7 +44,12 @@ interface API {
         @Body req: UserProjectRequest
     ): Response<UserProjectResponse>
 
-
+    @POST("/{projectId}/users/{userId}")
+    suspend fun addUserProject(
+        @Path("projectId") projectId: Long?,
+        @Path("userId") userId: Long?,
+        @Body req: UserProjectRequest
+        ): Response<Unit>
 
 
 

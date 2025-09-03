@@ -2,44 +2,44 @@ package com.example.frontend_android.repository
 
 import com.example.frontend_android.api.API
 import com.example.frontend_android.api.RepositoryAbstract
-import com.example.frontend_android.api.SharedPrefsUtils
-import com.example.frontend_android.model.Projects.ProjectRequest
-import com.example.frontend_android.model.Projects.ProjectResponse
-import com.example.frontend_android.model.Users.UserRequest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
+import com.example.frontend_android.model.Projects.UserProjectRequest
+import com.example.frontend_android.model.Projects.UserProjectResponse
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ProjectRepository @Inject constructor(
+class UserProjectRepository @Inject constructor(
     override val apiInterface: API,
-) : RepositoryAbstract<ProjectRequest, ProjectResponse, API>() {
+) : RepositoryAbstract<UserProjectRequest, UserProjectResponse, API>() {
+
 
     override suspend fun performAdd(
         api: API,
-        data: ProjectRequest,
+        data: UserProjectRequest,
         userId: Long?,
         targetId: Long?
     ): Response<Unit> {
-        return apiInterface.createProject(data)
+        return apiInterface.addUserProject(projectId = targetId, userId = userId, req = data)
     }
 
     override suspend fun performGet(
         api: API,
         userId: Long,
         targetId: Long?
-    ): Response<ProjectResponse> {
+    ): Response<UserProjectResponse> {
+        return apiInterface.getUserProject(
+            projectId = targetId,
+            userId = userId,
+        )
+    }
+
+
+    override suspend fun updateData(data: UserProjectRequest): Result<Unit> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateData(data: ProjectRequest): Result<Unit> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteData(data: ProjectRequest): Result<Unit> {
+    override suspend fun deleteData(id: UserProjectRequest): Result<Unit> {
         TODO("Not yet implemented")
     }
 
