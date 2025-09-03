@@ -1,17 +1,14 @@
-package com.example.frontend_android.model.Projects;
-
+package com.example.frontend_android.model.Projects
 
 
 /**
  * DTO för projekt
  */
+data class ProjectRequest (
+    private val projectName: String? = null,
 
-public class ProjectRequest {
+    private val description: String? = null,
+    private val isPublic: Boolean? = null,
 
-    private String projectName;
-
-    private String description;
-    private Boolean isPublic;
-    private double salary = 0.0;
-    private String type;
-}
+    private val genre: String? = null
+)

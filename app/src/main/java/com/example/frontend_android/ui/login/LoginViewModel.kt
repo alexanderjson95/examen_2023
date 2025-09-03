@@ -20,15 +20,15 @@ class LoginViewModel  @Inject constructor(
     private val repo: AuthRepository
 ): ViewModel() {
 
-    private val _status = MutableStateFlow<String?>(null)
-    val state: StateFlow<String?> = _status
+    private val _status = MutableLiveData<Boolean?>(null)
+    val state: MutableLiveData<Boolean?> = _status
 
     fun login(username: String,password: String) {
         viewModelScope.launch {
             val result = repo.login(username,password)
             _status.value = result.fold(
-                onSuccess = { "success" },
-                onFailure = { "Error" }
+                onSuccess = { true },
+                onFailure = { false }
             )
         }
     }

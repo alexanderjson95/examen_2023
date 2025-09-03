@@ -3,4 +3,21 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="projectName">Projekt</string>
+    <string name="password">Lösenord</string>
+    <string name="p_description">Beskrivning</string>
+    <string name="genre">Genre</string>
+    <string name="applyProject">Ansök</string>
+    <string name="details_project">Se mer</string>
+    <string name="error_key">Error</string>
+    <string name="error_value">403 - kan ej läsas in</string>
+    <string name="username">Användarnamn\n</string>
+    <string name="register">Registrera</string>
+    <string name="login">Logga in</string>
+    <string name="email">Email</string>
+    <string name="description">Projektbeskrivning</string>
+    <string name="description_value">Beskrivning\n</string>
+    <string name="genre_value">Genre</string>
+    <string name="create_project">Skapa Projekt</string>
+    <string name="close">Stäng</string>
 </resources>

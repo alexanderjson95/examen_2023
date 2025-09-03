@@ -11,6 +11,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -21,7 +22,6 @@ import javax.inject.Singleton
 object RetrofitModule {
 
     private const val BASE_URL = "http://10.0.2.2:8080/"
-
     /**
      * @return shared preferences
      */
@@ -45,14 +45,19 @@ object RetrofitModule {
 
     @Provides
     @Singleton
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+    }
+
+    @Provides
+    @Singleton
     fun provideTokenInterceptor(sharedPreferences: SharedPreferences): TokenInterceptor {
         return TokenInterceptor(sharedPreferences)
     }
 
 
-    /**
-     * @return shared preferences
-     */
     @Provides
     @Singleton
     fun provideOkHttpClient(tokenInterceptor: TokenInterceptor ): OkHttpClient {
@@ -61,9 +66,7 @@ object RetrofitModule {
             .build()
     }
 
-    /**
-     * @return shared preferences
-     */
+
     @Provides
     @Singleton
     fun provideRetrofit(client: OkHttpClient): retrofit2.Retrofit {
@@ -75,9 +78,6 @@ object RetrofitModule {
     }
 
 
-    /**
-     * @return shared preferences
-     */
     @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit): API {
