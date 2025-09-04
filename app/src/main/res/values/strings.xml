@@ -20,4 +20,5 @@
     <string name="genre_value">Genre</string>
     <string name="create_project">Skapa Projekt</string>
     <string name="close">Stäng</string>
+    <string name="openProject">Öppna</string>
 </resources>

@@ -1,9 +1,12 @@
 package com.example.frontend_android.repository
 
+import android.util.Log
 import com.example.frontend_android.api.API
 import com.example.frontend_android.api.RepositoryAbstract
 import com.example.frontend_android.model.Projects.UserProjectRequest
 import com.example.frontend_android.model.Projects.UserProjectResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,6 +36,30 @@ class UserProjectRepository @Inject constructor(
             userId = userId,
         )
     }
+
+
+    suspend fun getAllDataById(): Result<List<UserProjectResponse>> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = apiInterface.getAllUsersProjects()
+                if (response.isSuccessful) {
+                    val projects = response.body().orEmpty()
+
+                    projects.forEach { p ->
+                        Log.d("getAllDataById", "Project: ${p.projectName}, Role: ${p.role}")
+                    }
+
+                    return@withContext Result.success(projects)
+                } else {
+                    return@withContext Result.failure(
+                        Exception("Error: ${response.code()} - ${response.message()}")
+                    )
+                }
+            } catch (e: Exception) {
+                return@withContext Result.failure(e)
+            }
+        }
+
 
 
     override suspend fun updateData(data: UserProjectRequest): Result<Unit> {

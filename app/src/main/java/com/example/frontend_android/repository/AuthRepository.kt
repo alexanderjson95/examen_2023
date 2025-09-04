@@ -27,6 +27,7 @@ class AuthRepository @Inject constructor(
             if (response.isSuccessful) {
                 val body = response.body() ?: return@withContext Result.failure(Exception("Empty body"))
                 prefs.edit { putString("token", body.token) }
+                Log.d("LOGIN", "Saved token: ${body.token}")
                 Result.success(Unit)
 
             } else {

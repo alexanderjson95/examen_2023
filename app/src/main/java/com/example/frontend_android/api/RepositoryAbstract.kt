@@ -39,6 +39,7 @@ abstract class RepositoryAbstract<req,resp,I> : RepositoryInterface<req, resp> {
         }
     }
 
+
 //    override suspend fun updateData(data: T): Result<T> {}
 //    override suspend fun deleteData(data: T): Result<T> {}
 

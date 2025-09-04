@@ -15,13 +15,13 @@ import javax.inject.Inject
 class UserProjectAdapter @Inject constructor():
         RecyclerView.Adapter<UserProjectAdapter.UserProjectViewHolder>(){
 
-            private var userProjectList: List<ProjectResponse> = emptyList()
+            private var userProjectList: List<UserProjectResponse> = emptyList()
     class UserProjectViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var project_value: TextView = view.findViewById(R.id.project_value)
         var genre_value: TextView = view.findViewById(R.id.genre_value)
     }
 
-    fun submitList(newList: List<ProjectResponse>){
+    fun submitList(newList: List<UserProjectResponse>){
         userProjectList = newList
         notifyDataSetChanged() //todo
     }
@@ -41,7 +41,7 @@ class UserProjectAdapter @Inject constructor():
     ) {
         val projects = userProjectList[position]
         holder.project_value.text = "${projects.projectName}"
-        holder.genre_value.text = "${projects.type}"
+        holder.genre_value.text = "${projects.role}"
     }
 
     override fun getItemCount(): Int {

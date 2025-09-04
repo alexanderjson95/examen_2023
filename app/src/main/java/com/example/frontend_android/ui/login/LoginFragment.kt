@@ -30,7 +30,7 @@ class LoginFragment : Fragment(R.layout.fragment_login){
         loginViewModel.state.observe(viewLifecycleOwner) {
             if (it == true)
             {
-                findNavController().navigate(R.id.add_report_dialog)
+                findNavController().navigate(R.id.navigation_dashboard)
             }
         }
                 val loginBtn = view.findViewById<MaterialButton>(R.id.loginButton)

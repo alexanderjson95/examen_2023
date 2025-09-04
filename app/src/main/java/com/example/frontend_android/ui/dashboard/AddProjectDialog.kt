@@ -32,6 +32,10 @@ class AddProjectDialog : DialogFragment() {
         val addBtn = view.findViewById<MaterialButton>(R.id.create_project_btn)
         val closeBtn = view.findViewById<MaterialButton>(R.id.close_dialog_btn)
 
+        closeBtn.setOnClickListener {
+            projectVM.getAllUserProjects()
+        }
+
         addBtn.setOnClickListener {
             projectVM.addProject(
                 projectName.text.toString(),

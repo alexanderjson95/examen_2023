@@ -7,7 +7,6 @@ import okhttp3.Response
 
 class TokenInterceptor(private val sp : SharedPreferences) : Interceptor{
     override fun intercept(chain: Interceptor.Chain): Response {
-        Log.d("LOGGING", "LOGGING")
 
         val orgReq = chain.request()
         val path = orgReq.url.encodedPath

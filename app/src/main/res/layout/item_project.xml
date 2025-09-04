@@ -95,11 +95,11 @@
 
             <com.google.android.material.button.MaterialButton
 
-                android:id="@+id/apply_btn"
+                android:id="@+id/open_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="@string/applyProject"
+                android:text="@string/openProject"
                 android:backgroundTint="@color/royal_blue"
                 android:layout_margin="10dp"
                 android:textColor="@color/white"/>

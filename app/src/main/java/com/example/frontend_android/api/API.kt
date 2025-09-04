@@ -51,6 +51,8 @@ interface API {
         @Body req: UserProjectRequest
         ): Response<Unit>
 
+    @GET("/projects/user/projects")
+    suspend fun getAllUsersProjects(): Response<List<UserProjectResponse>>
 
 
 }

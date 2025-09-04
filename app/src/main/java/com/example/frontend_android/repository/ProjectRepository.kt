@@ -2,13 +2,8 @@ package com.example.frontend_android.repository
 
 import com.example.frontend_android.api.API
 import com.example.frontend_android.api.RepositoryAbstract
-import com.example.frontend_android.api.SharedPrefsUtils
 import com.example.frontend_android.model.Projects.ProjectRequest
 import com.example.frontend_android.model.Projects.ProjectResponse
-import com.example.frontend_android.model.Users.UserRequest
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -39,7 +34,7 @@ class ProjectRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteData(data: ProjectRequest): Result<Unit> {
+    override suspend fun deleteData(id: ProjectRequest): Result<Unit> {
         TODO("Not yet implemented")
     }
 
