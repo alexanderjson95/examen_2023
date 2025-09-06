@@ -1,4 +1,4 @@
-package com.example.frontend_android.ui.dashboard
+package com.example.frontend_android.ui.project
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.frontend_android.R
-import com.example.frontend_android.ui.dashboard.ProjectViewModel
+import com.example.frontend_android.ui.dashboard.DashboardViewModel
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 class AddProjectDialog : DialogFragment() {
 
-    private val projectVM: ProjectViewModel by activityViewModels()
+    private val projectVM: ProjectsViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,9 +32,7 @@ class AddProjectDialog : DialogFragment() {
         val addBtn = view.findViewById<MaterialButton>(R.id.create_project_btn)
         val closeBtn = view.findViewById<MaterialButton>(R.id.close_dialog_btn)
 
-        closeBtn.setOnClickListener {
-            projectVM.getAllUserProjects()
-        }
+
 
         addBtn.setOnClickListener {
             projectVM.addProject(

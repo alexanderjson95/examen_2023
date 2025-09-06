@@ -12,10 +12,28 @@
         tools:layout="@layout/fragment_login"/>
     <fragment
         android:id="@+id/add_report_dialog"
-        android:name="com.example.frontend_android.ui.dashboard.AddProjectDialog"
+        android:name="com.example.frontend_android.ui.project.AddProjectDialog"
         tools:layout="@layout/add_project_form"/>
+    <fragment
+        android:id="@+id/navigation_projects"
+        android:name="com.example.frontend_android.ui.project.ProjectsFragment"
+        tools:layout="@layout/fragment_projects"/>
+
+    <fragment
+        android:id="@+id/navigation_messages"
+        android:name="com.example.frontend_android.ui.messages.MessageFragment"
+        tools:layout="@layout/fragment_messages"/>
+
+    <fragment
+        android:id="@+id/navigation_add_message"
+        android:name="com.example.frontend_android.ui.messages.AddMessageDialog"
+        tools:layout="@layout/add_message_form"/>
 
 
+    <fragment
+        android:id="@+id/navigation_users"
+        android:name="com.example.frontend_android.ui.user.UsersFragment"
+        tools:layout="@layout/fragment_users"/>
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.frontend_android.ui.home.HomeFragment"

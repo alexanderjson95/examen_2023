@@ -1,10 +1,11 @@
-package com.example.frontend_android.model.Users;
+package com.example.frontend_android.model.Users
 
 
-
-public class UserResponse {
-    private Long id;
-    private String username;
-    private String email;
-    private String publicKey;
-}
+data class UserResponse (
+     val id: Long? = null,
+     val username: String,
+     val firstName: String? = null,
+     val lastName: String? = null,
+     val email: String? = null,
+     val publicKey: String? = null
+          )

@@ -62,7 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/username"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
+                android:text="alexanders52"
                 android:layout_marginBottom="16dp">
             </EditText>
 
@@ -71,6 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/password"
+                android:text="mittSäkraLösen123"
                 android:inputType="textPassword"
                 android:layout_marginBottom="16dp">
             </EditText>

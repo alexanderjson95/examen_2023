@@ -10,5 +10,5 @@ data class ProjectResponse (
     private val isPublic: Boolean = false,
     private val salary: Double = 0.0,
     val type: String? = null,
-    private val created: LocalDateTime? = null
+    private val created: String? = null
 )

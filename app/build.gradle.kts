@@ -76,6 +76,7 @@ dependencies {
     androidTestImplementation(libs.androidx.runner)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.material)
+    implementation(libs.material.v1120)
     implementation(libs.androidx.navigation.compose)
     implementation(platform(libs.androidx.compose.bom.v20240200))
     implementation(libs.ui)

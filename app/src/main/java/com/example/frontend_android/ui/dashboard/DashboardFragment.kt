@@ -25,7 +25,7 @@ import kotlin.getValue
 class DashboardFragment : Fragment(R.layout.fragment_dashboard){
 
 
-    private val projectVM: ProjectViewModel by activityViewModels()
+    private val projectVM: DashboardViewModel by activityViewModels()
     @Inject
     lateinit var adapter: UserProjectAdapter
 

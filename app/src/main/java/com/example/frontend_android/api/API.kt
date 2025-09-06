@@ -1,6 +1,9 @@
 package com.example.frontend_android.api
 
+import com.example.frontend_android.model.Chat.MessageRequest
+import com.example.frontend_android.model.Chat.MessageResponse
 import com.example.frontend_android.model.Projects.ProjectRequest
+import com.example.frontend_android.model.Projects.ProjectResponse
 import com.example.frontend_android.model.Projects.UserProjectRequest
 import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.example.frontend_android.model.Users.UserRequest
@@ -13,6 +16,7 @@ import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 interface API {
@@ -22,11 +26,22 @@ interface API {
     @GET("users/{id}")
     suspend fun getUserById(@Path("id") id: Long): Response<UserResponse>
 
+    @GET("users/all")
+    suspend fun getAllUsers(): Response<List<UserResponse>>
+
+
     @POST("authenticate")
     suspend fun login(@Body req: AuthRequest): Response<AuthenticationResponse>
 
     @POST("refresh")
     suspend fun refresh(@Body req: AuthRequest): Response<AuthenticationResponse>
+
+
+    @GET("users/search")
+    suspend fun searchUsers(
+        @Query("query") query: String,
+        @Query("value") value: String
+    ): Response<List<UserResponse>>
 
     @POST("projects")
     suspend fun createProject(@Body request: ProjectRequest): Response<Unit>
@@ -54,5 +69,14 @@ interface API {
     @GET("/projects/user/projects")
     suspend fun getAllUsersProjects(): Response<List<UserProjectResponse>>
 
+    @GET("projects")
+    suspend fun getAllProjects(): Response<List<ProjectResponse>>
+
+
+    @GET("messages/sent")
+    suspend fun getAllMessages(): Response<List<MessageResponse>>
+
+    @POST("messages/send")
+    suspend fun sendMessage(@Body request: MessageRequest): Response<Unit>
 
 }

@@ -21,4 +21,15 @@
     <string name="create_project">Skapa Projekt</string>
     <string name="close">Stäng</string>
     <string name="openProject">Öppna</string>
+    <string name="title">Sökord</string>
+    <string name="Search">sök</string>
+    <string name="sender">Avsändare</string>
+    <string name="content">Meddelande:</string>
+    <string name="send">Skicka meddelande</string>
+    <string name="date_key">Datum:</string>
+    <string name="name">Namn</string>
+    <string name="write">Skicka meddelande</string>
+    <string name="recipient_value">Mottagare</string>
+    <string name="recipient_key">Mottagare</string>
+    <string name="mottagare">Mottagare</string>
 </resources>
