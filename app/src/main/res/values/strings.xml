@@ -32,4 +32,12 @@
     <string name="recipient_value">Mottagare</string>
     <string name="recipient_key">Mottagare</string>
     <string name="mottagare">Mottagare</string>
+    <string name="Roll">"Yrkestitel: "</string>
+    <string name="role_value">Skådespelare</string>
+    <string name="roleName">Yrkesroll</string>
+    <string name="book">Skicka bokningsförfrågan</string>
+    <string name="booking">Schema</string>
+    <string name="start_value">FRÅN</string>
+    <string name="end_value">TILL</string>
+    <string name="create">SKAPA</string>
 </resources>

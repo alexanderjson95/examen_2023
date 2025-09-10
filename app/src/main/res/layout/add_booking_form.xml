@@ -9,7 +9,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <EditText
-        android:id="@+id/projectName"
+        android:id="@+id/project_key"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/projectName"
@@ -18,60 +18,43 @@
     </EditText>
 
     <EditText
-        android:id="@+id/description_key"
+        android:id="@+id/name_key"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:hint="@string/username"
+        android:inputType="text"
+        android:layout_marginBottom="16dp">
+    </EditText>
+
+    <EditText
+        android:id="@+id/description_key"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:hint="@string/description_value"
         android:inputType="text"
         android:layout_marginBottom="16dp">
     </EditText>
 
-    <EditText
-        android:id="@+id/genre_key"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/genre_value"
-        android:inputType="text"
-        android:layout_marginBottom="16dp">
-    </EditText>
 
-
-    <EditText
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/start_key"
-        android:layout_width="match_parent"
+        android:text="@string/start_value"
         android:layout_height="wrap_content"
-        android:hint="@string/start_value"
-        android:inputType="text"
-        android:layout_marginBottom="16dp">
-    </EditText>
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold">
+    </com.google.android.material.button.MaterialButton>
 
 
-    <EditText
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/end_key"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/end_value"
-        android:inputType="text"
-        android:layout_marginBottom="16dp">
-    </EditText>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/create_project_btn"
-        android:text="@string/create_project"
+        android:text="@string/end_value"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="16dp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold">
+    </com.google.android.material.button.MaterialButton>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/close_dialog_btn"
-        android:text="@string/close"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
-        android:textStyle="bold"
-        />
 
 
 </LinearLayout>

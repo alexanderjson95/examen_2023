@@ -42,6 +42,7 @@ class MessageAdapter @Inject constructor():
         holder: MessageViewHolder,
         position: Int
     ) {
+
         //todo länk på username till profil
         val message = messageList[position]
         holder.sender_value.text = "${message.senderUsername}" //todo map usernames från users

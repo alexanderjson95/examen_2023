@@ -2,10 +2,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.androidx.navigation.safeargs)
 
     id("kotlin-kapt")
     alias(libs.plugins.dagger.hilt.android.plugin)
-
 
 }
 
@@ -79,6 +79,8 @@ dependencies {
     implementation(libs.material.v1120)
     implementation(libs.androidx.navigation.compose)
     implementation(platform(libs.androidx.compose.bom.v20240200))
+    implementation(libs.mhiew.material.calendarview)
+
     implementation(libs.ui)
     implementation(libs.material3)
     implementation(libs.androidx.lifecycle.runtime.ktx.v270)

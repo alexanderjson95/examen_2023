@@ -10,6 +10,20 @@
         android:name="com.example.frontend_android.ui.login.LoginFragment"
         android:label="@string/login"
         tools:layout="@layout/fragment_login"/>
+
+    <fragment
+        android:id="@+id/navigation_booking"
+        android:name="com.example.frontend_android.ui.schedule.BookingFragment"
+        android:label="@string/booking"
+        tools:layout="@layout/fragment_booking">
+        <action
+            android:id="@+id/action_bookingFragment_to_bookingDialog"
+            app:destination="@id/navigation_booking_dialog" />
+    </fragment>
+
+
+
+
     <fragment
         android:id="@+id/add_report_dialog"
         android:name="com.example.frontend_android.ui.project.AddProjectDialog"
@@ -18,6 +32,16 @@
         android:id="@+id/navigation_projects"
         android:name="com.example.frontend_android.ui.project.ProjectsFragment"
         tools:layout="@layout/fragment_projects"/>
+
+    <dialog
+        android:id="@+id/navigation_booking_dialog"
+        android:name="com.example.frontend_android.ui.schedule.BookingDialog"
+        tools:layout="@layout/add_booking_form">
+        <argument
+            android:name="dateMillis"
+            app:argType="long" />
+    </dialog>
+
 
     <fragment
         android:id="@+id/navigation_messages"

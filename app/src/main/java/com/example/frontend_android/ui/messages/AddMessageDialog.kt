@@ -21,7 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 
 class AddMessageDialog : DialogFragment() {
-//TODO optimera allt
+//TODO optimera allt    OCH ÄVEN gör så att om man skickar till sig själv blir det anteckning
+    // todo gör fel check osv sedan
     private val vm: MessageViewModel by activityViewModels()
     private val um: UsersViewModel by activityViewModels()
 

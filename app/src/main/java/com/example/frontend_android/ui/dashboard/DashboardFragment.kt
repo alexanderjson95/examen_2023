@@ -39,6 +39,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard){
         recyclerView.adapter = adapter
 
 
+        // Hämtar användarens projekt
         projectVM.getAllUserProjects()
 
 

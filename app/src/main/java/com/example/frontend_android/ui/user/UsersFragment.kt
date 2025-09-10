@@ -40,10 +40,7 @@ class UsersFragment : Fragment(R.layout.fragment_users){
                 vm.searchUsers("username", text)
             }
         }
-
-
     }
-
     private fun observeViewModel(){
         vm.users.observe(viewLifecycleOwner){
                 users ->

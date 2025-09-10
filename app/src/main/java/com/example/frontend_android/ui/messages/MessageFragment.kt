@@ -24,6 +24,7 @@ class MessageFragment : Fragment(R.layout.fragment_messages){
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         observeViewModel()
+        vm.getUserMessages()
 
         val input = view.findViewById<EditText>(R.id.messageBox)
         val sendBtn = view.findViewById<MaterialButton>(R.id.sendBtn)
