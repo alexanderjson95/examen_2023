@@ -1,5 +1,6 @@
 package com.example.frontend_android.api
 
+import com.example.frontend_android.model.Bookings.BookingRequest
 import com.example.frontend_android.model.Chat.MessageRequest
 import com.example.frontend_android.model.Chat.MessageResponse
 import com.example.frontend_android.model.Projects.ProjectRequest
@@ -46,11 +47,21 @@ interface API {
     @POST("projects")
     suspend fun createProject(@Body request: ProjectRequest): Response<Unit>
 
+    @POST("bookings")
+    suspend fun createBooking(@Body request: BookingRequest): Response<Unit>
+
+
     @GET("projects/{projectId}/users/{userId}")
     suspend fun getUserProject(
         @Path("projectId") projectId: Long?,
         @Path("userId") userId: Long
     ): Response<UserProjectResponse>
+
+    @GET("projects/{projectId}/users")
+    suspend fun getMembers(
+        @Path("projectId") projectId: Long?,
+    ): Response<List<UserProjectResponse>>
+
 
     @PATCH("projects/{projectId}/users/{userId}")
     suspend fun updateUserProject(

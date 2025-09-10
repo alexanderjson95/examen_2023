@@ -1,19 +1,11 @@
-package com.example.frontend_android.model.Bookings;
+package com.example.frontend_android.model.Bookings
+
+import java.time.LocalDateTime
 
 
-
-import java.time.LocalDateTime;
-
-public class BookingRequest {
-
-    private Long projectId;
-
-    private Long senderId;
-
-    private Long recipientId;
-    private String title;
-    private String description;
-
-    private LocalDateTime start;
-    private LocalDateTime end;
-}
+data class BookingRequest (
+    private val projectId: Long,
+    private val userId: Long? = null, // bokning för alla i projekt, lättare att hålla user null då
+    private val start: LocalDateTime,
+    private val end: LocalDateTime
+)

@@ -40,6 +40,12 @@
         <argument
             android:name="dateMillis"
             app:argType="long" />
+        <argument
+            android:name="selectedProject"
+            app:argType="string" />
+        <argument
+            android:name="selectedUser"
+            app:argType="string" />
     </dialog>
 
 
