@@ -80,6 +80,16 @@ class BookingDialog : DialogFragment() {
                 }
                 else if (timeCheck(startHour,startMinute,endHour,endMinute)){
                     Toast.makeText(requireContext(),"Bokning skickad", Toast.LENGTH_LONG).show()
+                    val result = Bundle().apply {
+                        putLong("dateMillis", millis)
+                        putString("selectedProject", selectedProject)
+                        putString("selectedUser", selectedMember)
+                        putInt("startHour", startHour!!)
+                        putInt("startMinute", startMinute!!)
+                        putInt("endHour", endHour!!)
+                        putInt("endMinute", endMinute!!)
+                    }
+                    parentFragmentManager.setFragmentResult("booking_request", result)
                 } else {
                     Toast.makeText(requireContext(),"Ingen bokning gjort! Sluttid kan inte vara innan start!", Toast.LENGTH_LONG).show()
                 }

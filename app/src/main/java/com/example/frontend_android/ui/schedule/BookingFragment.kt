@@ -1,5 +1,6 @@
 package com.example.frontend_android.ui.schedule
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -13,11 +14,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.frontend_android.R
 import com.example.frontend_android.model.Projects.UserProjectResponse
-import com.example.frontend_android.model.Users.UserResponse
 import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
+import com.prolificinteractive.materialcalendarview.DayViewFacade
 
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.spans.DotSpan
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.Instant
 import java.time.ZoneId
 import kotlin.getValue
 
@@ -31,7 +35,7 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
     private lateinit var selectedUser: String
 
     private var projectId: Long? = null
-
+    private var userId: Long? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,6 +70,7 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
                         ) {
                             selectedProject = projectsList[position].projectName.toString()
                             projectId = projectsList[position].projectId
+                            calendarView.removeDecorators()
 
 
                             Toast.makeText(
@@ -80,7 +85,7 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
                     }
 
             }
-        }
+
 
         bookingVM.members.observe(viewLifecycleOwner) { members ->
             if (!members.isNullOrEmpty()) {
@@ -103,6 +108,8 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
                             id: Long
                         ) {
                             selectedUser = membersList[position].username.toString()
+                            userId = membersList[position].userId
+                            bookingVM.getBooking(userId)
 
                             Toast.makeText(
                                 requireContext(),
@@ -113,6 +120,14 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
 
                         override fun onNothingSelected(parent: AdapterView<*>?) {}
                     }
+            }
+            parentFragmentManager.setFragmentResultListener("booking_request", viewLifecycleOwner) { _, bundle ->
+                val dateMillis = bundle.getLong("dateMillis")
+                val startHour = bundle.getInt("startHour")
+                val startMinute = bundle.getInt("startMinute")
+                val endHour = bundle.getInt("endHour")
+                val endMinute = bundle.getInt("endMinute")
+                bookingVM.addBooking(projectId, userId,startHour,startMinute,endHour,endMinute,dateMillis)
             }
         }
         calendarView.setOnDateChangedListener { _, date: CalendarDay, _ ->
@@ -135,8 +150,54 @@ class BookingFragment : Fragment(R.layout.fragment_booking) {
                 }
 
             }
-        }
 
+        bookingVM.bookings.observe(viewLifecycleOwner) { b ->
+            if (!b.isNullOrEmpty()) {
+                val bookedDates = b.map { booking ->
+                    booking.dateMillis.let { m ->
+                        val localDate = Instant.ofEpochMilli(m)
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate()
+                        CalendarDay.from(localDate)
+                    }
+                }
+                calendarView.removeDecorators()
+                calendarView.addDecorator(ScheduleDecorator(bookedDates, Color.RED))
+            }
+        }
+    }
+}
+
+
+
+class ScheduleDecorator(private val dates: Collection<CalendarDay>, private val color: Int)
+    : DayViewDecorator {
+    override fun shouldDecorate(day: CalendarDay?): Boolean {
+        return dates.contains(day)
+    }
+
+    override fun decorate(view: DayViewFacade?) {
+        view?.addSpan(DotSpan(10f, color))
+    }
+
+    fun rotateColors(iterations: Int){
+        var r = 0
+        var g = 0
+        var b = 0
+        val max = 255
+        val colorList = mutableListOf<Int>()
+        for (i in 0..iterations){
+            r = listOf(0,100,255).random()
+            g = listOf(0,100,255).random()
+            b =listOf(0,100,255).random()
+            colorSwapper(r,g,b)
+        }
+    }
+
+    fun colorSwapper(r: Int, g: Int, b: Int): Triple<Int, Int, Int> {
+        return Triple(r,g,b)
+    }
+}
 
 //            bookingVM.bookings.observe(viewLifecycleOwner){
 //                    bookings ->

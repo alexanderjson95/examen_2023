@@ -8,17 +8,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend_android.R
 import com.example.frontend_android.model.Projects.ProjectResponse
 import com.example.frontend_android.model.Projects.UserProjectResponse
+import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 @FragmentScoped
-class UserProjectAdapter @Inject constructor():
+class UserProjectAdapter @Inject constructor(private val navigateOnClick: () -> Unit):
         RecyclerView.Adapter<UserProjectAdapter.UserProjectViewHolder>(){
 
             private var userProjectList: List<UserProjectResponse> = emptyList()
     class UserProjectViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var project_value: TextView = view.findViewById(R.id.project_value)
         var genre_value: TextView = view.findViewById(R.id.genre_value)
+        val openBtn: MaterialButton = view.findViewById(R.id.open_btn)
     }
 
     fun submitList(newList: List<UserProjectResponse>){
@@ -31,7 +33,7 @@ class UserProjectAdapter @Inject constructor():
         viewType: Int
     ): UserProjectAdapter.UserProjectViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_project, parent, false)
+            .inflate(R.layout.item_project_wide, parent, false)
         return UserProjectViewHolder(itemView)
     }
 
@@ -42,11 +44,16 @@ class UserProjectAdapter @Inject constructor():
         val projects = userProjectList[position]
         holder.project_value.text = "${projects.projectName}"
         holder.genre_value.text = "${projects.role}"
+        holder.openBtn.setOnClickListener {
+            navigateOnClick()
+        }
+
     }
 
     override fun getItemCount(): Int {
         return userProjectList.size
     }
+
 
 
 }

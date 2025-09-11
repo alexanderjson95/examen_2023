@@ -26,9 +26,9 @@ class ProjectRepository @Inject constructor(
 
     override suspend fun performGet(
         api: API,
-        userId: Long,
+        userId: Long?,
         targetId: Long?
-    ): Response<ProjectResponse> {
+    ): Response<List<ProjectResponse>>{
         TODO("Not yet implemented")
     }
 

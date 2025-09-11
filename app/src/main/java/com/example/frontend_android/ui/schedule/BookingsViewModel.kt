@@ -13,7 +13,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 
@@ -71,14 +70,16 @@ class BookingsViewModel  @Inject constructor(
         }
     }
 
-
-    fun addBooking(projectId: Long, userId: Long?, description: String?,start: LocalDateTime, end: LocalDateTime ) {
+    fun addBooking(projectId: Long?, userId: Long?, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int, dateMillis: Long) {
         viewModelScope.launch {
             request = BookingRequest(
                 projectId = projectId,
-                userId = userId,
-                start = start,
-                end = end
+                userId = userId!!,
+                dateMillis = dateMillis,
+                startHour = startHour,
+                startMinute = startMinute,
+                endHour = endHour,
+                endMinute = endMinute,
             )
             val result = repo.addData(request)
             _status.value = result.fold(
@@ -86,6 +87,25 @@ class BookingsViewModel  @Inject constructor(
                 onFailure = { "Error" }
             )
             Log.d("AddReportViewModel: ", "Booking API Response: ${_status.value}")
+        }
+    }
+
+    fun getBooking(targetId: Long?){
+        Log.e("BookingsViewModel", "loaded bookingss: $targetId")
+        viewModelScope.launch {
+            val result = repo.getDataById(targetId)
+            result.fold(
+                onSuccess = { list ->
+                    _bookings.postValue(list)
+                    Log.e("BookingsViewModel", "loaded bookings: ${bookings.value}")
+                    _status.value = "success"
+                },
+                onFailure = { e ->
+                    Log.e("BookingsViewModel", "Error loading bookings", e)
+                    _status.value = "error"
+                }
+            )
+            Log.d("BookingsViewModel: ", "Booking API Response: ${_status.value}")
         }
     }
 

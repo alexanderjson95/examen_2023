@@ -40,4 +40,12 @@
     <string name="start_value">FRÅN</string>
     <string name="end_value">TILL</string>
     <string name="create">SKAPA</string>
+    <string name="title_projects">Projekt</string>
+    <string name="title_mypage">Mina projekt</string>
+    <string name="title_messenges">Inbox</string>
+    <string name="title_users">Användare</string>
+    <string name="leave">Lämna</string>
+    <string name="chat">Meddelanden</string>
+    <string name="settings">Inställning</string>
+    <string name="settings_">inställningar</string>
 </resources>

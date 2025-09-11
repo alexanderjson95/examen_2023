@@ -26,9 +26,10 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard){
 
 
     private val projectVM: DashboardViewModel by activityViewModels()
-    @Inject
-    lateinit var adapter: UserProjectAdapter
 
+    private val adapter = UserProjectAdapter {
+        findNavController().navigate(R.id.navigation_myProject)
+    }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

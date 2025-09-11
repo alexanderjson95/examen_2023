@@ -28,9 +28,9 @@ class UserProjectRepository @Inject constructor(
 
     override suspend fun performGet(
         api: API,
-        userId: Long,
+        userId: Long?,
         targetId: Long?
-    ): Response<UserProjectResponse> {
+    ): Response<List<UserProjectResponse>>{
         return apiInterface.getUserProject(
             projectId = targetId,
             userId = userId,
