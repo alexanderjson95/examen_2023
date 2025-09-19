@@ -6,20 +6,24 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend_android.R
-import com.example.frontend_android.model.Projects.ProjectResponse
 import com.example.frontend_android.model.Projects.UserProjectResponse
-import com.example.frontend_android.ui.project.ProjectAdapter
+import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
-@FragmentScoped
-class MemberAdapter @Inject constructor():
+class MemberAdapter(private val removeUser: (Long) -> Unit):
     RecyclerView.Adapter<MemberAdapter.MemberViewHolder>(){
 
     private var memberList: List<UserProjectResponse> = emptyList()
+
+
+
+
     class MemberViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var fname_value: TextView = view.findViewById(R.id.fname_value)
         var lname_value: TextView = view.findViewById(R.id.lname_value)
+
+        var removeBtn: MaterialButton = view.findViewById(R.id.removeBtn)
 
 
     }
@@ -27,6 +31,10 @@ class MemberAdapter @Inject constructor():
     fun submitList(newList: List<UserProjectResponse>){
         memberList = newList
         notifyDataSetChanged() //todo
+    }
+
+    fun returnUser(memberId: Long): Long {
+        return memberId;
     }
 
     override fun onCreateViewHolder(
@@ -45,7 +53,9 @@ class MemberAdapter @Inject constructor():
         val members = memberList[position]
         holder.fname_value.text = "${members.firstName}"
         holder.lname_value.text = "${members.lastName}"
-
+        holder.removeBtn.setOnClickListener {
+            removeUser(members.userId ?: -1L)
+        }
     }
 
     override fun getItemCount(): Int {

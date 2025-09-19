@@ -82,5 +82,7 @@
             android:text="@string/settings_"
             app:icon="@drawable/outline_admin_panel_settings_24"
             android:textColor="@color/white" />
+
+
     </GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

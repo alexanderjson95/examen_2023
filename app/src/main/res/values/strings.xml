@@ -59,4 +59,5 @@
     <string name="benjamin">Benjamin Giordano</string>
     <string name="testdate">2025/08/31</string>
     <string name="SearchMember">Sök medlemmar</string>
+    <string name="Kick">Kasta ut</string>
 </resources>

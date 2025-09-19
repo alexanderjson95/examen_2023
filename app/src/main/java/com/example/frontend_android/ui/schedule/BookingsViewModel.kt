@@ -38,6 +38,10 @@ class BookingsViewModel  @Inject constructor(
     val user: MutableLiveData<UserResponse?> = _user
     private val _members = MutableLiveData<List<UserProjectResponse>>()
     val members: LiveData<List<UserProjectResponse>> = _members
+
+    private val _userMember = MutableLiveData<List<UserProjectResponse>>()
+    val userMember: LiveData<List<UserProjectResponse>> = _userMember
+
     private val _bookings = MutableLiveData<List<BookingResponse>>()
     val bookings: LiveData<List<BookingResponse>> = _bookings
 
@@ -88,12 +92,12 @@ class BookingsViewModel  @Inject constructor(
             result.fold(
                 onSuccess = { user ->
                     _user.postValue(user)
-                    Log.d("GetMember", "Member function works: Fetched:  ${user?.id}", )
+                    Log.d("GetMemberUser", "Member function works: Fetched:  ${user?.id}", )
                     _status.value = "success"
 
                 },
                 onFailure = { e ->
-                    Log.e("GetMember", "Member function Error: Error loading userprojects", e)
+                    Log.e("GetMemberUser", "Member function Error: Error loading userprojects", e)
                     _status.value = "error"
                 }
             )

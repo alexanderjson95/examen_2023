@@ -147,6 +147,10 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
                             override fun onNothingSelected(parent: AdapterView<*>?) {}
                         }
                 }
+
+
+
+
                 calendarView.setOnDateChangedListener { _, date: CalendarDay, _ ->
                     if (!::selectedUser.isInitialized) {
                         Toast.makeText(

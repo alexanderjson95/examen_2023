@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.frontend_android.model.Projects.ProjectRequest
 import com.example.frontend_android.model.Projects.UserProjectResponse
+import com.example.frontend_android.model.Users.UserResponse
 import com.example.frontend_android.repository.ProjectRepository
 import com.example.frontend_android.repository.UserProjectRepository
+import com.example.frontend_android.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,10 +18,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
+/**
+ * Håller data som ska skickas med hela tiden i alla delar av ett projekt (schema, visa användare etc)
+ */
 @HiltViewModel
 class MyProjectViewModel  @Inject constructor(
-    private val repo: ProjectRepository,
-    private val userProjectRepo: UserProjectRepository
+    private val uRepo: UserRepository
 ): ViewModel() {
 
 
@@ -29,24 +33,24 @@ class MyProjectViewModel  @Inject constructor(
     private val _status = MutableStateFlow<String?>(null)
     val state: StateFlow<String?> = _status
 
-    private val _upstatus = MutableStateFlow<String?>(null)
-    val upStatus: StateFlow<String?> = _upstatus
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
-    }
-    val text: LiveData<String> = _text
+    private val _user = MutableLiveData<UserResponse?>()
+    val user: MutableLiveData<UserResponse?> = _user
 
-    fun getAllUserProjects() {
+
+    fun getUser() {
         viewModelScope.launch {
-            val result = userProjectRepo.getAllDataById()
+            Log.d("GetMemberUser", "TRYING", )
+            val result = uRepo.returnUser()
             result.fold(
-                onSuccess = {
-                        list -> _projects.postValue(list)
-                    _upstatus.value = "success"
+                onSuccess = { user ->
+                    _user.postValue(user)
+                    Log.d("GetMemberUser", "Member function works: Fetched:  ${user?.id}", )
+                    _status.value = "success"
+
                 },
                 onFailure = { e ->
-                    Log.e("ProjectViewModel", "Error loading projects", e)
-                    _upstatus.value = "error"
+                    Log.e("GetMemberUser", "aaaaMember function Error: Error loading userprojects", e)
+                    _status.value = "error"
                 }
             )
         }

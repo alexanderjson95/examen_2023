@@ -36,7 +36,9 @@ class UserRepository @Inject constructor(
     suspend fun returnUser(): Result<UserResponse?> = withContext(Dispatchers.IO) {
         try {
             val response = apiInterface.returnUser()
+
             if (response.isSuccessful) {
+
                 Result.success(response.body())
             } else {
                 Result.failure(Exception("Error: ${response.code()} - ${response.message()}"))

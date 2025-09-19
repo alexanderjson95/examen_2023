@@ -45,7 +45,6 @@ class UserProjectAdapter @Inject constructor(private val navigateOnClick: (Long)
         val projectId = projects.projectId ?: -1L
         holder.openBtn.setOnClickListener {
             navigateOnClick(projectId)
-
         }
 
     }

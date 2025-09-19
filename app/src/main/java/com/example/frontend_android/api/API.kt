@@ -42,7 +42,7 @@ interface API {
     @GET("users/roles")
     suspend fun getAllRoles(): Response<List<RoleResponse>>
 
-    @GET("/returnUser")
+    @GET("users/returnUser")
     suspend fun returnUser(): Response<UserResponse>
 
     @GET("users/search")
