@@ -49,39 +49,6 @@
 
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:paddingTop="8dp"
-            >
-
-
-            <TextView
-                android:id="@+id/genre_key"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/genre"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/genre_value"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Komedi"
-                android:textSize="16sp"
-                android:gravity="end" />
-        </LinearLayout>
-
-
-
 
         <LinearLayout
             android:layout_width="match_parent"

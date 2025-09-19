@@ -13,13 +13,12 @@ import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 @FragmentScoped
-class UserProjectAdapter @Inject constructor(private val navigateOnClick: () -> Unit):
+class UserProjectAdapter @Inject constructor(private val navigateOnClick: (Long) -> Unit):
         RecyclerView.Adapter<UserProjectAdapter.UserProjectViewHolder>(){
 
             private var userProjectList: List<UserProjectResponse> = emptyList()
     class UserProjectViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var project_value: TextView = view.findViewById(R.id.project_value)
-        var genre_value: TextView = view.findViewById(R.id.genre_value)
         val openBtn: MaterialButton = view.findViewById(R.id.open_btn)
     }
 
@@ -43,9 +42,10 @@ class UserProjectAdapter @Inject constructor(private val navigateOnClick: () -> 
     ) {
         val projects = userProjectList[position]
         holder.project_value.text = "${projects.projectName}"
-        holder.genre_value.text = "${projects.role}"
+        val projectId = projects.projectId ?: -1L
         holder.openBtn.setOnClickListener {
-            navigateOnClick()
+            navigateOnClick(projectId)
+
         }
 
     }

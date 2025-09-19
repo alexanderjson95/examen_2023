@@ -38,10 +38,8 @@ class AddMessageDialog : DialogFragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val senderName = view.findViewById<EditText>(R.id.sender_value)
         val msgContent = view.findViewById<EditText>(R.id.content_value)
         val addBtn = view.findViewById<MaterialButton>(R.id.create_msg_btn)
-        val closeBtn = view.findViewById<MaterialButton>(R.id.close_dialog_btn)
         val userDropdown: AutoCompleteTextView = view.findViewById(R.id.userDropdown)
         val name_key = view.findViewById<TextView>(R.id.name_key)
 

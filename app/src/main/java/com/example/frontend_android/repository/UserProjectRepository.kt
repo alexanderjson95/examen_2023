@@ -37,6 +37,14 @@ class UserProjectRepository @Inject constructor(
         )
     }
 
+    override suspend fun performPatch(
+        api: API,
+        data: UserProjectRequest,
+        bookingId: Long
+    ): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
     suspend fun getAllDataById(): Result<List<UserProjectResponse>> =
         withContext(Dispatchers.IO) {
             try {
@@ -71,11 +79,6 @@ class UserProjectRepository @Inject constructor(
                 Result.failure(e)
             }
         }
-
-
-    override suspend fun updateData(data: UserProjectRequest): Result<Unit> {
-        TODO("Not yet implemented")
-    }
 
     override suspend fun deleteData(id: UserProjectRequest): Result<Unit> {
         TODO("Not yet implemented")

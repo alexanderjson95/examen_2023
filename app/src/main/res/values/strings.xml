@@ -48,4 +48,15 @@
     <string name="chat">Meddelanden</string>
     <string name="settings">Inställning</string>
     <string name="settings_">inställningar</string>
+    <string name="start_time">Starttid:</string>
+    <string name="c_time">Vald tid:</string>
+    <string name="yoe">Erfarenhet (ÅÅ/MM)</string>
+    <string name="fname">Förnamn\n</string>
+    <string name="eName">Efternamn</string>
+    <string name="skapa_projekt">Skapa projekt</string>
+    <string name="msg_hint">Innehåll</string>
+    <string name="testmessage">Material Design is an adaptable system of guidelines, components, and tools that support the best practices of user interface design. Backed by open-source code, Material Design streamlines collaboration between designers and developers, and helps teams quickly build beautiful products.</string>
+    <string name="benjamin">Benjamin Giordano</string>
+    <string name="testdate">2025/08/31</string>
+    <string name="SearchMember">Sök medlemmar</string>
 </resources>

@@ -13,5 +13,6 @@ data class BookingResponse(
     val endHour: Int,
     val endMinute: Int,
     val dateMillis: Long,
+    val availability: Boolean,
     val created: String
 )

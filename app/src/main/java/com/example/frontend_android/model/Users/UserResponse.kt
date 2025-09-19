@@ -1,11 +1,13 @@
 package com.example.frontend_android.model.Users
 
+import com.example.frontend_android.ui.user.RoleResponse
 
-data class UserResponse (
-     val id: Long? = null,
+
+data class UserResponse(
+     val id: Long,
      val username: String,
-     val firstName: String? = null,
-     val lastName: String? = null,
-     val email: String? = null,
-     val publicKey: String? = null
-          )
+     val firstName: String,
+     val lastName: String,
+     val email: String,
+     val roles: List<RoleResponse>
+)

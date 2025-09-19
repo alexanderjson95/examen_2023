@@ -26,7 +26,7 @@ class MessageFragment : Fragment(R.layout.fragment_messages){
         observeViewModel()
         vm.getUserMessages()
 
-        val input = view.findViewById<EditText>(R.id.messageBox)
+        val input = view.findViewById<EditText>(R.id.message_edit_text)
         val sendBtn = view.findViewById<MaterialButton>(R.id.sendBtn)
         sendBtn.setOnClickListener {
             vm.getUserMessages()

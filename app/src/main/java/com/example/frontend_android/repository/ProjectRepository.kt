@@ -1,9 +1,12 @@
 package com.example.frontend_android.repository
 
+import android.util.Log
 import com.example.frontend_android.api.API
 import com.example.frontend_android.api.RepositoryAbstract
 import com.example.frontend_android.model.Projects.ProjectRequest
 import com.example.frontend_android.model.Projects.ProjectResponse
+import com.example.frontend_android.model.Users.UserResponse
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -32,6 +35,33 @@ class ProjectRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun performPatch(
+        api: API,
+        data: ProjectRequest,
+        bookingId: Long
+    ): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+
+    suspend fun searchProjects(query: String, value: String): Result<List<ProjectResponse>> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = apiInterface.searchProjects(query, value)
+                val rawBody = response.errorBody()?.string() ?: Gson().toJson(response.body())
+                Log.d("GetMemberRaw", "Raw response: $rawBody and $query")
+
+                if (response.isSuccessful) {
+
+                    Result.success(response.body().orEmpty())
+                } else {
+                    Result.failure(Exception("Error: ${response.code()} - ${response.message()}"))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+
 
     suspend fun getAllProjects(): Result<List<ProjectResponse>> =
         withContext(Dispatchers.IO) {
@@ -47,15 +77,9 @@ class ProjectRepository @Inject constructor(
             }
         }
 
-    override suspend fun updateData(data: ProjectRequest): Result<Unit> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun deleteData(id: ProjectRequest): Result<Unit> {
         TODO("Not yet implemented")
     }
-
-
 }
 
 

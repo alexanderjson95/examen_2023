@@ -5,10 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/userprojectSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
     <Spinner
         android:id="@+id/memberSpinner"
         android:layout_width="match_parent"
@@ -21,4 +18,30 @@
         app:mcv_showOtherDates="all"
         app:mcv_selectionMode="single"
         app:mcv_firstDayOfWeek="monday" />
+
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="1"
+        android:rowCount="2">
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/available_btn"
+            android:width="300dp"
+            android:text="sätt/ändra tillänglighet">
+        </com.google.android.material.button.MaterialButton>
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/booking_btn"
+            android:width="300dp"
+            android:text="Gör bokning">
+        </com.google.android.material.button.MaterialButton>
+
+    </GridLayout>
+
 </LinearLayout>

@@ -17,7 +17,6 @@ class ProjectAdapter @Inject constructor():
             private var projectList: List<ProjectResponse> = emptyList()
     class ProjectViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var project_value: TextView = view.findViewById(R.id.project_value)
-        var genre_value: TextView = view.findViewById(R.id.genre_value)
     }
 
     fun submitList(newList: List<ProjectResponse>){
@@ -40,7 +39,6 @@ class ProjectAdapter @Inject constructor():
     ) {
         val projects = projectList[position]
         holder.project_value.text = "${projects.projectName}"
-        holder.genre_value.text = "${projects.type}"
     }
 
     override fun getItemCount(): Int {

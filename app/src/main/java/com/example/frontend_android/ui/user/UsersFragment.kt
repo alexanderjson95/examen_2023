@@ -38,6 +38,8 @@ class UsersFragment : Fragment(R.layout.fragment_users){
             val text = input.text.toString()
             if (text.isNotEmpty()) {
                 vm.searchUsers("username", text)
+            } else {
+                vm.getUsers()
             }
         }
     }

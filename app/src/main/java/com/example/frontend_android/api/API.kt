@@ -12,6 +12,7 @@ import com.example.frontend_android.model.Users.UserRequest
 import com.example.frontend_android.model.Users.UserResponse
 import com.example.frontend_android.model.auth.AuthRequest
 import com.example.frontend_android.model.auth.AuthenticationResponse
+import com.example.frontend_android.ui.user.RoleResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -22,7 +23,7 @@ import retrofit2.http.Query
 
 
 interface API {
-    @POST("users/register")
+    @POST("/users/register")
     suspend fun registerUser(@Body user: UserRequest): Response<Void>
 
     @GET("users/{id}")
@@ -38,6 +39,11 @@ interface API {
     @POST("refresh")
     suspend fun refresh(@Body req: AuthRequest): Response<AuthenticationResponse>
 
+    @GET("users/roles")
+    suspend fun getAllRoles(): Response<List<RoleResponse>>
+
+    @GET("/returnUser")
+    suspend fun returnUser(): Response<UserResponse>
 
     @GET("users/search")
     suspend fun searchUsers(
@@ -47,6 +53,13 @@ interface API {
 
     @POST("projects")
     suspend fun createProject(@Body request: ProjectRequest): Response<Unit>
+
+
+    @GET("projects/search")
+    suspend fun searchProjects(
+        @Query("query") query: String,
+        @Query("value") value: String
+    ): Response<List<ProjectResponse>>
 
 
 
@@ -96,6 +109,7 @@ interface API {
     suspend fun getUserBookings(@Path("userId") userId: Long?): Response<List<BookingResponse>>
     @GET("/bookings/projects/{projectId}")
     suspend fun getBookingsByProject(@Path("projectId") projectId: Long?): Response<List<BookingResponse>>
-
+    @PATCH("/bookings/{bookingId}/update")
+    suspend fun patchBooking(@Path("bookingId") bookingId: Long?, @Body req: BookingRequest): Response<Unit>
 
 }

@@ -1,34 +1,75 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:id="@+id/message_form"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:id="@+id/main"
+    android:padding="16dp"
+    android:elevation="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    android:background="@android:color/white"
-    android:padding="16dp">
 
-    <EditText
-        android:id="@+id/messageBox"
+    <LinearLayout
+        android:id="@+id/recyclerbox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        />
+        android:layout_height="450dp"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        style="@style/CustomEditTextStyle"
+        android:gravity="end"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:paddingTop="8dp">
 
-    <Button
-        android:id="@+id/sendBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/send"
-        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messagesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/searchBtn"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/chatbox"
         android:layout_margin="16dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/chatbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        style="@style/CustomEditTextStyle"
+        android:gravity="end"
+        android:paddingTop="8dp">
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/message_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/send"
+            android:inputType="textMultiLine"
+            android:background="@null"
+            android:maxLines="5"
+            style="@style/ChatEditTextTwo"
+            android:padding="8dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sendBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/outline_arrow_circle_right_24"
+            style="@style/SendMaterialBtn">
+        </com.google.android.material.button.MaterialButton>
+    </LinearLayout>
 
 
 </LinearLayout>
+
+

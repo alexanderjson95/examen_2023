@@ -23,8 +23,6 @@ class UsersViewModel  @Inject constructor(
     val users: LiveData<List<UserResponse>> = _users
     private val _status = MutableLiveData<String?>(null)
     val state: MutableLiveData<String?> = _status
-
-
     fun returnUserByUsername(username: String): UserResponse? {
         val u = users.value?.find { it.username == username }
         Log.e("AllProjectsViewModel", "Found: ${u?.username} with ID: ${u?.id}")
@@ -62,6 +60,4 @@ class UsersViewModel  @Inject constructor(
             )
         }
     }
-
-
 }

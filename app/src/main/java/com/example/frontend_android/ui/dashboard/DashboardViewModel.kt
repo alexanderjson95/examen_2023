@@ -5,10 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.frontend_android.api.SharedPrefsUtils
 import com.example.frontend_android.model.Projects.ProjectRequest
 import com.example.frontend_android.model.Projects.UserProjectResponse
-import com.example.frontend_android.repository.AuthRepository
 import com.example.frontend_android.repository.ProjectRepository
 import com.example.frontend_android.repository.UserProjectRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -37,6 +35,23 @@ class DashboardViewModel  @Inject constructor(
         value = "This is dashboard Fragment"
     }
     val text: LiveData<String> = _text
+
+
+    fun addProject(name: String?, description: String?, genre: String?) {
+        viewModelScope.launch {
+            request = ProjectRequest(
+                projectName = name,
+                description = description,
+                genre = genre
+            )
+            val result = repo.addData(request)
+            _status.value = result.fold(
+                onSuccess = { "success" },
+                onFailure = { "Error" }
+            )
+            Log.d("AddReportViewModel: ", "Response: ${_status.value}")
+        }
+    }
 
     fun getAllUserProjects() {
         viewModelScope.launch {

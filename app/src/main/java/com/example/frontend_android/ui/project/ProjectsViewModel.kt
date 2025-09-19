@@ -63,4 +63,20 @@ class ProjectsViewModel  @Inject constructor(
         }
     }
 
+    fun searchProjects(query: String, value: String){
+        viewModelScope.launch {
+            val result = repo.searchProjects(query,value)
+            result.fold(
+                onSuccess = { list ->
+                    _projects.postValue(list)
+                    _status.value = "success"
+                },
+                onFailure = { e ->
+                    Log.e("AllProjectsViewModel", "Error loading users: ", e)
+                    _status.value = "error"
+                }
+            )
+        }
+    }
+
 }

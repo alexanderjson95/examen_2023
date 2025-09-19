@@ -7,5 +7,7 @@ data class BookingRequest(
     val startMinute: Int,
     val endHour: Int,
     val endMinute: Int,
+    val availability: Boolean,
+    val accepted: Boolean? = false,
     val dateMillis: Long
 )

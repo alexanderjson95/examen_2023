@@ -7,7 +7,7 @@ sealed interface  RepositoryInterface <req,resp> {
     suspend fun addData(data: req): Result<Unit>
 
     suspend fun getDataById(id: Long?): Result<List<resp>>
-    suspend fun updateData(data: req): Result<Unit>
+    suspend fun updateData(id: Long, data: req): Result<Unit>
     suspend fun deleteData(id: req): Result<Unit>
 
 

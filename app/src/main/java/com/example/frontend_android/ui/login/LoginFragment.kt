@@ -20,8 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login){
-
-
         private val loginViewModel: LoginViewModel by viewModels()
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,16 +28,23 @@ class LoginFragment : Fragment(R.layout.fragment_login){
         loginViewModel.state.observe(viewLifecycleOwner) {
             if (it == true)
             {
-                findNavController().navigate(R.id.navigation_dashboard)
+                val action = LoginFragmentDirections.actionLoginToDashboard()
+                findNavController().navigate(action)
             }
         }
                 val loginBtn = view.findViewById<MaterialButton>(R.id.loginButton)
                 val username = view.findViewById<EditText>(R.id.usernameEditText)
                 val password = view.findViewById<EditText>(R.id.passwordEditText)
-
+                val registerMenuItem = view.findViewById<TextView>(R.id.registerMenuItem)
             loginBtn.setOnClickListener {
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
+            registerMenuItem.setOnClickListener {
+                val actionReg = LoginFragmentDirections.actionLoginToReg()
+                findNavController().navigate(actionReg)
+            }
+
+
 
         }
 

@@ -8,7 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.frontend_android.model.Bookings.BookingRequest
 import com.example.frontend_android.model.Bookings.BookingResponse
 import com.example.frontend_android.model.Projects.UserProjectResponse
+import com.example.frontend_android.model.Users.UserResponse
 import com.example.frontend_android.repository.UserProjectRepository
+import com.example.frontend_android.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +21,9 @@ import javax.inject.Inject
 @HiltViewModel
 class BookingsViewModel  @Inject constructor(
     private val repo: BookingRepository,
-    private val upRepo: UserProjectRepository
+    private val upRepo: UserProjectRepository,
+    private val uRepo: UserRepository
+
 ): ViewModel() {
 
 
@@ -30,10 +34,14 @@ class BookingsViewModel  @Inject constructor(
     private val _projects = MutableLiveData<List<UserProjectResponse>>()
     val projects: LiveData<List<UserProjectResponse>> = _projects
 
+    private val _user = MutableLiveData<UserResponse?>()
+    val user: MutableLiveData<UserResponse?> = _user
     private val _members = MutableLiveData<List<UserProjectResponse>>()
     val members: LiveData<List<UserProjectResponse>> = _members
     private val _bookings = MutableLiveData<List<BookingResponse>>()
     val bookings: LiveData<List<BookingResponse>> = _bookings
+
+
 
     fun getAllProjects(){
         viewModelScope.launch {
@@ -53,6 +61,10 @@ class BookingsViewModel  @Inject constructor(
         }
     }
 
+
+
+
+
     fun getMember(projectId: Long?){
         viewModelScope.launch {
             val result = upRepo.getAllMembersById(projectId)
@@ -70,7 +82,25 @@ class BookingsViewModel  @Inject constructor(
         }
     }
 
-    fun addBooking(projectId: Long?, userId: Long?, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int, dateMillis: Long) {
+    fun getUser() {
+        viewModelScope.launch {
+            val result = uRepo.returnUser()
+            result.fold(
+                onSuccess = { user ->
+                    _user.postValue(user)
+                    Log.d("GetMember", "Member function works: Fetched:  ${user?.id}", )
+                    _status.value = "success"
+
+                },
+                onFailure = { e ->
+                    Log.e("GetMember", "Member function Error: Error loading userprojects", e)
+                    _status.value = "error"
+                }
+            )
+        }
+    }
+
+    fun patchBooking(bookingId: Long, projectId: Long?, userId: Long?, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int, availability: Boolean, dateMillis: Long, accepted: Boolean){
         viewModelScope.launch {
             request = BookingRequest(
                 projectId = projectId,
@@ -79,14 +109,38 @@ class BookingsViewModel  @Inject constructor(
                 startHour = startHour,
                 startMinute = startMinute,
                 endHour = endHour,
+                availability = availability,
                 endMinute = endMinute,
+                accepted = accepted,
+                )
+            val result = repo.updateData(bookingId,request)
+            _status.value = result.fold(
+                onSuccess = { "success" },
+                onFailure = { "Error" }
+            )
+            Log.d("AddReportViewModel: ", "Booking API Response: ${_status.value} and availability:  $availability")
+        }
+    }
+
+    fun addBooking(projectId: Long?, userId: Long?, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int, availability: Boolean, dateMillis: Long) {
+        viewModelScope.launch {
+            request = BookingRequest(
+                projectId = projectId,
+                userId = userId!!,
+                dateMillis = dateMillis,
+                startHour = startHour,
+                startMinute = startMinute,
+                endHour = endHour,
+                availability = availability,
+                endMinute = endMinute,
+                accepted = false,
             )
             val result = repo.addData(request)
             _status.value = result.fold(
                 onSuccess = { "success" },
                 onFailure = { "Error" }
             )
-            Log.d("AddReportViewModel: ", "Booking API Response: ${_status.value}")
+            Log.d("AddReportViewModel: ", "Booking API Response: ${_status.value} and availability:  $availability")
         }
     }
 

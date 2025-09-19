@@ -1,5 +1,6 @@
 package com.example.frontend_android.ui.project
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 class AddProjectDialog : DialogFragment() {
 
-    private val projectVM: ProjectsViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -24,6 +24,7 @@ class AddProjectDialog : DialogFragment() {
     ): View? {
         return inflater.inflate(R.layout.add_project_form, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         val projectName = view.findViewById<EditText>(R.id.projectName)
@@ -35,19 +36,17 @@ class AddProjectDialog : DialogFragment() {
 
 
         addBtn.setOnClickListener {
-            projectVM.addProject(
-                projectName.text.toString(),
-                projectDescription.text.toString(),
-                projectGenre.text.toString()
-            )
-
+            val result = Bundle().apply {
+                putString("projectName", projectName.text.toString())
+                putString("projectDescription", projectDescription.text.toString())
+                putString("projectGenre", projectGenre.text.toString())
+            }
+            parentFragmentManager.setFragmentResult("addProjectRequest", result)
+            dismiss()
         }
 
-
+        closeBtn.setOnClickListener { dismiss() }
         isCancelable = true
     }
-    override fun onStart(){
-        super.onStart()
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-    }
+
 }
