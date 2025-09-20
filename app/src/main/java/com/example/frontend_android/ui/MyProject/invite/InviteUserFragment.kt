@@ -20,15 +20,24 @@ import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
 
+
+// TODO:
+
+/*
+        1. gör så man kan ta bort förfrågan
+        2. gör en mall av adapter + detta fragment för user till project
+        3. på projects: lägg en knapp för att visa förfrågningar användare gjort, en för att visa förfrågningar, en för att visa alla andra - samma mall som ovan
+        4. skapa enkel meddelande skärm igen (gamla)
+        5. lägg på patch och remove på allt nu - inklusive user, project och user project (acceptera knapp)
+        6. lägg på grundläggande kryptering
+
+ */
+
 @AndroidEntryPoint
 class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser){
     private val bvm: BookingsViewModel by activityViewModels()
 
     private var projectId: Long = 0L
-    private var userId: Long = 0L
-
-    private var userList: List<UserResponse> = emptyList()
-    private var memberList: List<UserProjectResponse> = emptyList()
     private val args: ProjectUserFragmentArgs by navArgs()
 
     private var showMembers: Boolean = false;
@@ -45,6 +54,11 @@ class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser){
         adapter = InviteUserAdapter ( addUser = {userId ->
             bvm.sendInvite(projectId, userId)
             bvm.getMember(projectId)
+            },
+            removeUser = {
+                userId ->
+                bvm.removeUserRequest(projectId, userId)
+                bvm.getMember(projectId)
             }
         )
 

@@ -117,6 +117,23 @@ class BookingsViewModel  @Inject constructor(
     }
 
 
+    fun removeUserRequest(projectId: Long?, userId: Long){
+        viewModelScope.launch {
+            val result = upRepo.getAllMembersById(projectId)
+            result.fold(
+                onSuccess = { list ->
+                    _members.postValue(list)
+                    Log.d("GetMember", "Member function works: Fetched:  ${list.first().firstName}", )
+                    _status.value = "success"
+                },
+                onFailure = { e ->
+                    Log.e("GetMember", "Member function Error: Error loading userprojects", e)
+                    _status.value = "error"
+                }
+            )
+        }
+    }
+
     private val _users = MutableLiveData<List<UserResponse>>()
     val users: LiveData<List<UserResponse>> = _users
     fun getUser() {
