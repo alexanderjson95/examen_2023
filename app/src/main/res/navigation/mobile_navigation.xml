@@ -128,6 +128,10 @@
             android:id="@+id/myProject_to_members"
             app:destination="@id/navigation_members" />
 
+        <action
+            android:id="@+id/myProject_to_addMember"
+            app:destination="@id/navigation_invite" />
+
         <argument
             android:name="projectId"
             app:argType="long" />
@@ -137,6 +141,19 @@
         android:id="@+id/navigation_members"
         android:name="com.example.frontend_android.ui.schedule.ProjectUserFragment"
         tools:layout="@layout/fragment_users">
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_invite"
+        android:name="com.example.frontend_android.ui.MyProject.invite.InviteUserFragment"
+        tools:layout="@layout/fragment_my_project_adduser">
         <argument
             android:name="projectId"
             app:argType="long" />

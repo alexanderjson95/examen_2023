@@ -14,7 +14,6 @@ import javax.inject.Inject
 @FragmentScoped
 class UserProjectAdapter @Inject constructor():
         RecyclerView.Adapter<UserProjectAdapter.UserProjectViewholder>(){
-
             private var projectList: List<UserProjectResponse> = emptyList()
     class UserProjectViewholder(view: View) : RecyclerView.ViewHolder(view){
         var username_value: TextView = view.findViewById(R.id.username_value)

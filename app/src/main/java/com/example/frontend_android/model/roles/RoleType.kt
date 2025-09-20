@@ -1,4 +1,4 @@
-package com.example.frontend_android.ui.user
+package com.example.frontend_android.model.roles
 
 enum class RoleType {
         regissör,

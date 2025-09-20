@@ -1,7 +1,6 @@
 package com.example.frontend_android.model.Users
 
-import com.example.frontend_android.ui.user.RoleRequest
-import com.example.frontend_android.ui.user.RoleType
+import com.example.frontend_android.model.roles.RoleRequest
 
 
 data class UserRequest(

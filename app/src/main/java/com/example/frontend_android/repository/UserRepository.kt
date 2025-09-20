@@ -4,8 +4,7 @@ import android.util.Log
 import com.example.frontend_android.api.API
 import com.example.frontend_android.model.Users.UserRequest
 import com.example.frontend_android.model.Users.UserResponse
-import com.example.frontend_android.ui.user.RoleResponse
-import com.example.frontend_android.ui.user.RoleType
+import com.example.frontend_android.model.roles.RoleResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -33,6 +32,28 @@ class UserRepository @Inject constructor(
                 Result.failure(e)
             }
         }
+    suspend fun getUserRoles(userId: Long?): Result<List<RoleResponse>> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = apiInterface.getMemberRoles(userId)
+                Log.d("role","${response.body()}")
+                if (response.isSuccessful) {
+                    Result.success(response.body().orEmpty())
+                } else {
+                    Result.failure(Exception("Role error: ${response.code()} - ${response.message()}"))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
+
+    suspend fun getUserRoless(userId: Long): List<String> {
+        val roles = apiInterface.getUserRoles(userId)
+        println("Fetched roles: $roles")
+        return roles
+
+    }
+
     suspend fun returnUser(): Result<UserResponse?> = withContext(Dispatchers.IO) {
         try {
             val response = apiInterface.returnUser()
@@ -68,7 +89,7 @@ class UserRepository @Inject constructor(
             try {
                 val response = apiInterface.getAllUsers()
                 if (response.isSuccessful) {
-                    Log.d("MovieLike", "users: ${response.body()}")
+                    Log.d("All users", "users: ${response.body()}")
                     Result.success(response.body().orEmpty())
                 } else {
                     Result.failure(Exception(" getAll Error: ${response.code()} - ${response.message()}"))

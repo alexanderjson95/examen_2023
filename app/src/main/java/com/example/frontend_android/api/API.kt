@@ -12,7 +12,7 @@ import com.example.frontend_android.model.Users.UserRequest
 import com.example.frontend_android.model.Users.UserResponse
 import com.example.frontend_android.model.auth.AuthRequest
 import com.example.frontend_android.model.auth.AuthenticationResponse
-import com.example.frontend_android.ui.user.RoleResponse
+import com.example.frontend_android.model.roles.RoleResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -73,6 +73,18 @@ interface API {
     suspend fun getMembers(
         @Path("projectId") projectId: Long?,
     ): Response<List<UserProjectResponse>>
+
+    @GET("users/roles/{userId}")
+    suspend fun getMemberRoles(
+        @Path("userId") userId: Long?,
+    ): Response<List<RoleResponse>>
+
+
+        @GET("users/{userId}/roles")
+        suspend fun getUserRoles(
+            @Path("userId") userId: Long
+        ): List<String>
+
 
 
     @PATCH("projects/{projectId}/users/{userId}")

@@ -27,10 +27,13 @@ class ProjectUserFragment : Fragment(R.layout.fragment_myprojectusers){
     private val vm: UsersViewModel by activityViewModels()
     private val bookingVM: BookingsViewModel by activityViewModels()
     private var projectId: Long? = null
-    private var userId: Long? = null
+
     private var memberId: Long? = null
 
     private var isAdmin: Boolean = false
+
+    private var userId: Long = 0L
+
 
     private val args: ProjectUserFragmentArgs by navArgs()
     private lateinit var adapter: MemberAdapter
@@ -44,35 +47,53 @@ class ProjectUserFragment : Fragment(R.layout.fragment_myprojectusers){
 
 
         adapter = MemberAdapter { memberId ->
-            if (isAdmin) {
+
+            if (isAdmin && memberId != userId) {
                 Toast.makeText(requireContext(), "Member: ${memberId} is being kicked!!!!", Toast.LENGTH_SHORT).show()
-            } else
+            }
+
+            else if (memberId == userId) {
+                Toast.makeText(requireContext(), "Member: ${memberId} leaving!!!!!!!", Toast.LENGTH_SHORT).show()
+            }
+
+            else
             {
                 Toast.makeText(requireContext(), "Member: ${memberId} is NOT being kicked!!!!", Toast.LENGTH_SHORT).show()
             }
+
+
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        userId?.let { bookingVM.getUser() }
         projectId?.let { bookingVM.getMember(projectId) }
 
+        bookingVM.getUser()
+        bookingVM.user.observe(viewLifecycleOwner) { u ->
+            userId = u?.id ?: 0
+            Toast.makeText(requireContext(), "userid : $userId", Toast.LENGTH_SHORT).show()
+            bookingVM.getRoless(userId)
+        }
+
+        bookingVM.roless.observe(viewLifecycleOwner) { roles ->
+            roles.forEach { role ->
+                println("ROLES: $role")
+            }
+
+        }
 
         bookingVM.members.observe(viewLifecycleOwner) { members ->
             adapter.submitList(members)
-            for (m in members) {
-                memberId = m.userId
-                if (m.userId == userId && m.isAdmin == true) {
-                    Toast.makeText(requireContext(), "Member: ${m.userId} is a admin!", Toast.LENGTH_SHORT).show()
-                    isAdmin = true
-
-                } else{
-                    Toast.makeText(requireContext(), "Member: ${m.userId} is not an admin!", Toast.LENGTH_SHORT).show()
-                    isAdmin = false
-                }
-            }
+            val adminUser = userId
+            isAdmin = members.any { it.userId == adminUser && it.isAdmin == true }
+            Toast.makeText(requireContext(), "Member: $isAdmin", Toast.LENGTH_SHORT).show()
         }
     }
+        override fun onDestroyView() {
+            super.onDestroyView()
+            adapter.submitList(emptyList())
+            bookingVM.clearAll()
+        }
 }
 
 

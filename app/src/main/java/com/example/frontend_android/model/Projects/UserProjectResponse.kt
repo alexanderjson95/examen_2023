@@ -1,9 +1,6 @@
 package com.example.frontend_android.model.Projects
 
-import com.example.frontend_android.model.Users.UserResponse
-import java.time.LocalDateTime
-
-
+import com.example.frontend_android.model.roles.RoleResponse
 
 
 data class UserProjectResponse (
@@ -14,7 +11,7 @@ data class UserProjectResponse (
     val username: String? = null,
     val firstName: String? = null,
     val lastName: String? = null,
-    val role: String? = null,
+    val roles: List<RoleResponse> = emptyList(),
     val isCreator: Boolean? = null,
     val isAdmin: Boolean? = null,
     val hasJoined: Boolean? = null,

@@ -1,6 +1,6 @@
 package com.example.frontend_android.model.Users
 
-import com.example.frontend_android.ui.user.RoleResponse
+import com.example.frontend_android.model.roles.RoleResponse
 
 
 data class UserResponse(

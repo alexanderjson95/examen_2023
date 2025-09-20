@@ -11,6 +11,7 @@ import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.example.frontend_android.model.Users.UserResponse
 import com.example.frontend_android.repository.UserProjectRepository
 import com.example.frontend_android.repository.UserRepository
+import com.example.frontend_android.model.roles.RoleResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -66,6 +67,11 @@ class BookingsViewModel  @Inject constructor(
     }
 
 
+    fun clearAll(){
+        _bookings.value = emptyList()
+        _members.value = emptyList()
+        _projects.value = emptyList()
+    }
 
 
 
@@ -103,6 +109,26 @@ class BookingsViewModel  @Inject constructor(
             )
         }
     }
+
+        private val _roless = MutableLiveData<List<String>>()
+        val roless: LiveData<List<String>> get() = _roless
+
+
+        fun getRoless(userId: Long) {
+            Log.d("Roless", "fetch", )
+            viewModelScope.launch {
+                try {
+                    _roless.value = uRepo.getUserRoless(userId)
+                    Log.d("Roless", "Member function: Fetched:  ${roless.value}", )
+
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    _roless.value = emptyList()
+                }
+            }
+        }
+
 
     fun patchBooking(bookingId: Long, projectId: Long?, userId: Long?, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int, availability: Boolean, dateMillis: Long, accepted: Boolean){
         viewModelScope.launch {

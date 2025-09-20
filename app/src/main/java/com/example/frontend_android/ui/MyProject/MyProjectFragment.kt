@@ -3,6 +3,7 @@ package com.example.frontend_android.ui.MyProject
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.compose.ui.graphics.vector.addPathNodes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -25,24 +26,33 @@ class MyProjectFragment : Fragment(R.layout.fragment_my_project){
         super.onViewCreated(view, savedInstanceState)
 
         val projectId = args.projectId
-        //Toast.makeText(requireContext(), "ProjectId: $projectId", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "ENTERING : $projectId", Toast.LENGTH_SHORT).show()
 
         vm.getUser()
-        vm.user.observe(viewLifecycleOwner) { u -> u?.let { userId = it.id } }
+        vm.user.observe(viewLifecycleOwner) { u ->
+            userId = u?.id ?: 0
+            Toast.makeText(requireContext(), "userid : $userId", Toast.LENGTH_SHORT).show()
+            vm.getRoless(userId)
 
-
+        }
+        vm.roless.observe(viewLifecycleOwner) { roles ->
+            roles.forEach { role ->
+                println("ROLES: $role")
+            }
+        }
 
 
 
 
         val settings_btn = view.findViewById<MaterialButton>(R.id.settings_btn)
         val members_btn = view.findViewById<MaterialButton>(R.id.members_btn)
-        val message_btn = view.findViewById<MaterialButton>(R.id.message_btn)
+        val invite_btn = view.findViewById<MaterialButton>(R.id.message_btn)
         val schedule_bt = view.findViewById<MaterialButton>(R.id.schedule_btn)
 
-
-
-
+        invite_btn.setOnClickListener {
+            val action = MyProjectFragmentDirections
+                .myProjectToAddMember(projectId,userId)
+            findNavController().navigate(action) }
 
         schedule_bt.setOnClickListener {
             val action = MyProjectFragmentDirections

@@ -12,13 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.frontend_android.R
-import com.example.frontend_android.ui.dashboard.DashboardFragmentDirections
-import com.example.frontend_android.ui.login.LoginFragmentDirections
-import com.example.frontend_android.ui.user.RoleRequest
-import com.example.frontend_android.ui.user.RoleResponse
+import com.example.frontend_android.model.roles.RoleRequest
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
-import java.math.BigDecimal
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.fragment_register){

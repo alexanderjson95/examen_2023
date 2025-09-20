@@ -60,4 +60,11 @@
     <string name="testdate">2025/08/31</string>
     <string name="SearchMember">Sök medlemmar</string>
     <string name="Kick">Kasta ut</string>
+    <string name="add_member">Bjud in</string>
+    <string name="invite">Inbjudningar</string>
+    <string name="remove">Ta bort</string>
+    <string name="change">Ändra projekt</string>
+    <string name="inv">Bjud in</string>
+    <string name="accept">Acceptera</string>
+    <string name="deletenotif">Är du säker att du vill ta bort projektet?</string>
 </resources>

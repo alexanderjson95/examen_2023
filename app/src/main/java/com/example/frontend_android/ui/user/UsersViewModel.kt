@@ -35,6 +35,7 @@ class UsersViewModel  @Inject constructor(
             result.fold(
                 onSuccess = { list ->
                     _users.postValue(list)
+
                     _status.value = "success"
                 },
                 onFailure = { e ->

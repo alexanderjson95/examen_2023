@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MyProject.MyProjectFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="32dp"
+        android:id="@+id/header"
+
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:text="@string/projectName">
+        </com.google.android.material.textview.MaterialTextView>
+    </LinearLayout>
+
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="2"
+        android:columnCount="1"
+        android:layout_margin="32dp"
+        android:id="@+id/btn_grid"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/members_btn"
+            android:layout_width="154dp"
+            android:layout_height="154dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="#5B9279"
+            app:iconGravity="textTop"
+            app:iconPadding="8dp"
+            app:icon="@drawable/outline_account_circle_24"
+            android:text="@string/invite"
+            android:textColor="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/message_btn"
+            android:layout_width="154dp"
+            android:layout_height="154dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="#5386E4"
+            app:iconGravity="textTop"
+            app:iconPadding="8dp"
+            app:icon="@drawable/outline_delete_forever_24"
+            android:text="@string/remove"
+            android:textColor="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/settings_btn"
+            android:layout_width="154dp"
+            android:layout_height="154dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="#B84A62"
+            app:iconGravity="textTop"
+            app:iconPadding="8dp"
+            android:text="@string/change"
+            app:icon="@drawable/outline_admin_panel_settings_24"
+            android:textColor="@color/white" />
+
+
+    </GridLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
