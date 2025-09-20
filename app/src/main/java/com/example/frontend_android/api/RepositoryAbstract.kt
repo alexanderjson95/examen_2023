@@ -9,7 +9,7 @@ abstract class RepositoryAbstract<req,resp,I> : RepositoryInterface<req, resp> {
 
     protected abstract val apiInterface: I
 
-    protected abstract suspend fun performAdd(api: I, data: req, userId: Long? = null, targetId: Long? = null): Response<Unit>
+    protected abstract suspend fun performAdd(api: I, data: req): Response<Unit>
     protected abstract suspend fun performGet(api: I, userId: Long?, targetId: Long? = null): Response<List<resp>>
     protected abstract suspend fun performPatch(api: I, data: req, bookingId: Long): Response<Unit>
 

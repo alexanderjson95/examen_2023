@@ -20,9 +20,7 @@ class ProjectRepository @Inject constructor(
 
     override suspend fun performAdd(
         api: API,
-        data: ProjectRequest,
-        userId: Long?,
-        targetId: Long?
+        data: ProjectRequest
     ): Response<Unit> {
         return apiInterface.createProject(data)
     }

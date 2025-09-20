@@ -35,9 +35,7 @@ class MemberAdapter(private val removeUser: (Long) -> Unit):
     }
 
 
-    fun returnUser(memberId: Long): Long {
-        return memberId;
-    }
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -64,6 +62,15 @@ class MemberAdapter(private val removeUser: (Long) -> Unit):
     override fun getItemCount(): Int {
         return memberList.size
     }
-
-
 }
+
+
+
+
+
+
+
+//
+//fun returnUser(memberId: Long): Long {
+////        return memberId;
+////    }

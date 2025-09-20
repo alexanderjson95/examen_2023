@@ -67,4 +67,5 @@
     <string name="inv">Bjud in</string>
     <string name="accept">Acceptera</string>
     <string name="deletenotif">Är du säker att du vill ta bort projektet?</string>
+    <string name="OnlyMembers">Visa endast medlemmar</string>
 </resources>

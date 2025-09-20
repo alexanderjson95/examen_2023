@@ -85,8 +85,6 @@ interface API {
             @Path("userId") userId: Long
         ): List<String>
 
-
-
     @PATCH("projects/{projectId}/users/{userId}")
     suspend fun updateUserProject(
         @Path("projectId") projectId: Long,
@@ -94,7 +92,7 @@ interface API {
         @Body req: UserProjectRequest
     ): Response<UserProjectResponse>
 
-    @POST("/{projectId}/users/{userId}")
+    @POST("projects/{projectId}/users/{userId}")
     suspend fun addUserProject(
         @Path("projectId") projectId: Long?,
         @Path("userId") userId: Long?,

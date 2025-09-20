@@ -4,9 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.example.frontend_android.model.Bookings.BookingRequest
 import com.example.frontend_android.model.Bookings.BookingResponse
+import com.example.frontend_android.model.Projects.ProjectRequest
+import com.example.frontend_android.model.Projects.UserProjectRequest
 import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.example.frontend_android.model.Users.UserResponse
 import com.example.frontend_android.repository.UserProjectRepository
@@ -31,14 +34,14 @@ class BookingsViewModel  @Inject constructor(
     private lateinit var request: BookingRequest
     private val _status = MutableStateFlow<String?>(null)
     val state: StateFlow<String?> = _status
+    private lateinit var requestP: UserProjectRequest
 
     private val _projects = MutableLiveData<List<UserProjectResponse>>()
     val projects: LiveData<List<UserProjectResponse>> = _projects
 
     private val _user = MutableLiveData<UserResponse?>()
     val user: MutableLiveData<UserResponse?> = _user
-    private val _members = MutableLiveData<List<UserProjectResponse>>()
-    val members: LiveData<List<UserProjectResponse>> = _members
+
 
     private val _userMember = MutableLiveData<List<UserProjectResponse>>()
     val userMember: LiveData<List<UserProjectResponse>> = _userMember
@@ -75,6 +78,27 @@ class BookingsViewModel  @Inject constructor(
 
 
 
+
+
+
+    fun sendInvite(projectId: Long, userId: Long){
+        viewModelScope.launch {
+            Log.d("AddReportViewModel: ", "USER ID: ${userId}")
+
+            requestP = UserProjectRequest(userId = userId, projectId = projectId, isAdmin = false, joined = false)
+
+            val result = upRepo.addData(requestP)
+            _status.value = result.fold(
+                onSuccess = { "success" },
+                onFailure = { "Error" }
+            )
+            Log.d("AddReportViewModel: ", "Response: ${_status.value}")
+        }
+    }
+
+
+    private val _members = MutableLiveData<List<UserProjectResponse>>()
+    val members: LiveData<List<UserProjectResponse>> = _members
     fun getMember(projectId: Long?){
         viewModelScope.launch {
             val result = upRepo.getAllMembersById(projectId)
@@ -92,6 +116,9 @@ class BookingsViewModel  @Inject constructor(
         }
     }
 
+
+    private val _users = MutableLiveData<List<UserResponse>>()
+    val users: LiveData<List<UserResponse>> = _users
     fun getUser() {
         viewModelScope.launch {
             val result = uRepo.returnUser()
@@ -109,6 +136,42 @@ class BookingsViewModel  @Inject constructor(
             )
         }
     }
+    fun searchUsers(query: String, value: String){
+        viewModelScope.launch {
+            val result = uRepo.searchUsers(query,value)
+            result.fold(
+                onSuccess = { list ->
+                    _users.postValue(list)
+
+                    _status.value = "success"
+                },
+                onFailure = { e ->
+                    Log.e("AllProjectsViewModel", "Error loading users: ", e)
+                    _status.value = "error"
+                }
+            )
+        }
+    }
+
+    fun getUsers(){
+        viewModelScope.launch {
+            val result = uRepo.getAll()
+            result.fold(
+                onSuccess = { list ->
+                    _users.postValue(list)
+                    _status.value = "success"
+                },
+                onFailure = { e ->
+                    Log.e("AllProjectsViewModel", "Error loading users: ", e)
+                    _status.value = "error"
+                }
+            )
+        }
+    }
+
+
+
+
 
         private val _roless = MutableLiveData<List<String>>()
         val roless: LiveData<List<String>> get() = _roless

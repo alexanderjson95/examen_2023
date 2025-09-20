@@ -20,9 +20,7 @@ class BookingRepository @Inject constructor(
 
     override suspend fun performAdd(
         api: API,
-        data: BookingRequest,
-        userId: Long?,
-        targetId: Long?
+        data: BookingRequest
     ): Response<Unit> {
         return apiInterface.createBooking(data)
     }

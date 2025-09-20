@@ -19,11 +19,9 @@ class UserProjectRepository @Inject constructor(
 
     override suspend fun performAdd(
         api: API,
-        data: UserProjectRequest,
-        userId: Long?,
-        targetId: Long?
+        data: UserProjectRequest
     ): Response<Unit> {
-        return apiInterface.addUserProject(projectId = targetId, userId = userId, req = data)
+        return apiInterface.addUserProject(projectId = data.projectId, userId = data.userId, req = data)
     }
 
     override suspend fun performGet(
