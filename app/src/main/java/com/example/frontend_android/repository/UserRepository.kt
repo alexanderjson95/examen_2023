@@ -51,7 +51,6 @@ class UserRepository @Inject constructor(
         val roles = apiInterface.getUserRoles(userId)
         println("Fetched roles: $roles")
         return roles
-
     }
 
     suspend fun returnUser(): Result<UserResponse?> = withContext(Dispatchers.IO) {

@@ -13,6 +13,7 @@ import com.example.frontend_android.model.Users.UserResponse
 import com.example.frontend_android.model.auth.AuthRequest
 import com.example.frontend_android.model.auth.AuthenticationResponse
 import com.example.frontend_android.model.roles.RoleResponse
+import com.example.frontend_android.model.roles.UserRoleResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -87,6 +88,8 @@ interface API {
         @Path("userId") userId: Long?,
     ): Response<List<RoleResponse>>
 
+    @GET("users/userroles")
+    suspend fun getAllUsersAndRoles(): Response<List<UserRoleResponse>>
 
         @GET("users/{userId}/roles")
         suspend fun getUserRoles(

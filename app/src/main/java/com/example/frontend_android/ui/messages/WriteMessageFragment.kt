@@ -46,14 +46,14 @@ class WriteMessageFragment : Fragment(R.layout.fragment_inchat) {
             if (m != null) {
                 val sender = m.map { it.senderFirstname }
                 val recipient = m.map { it.recipientId }
-                adapter.submitList(m)
+                adapter.submitList(m){recyclerView.scrollToPosition(adapter.itemCount - 1)}
                 Log.d("Messages", "MESSAGE: TYPE IN TEXT!!!!")
                 Log.d("Messages", "MESSAGE: sender: $sender and recipient $recipient  ")
-
             }
         }
 
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = LinearLayoutManager(requireContext()).apply { stackFromEnd = false
+        reverseLayout = true}
         recyclerView.adapter = adapter
 
         val input = view.findViewById<TextInputEditText>(R.id.message_edit_text)
@@ -70,7 +70,7 @@ class WriteMessageFragment : Fragment(R.layout.fragment_inchat) {
                 // skicka meddelande här
                 vm.sendMessage(recipientId, text)
                 val newList = vm.messages.value
-                adapter.submitList(newList?.toList())
+                adapter.submitList(newList?.toList()){recyclerView.scrollToPosition(adapter.itemCount - 1)}
                 // lägg på refresh UI här
             } else {
                 Log.d("Messages", "MESSAGE: TYPE IN TEXT!!!!")

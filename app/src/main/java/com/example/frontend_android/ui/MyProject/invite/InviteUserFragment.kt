@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend_android.R
 import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.example.frontend_android.model.Users.UserResponse
+import com.example.frontend_android.model.roles.UserRoleResponse
 import com.example.frontend_android.ui.schedule.BookingsViewModel
 import com.example.frontend_android.ui.schedule.ProjectUserFragmentArgs
 import com.google.android.material.button.MaterialButton
@@ -52,26 +53,42 @@ class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser) {
 
         projectId = args.projectId
 
-        bvm.users.observe(viewLifecycleOwner) { users ->
+
+
+        bvm.getAllUserRoles()
+
+
+
+        bvm.userroles.observe(viewLifecycleOwner) { r ->
             val members = bvm.members.value
-            if (users != null && members != null) {
-                val memberIds = members.mapNotNull { it.userId }.toSet()
+            if (r != null && members != null) {
+                val memberIds = members.map { it.userId }.toSet()
                 adapter.updateId(memberIds)
-                adapter.submitList(filterMembers(users, members))
-                Log.d("InviteUserFragment", "Fetched users: ${users.map { it.id }}")
+                adapter.submitList(filterMembers(r, members))
+                Log.d("InviteUserFragment", "Fetched users: ${r.map { it.userId }}")
             }
         }
+
+
+//        bvm.users.observe(viewLifecycleOwner) { users ->
+//            val members = bvm.members.value
+//            if (users != null && members != null) {
+//                val memberIds = members.mapNotNull { it.userId }.toSet()
+//                adapter.updateId(memberIds)
+//                adapter.submitList(filterMembers(users, members))
+//                Log.d("InviteUserFragment", "Fetched users: ${users.map { it.id }}")
+//            }
+//        }
 
         bvm.members.observe(viewLifecycleOwner) { members ->
-            val users = bvm.users.value
+            val users = bvm.userroles.value
             if (users != null && members != null) {
-                val memberIds = members.mapNotNull { it.userId }.toSet()
+                val memberIds = members.map { it.userId }.toSet()
                 adapter.updateId(memberIds)
                 adapter.submitList(filterMembers(users, members))
-                Log.d("InviteUserFragment", "Fetched users: ${users.map { it.id }}")
+                Log.d("InviteUserFragment", "Fetched users: ${users.map { it.userId }}")
             }
         }
-
 
         adapter = InviteUserAdapter(
             addUser = { userId ->
@@ -108,28 +125,28 @@ class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser) {
     }
 
 
-    private fun observeViewModel() {
-        bvm.users.observe(viewLifecycleOwner) { users ->
-            val members = bvm.members.value
-            if (users != null && members != null) {
-                val memberIds = members.mapNotNull { it.userId }.toSet()
-                adapter.updateId(memberIds)
-                adapter.submitList(filterMembers(users, members)
-                )
-                Log.d("InviteUserFragment", "Fetched users: ${users.map { it.id }}")
-            }
-        }
-
-    }
+//    private fun observeViewModel() {
+//        bvm.users.observe(viewLifecycleOwner) { users ->
+//            val members = bvm.members.value
+//            if (users != null && members != null) {
+//                val memberIds = members.mapNotNull { it.userId }.toSet()
+//                adapter.updateId(memberIds)
+//                adapter.submitList(filterMembers(users, members)
+//                )
+//                Log.d("InviteUserFragment", "Fetched users: ${users.map { it.id }}")
+//            }
+//        }
+//
+//    }
     private fun filterMembers(
-        userList: List<UserResponse>,
+        userList: List<UserRoleResponse>,
         memberList: List<UserProjectResponse>
-    ): List<UserResponse> {
-        val membersIds = memberList.mapNotNull { it.userId }.toHashSet()
+    ): List<UserRoleResponse> {
+        val membersIds = memberList.map { it.userId }.toHashSet()
         return if (showMembers) {
-            userList.filter { it.id in membersIds }
+            userList.filter { it.userId in membersIds }
         } else {
-            userList.filter { it.id !in membersIds }
+            userList.filter { it.userId !in membersIds }
         }
     }
 }

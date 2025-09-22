@@ -15,6 +15,8 @@ import com.example.frontend_android.model.Users.UserResponse
 import com.example.frontend_android.repository.UserProjectRepository
 import com.example.frontend_android.repository.UserRepository
 import com.example.frontend_android.model.roles.RoleResponse
+import com.example.frontend_android.model.roles.UserRoleResponse
+import com.example.frontend_android.repository.UserRoleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,11 +28,9 @@ import javax.inject.Inject
 class BookingsViewModel  @Inject constructor(
     private val repo: BookingRepository,
     private val upRepo: UserProjectRepository,
-    private val uRepo: UserRepository
-
+    private val uRepo: UserRepository,
+    private val userRoleRepo: UserRoleRepository
 ): ViewModel() {
-
-
     private lateinit var request: BookingRequest
     private val _status = MutableStateFlow<String?>(null)
     val state: StateFlow<String?> = _status
@@ -42,14 +42,29 @@ class BookingsViewModel  @Inject constructor(
     private val _user = MutableLiveData<UserResponse?>()
     val user: MutableLiveData<UserResponse?> = _user
 
-
+    private val _userroles = MutableLiveData<List<UserRoleResponse>>()
+    val userroles: MutableLiveData<List<UserRoleResponse>> = _userroles
     private val _userMember = MutableLiveData<List<UserProjectResponse>>()
     val userMember: LiveData<List<UserProjectResponse>> = _userMember
 
     private val _bookings = MutableLiveData<List<BookingResponse>>()
     val bookings: LiveData<List<BookingResponse>> = _bookings
 
-
+    fun getAllUserRoles(){
+        viewModelScope.launch {
+            val result = userRoleRepo.getData()
+            result.fold(
+                onSuccess = { list ->
+                    _userroles.postValue(list)
+                    _status.value = "success"
+                },
+                onFailure = { e ->
+                    Log.e("AllProjectsViewModel", "Error loading userprojects", e)
+                    _status.value = "error"
+                }
+            )
+        }
+    }
 
     fun getAllProjects(){
         viewModelScope.launch {

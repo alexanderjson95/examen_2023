@@ -69,18 +69,16 @@ class ProjectUserFragment : Fragment(R.layout.fragment_myprojectusers){
         projectId?.let { bookingVM.getMember(projectId) }
 
         bookingVM.getUser()
+
+
+
         bookingVM.user.observe(viewLifecycleOwner) { u ->
             userId = u?.id ?: 0
             Toast.makeText(requireContext(), "userid : $userId", Toast.LENGTH_SHORT).show()
             bookingVM.getRoless(userId)
         }
 
-        bookingVM.roless.observe(viewLifecycleOwner) { roles ->
-            roles.forEach { role ->
-                println("ROLES: $role")
-            }
 
-        }
 
         bookingVM.members.observe(viewLifecycleOwner) { members ->
             adapter.submitList(members)

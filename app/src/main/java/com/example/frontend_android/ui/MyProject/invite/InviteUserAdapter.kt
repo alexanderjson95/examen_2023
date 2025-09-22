@@ -11,20 +11,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend_android.R
 import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.example.frontend_android.model.Users.UserResponse
+import com.example.frontend_android.model.roles.UserRoleResponse
 import com.example.frontend_android.ui.schedule.MemberAdapter
 import com.google.android.material.button.MaterialButton
 
 class InviteUserAdapter  (
     private val addUser: (Long) -> Unit,private val removeUser: (Long) -> Unit, private var memberIds: Set<Long> = emptySet()):
-    ListAdapter<UserResponse, InviteUserAdapter.InviteUserViewHolder>(DiffCallback())
+    ListAdapter<UserRoleResponse, InviteUserAdapter.InviteUserViewHolder>(DiffCallback())
 {
 
 
     class InviteUserViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var fName_value: TextView = view.findViewById(R.id.fname_value)
         var lname_value: TextView = view.findViewById(R.id.lname_value)
+        var role_value: TextView = view.findViewById(R.id.role_value)
+
         var acceptBtn: MaterialButton = view.findViewById(R.id.acceptBtn)
-        var removeBtn: MaterialButton = view.findViewById(R.id.removeBtn)
 
     }
 
@@ -46,33 +48,26 @@ class InviteUserAdapter  (
         val users = getItem(position)
         holder.fName_value.text = users.firstName
         holder.lname_value.text = users.lastName
-        val isMember = memberIds.contains(users.id)
+        holder.role_value.text = users.roleType
+
+        val isMember = memberIds.contains(users.userId)
 
         if (isMember) {
             holder.acceptBtn.isEnabled = false
             holder.acceptBtn.text = "Inbjuden"
-            holder.removeBtn.isVisible = true
 
         }
         else
         {
             holder.acceptBtn.isEnabled = true
-            holder.removeBtn.isVisible = false
         }
 
         holder.acceptBtn.setOnClickListener {
-            addUser(users.id)  // lägger in userId ur userProject
+            addUser(users.userId)  // lägger in userId ur userProject
             holder.acceptBtn.isEnabled = false // överdriven extra säkerhet
             holder.acceptBtn.text = "Inbjuden"
-            holder.removeBtn.isVisible = true
         }
 
-        holder.removeBtn.setOnClickListener {
-            removeUser(users.id)  // tar bort userId ur userProject där joined = false
-            holder.acceptBtn.isEnabled = true
-            holder.acceptBtn.text = "Bjud in"
-            holder.removeBtn.isVisible = false
-        }
     }
 
     fun updateId(newMemberIds: Set<Long>) {
@@ -82,17 +77,17 @@ class InviteUserAdapter  (
 
 
 
-    class DiffCallback : DiffUtil.ItemCallback<UserResponse> (){
+    class DiffCallback : DiffUtil.ItemCallback<UserRoleResponse> (){
         override fun areItemsTheSame(
-            oldItem: UserResponse,
-            newItem: UserResponse
+            oldItem: UserRoleResponse,
+            newItem: UserRoleResponse
         ): Boolean {
-            return oldItem.id == newItem.id //behöver bara id för att ha koll på raderna
+            return oldItem.userId == newItem.userId //behöver bara id för att ha koll på raderna
         }
 
         override fun areContentsTheSame(
-            oldItem: UserResponse,
-            newItem: UserResponse
+            oldItem: UserRoleResponse,
+            newItem: UserRoleResponse
         ): Boolean {
            return  oldItem == newItem // behöver hela objekt för att jämnföra innehåll
         }
