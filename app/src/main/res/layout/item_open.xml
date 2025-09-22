@@ -13,41 +13,56 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:paddingTop="12dp">
+            android:paddingTop="8dp">
             <TextView
-                android:id="@+id/recipient_key"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:id="@+id/name_key"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/benjamin"
+                android:text="@string/name"
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:textColor="@color/black" />
-            <TextView
-                android:id="@+id/recipient_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textSize="16sp"
-                android:text="@string/testmessage" />
 
+            <TextView
+                android:id="@+id/fname_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Pelle"
+                android:textSize="16sp"
+                android:gravity="end" />
+            <TextView
+                android:id="@+id/lname_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Pelle"
+                android:textSize="16sp"
+                android:gravity="end" />
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
 
-            android:id="@+id/open_btn"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/acceptBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            android:layout_weight="0"
             android:text="@string/openProject"
-            android:layout_margin="16dp"/>
+            android:backgroundTint="@color/royal_blue"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"/>
     </LinearLayout>
+
+
+
+
 </androidx.cardview.widget.CardView>

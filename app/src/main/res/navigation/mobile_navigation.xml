@@ -96,10 +96,7 @@
         app:popUpToInclusive="true" />
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_messages"
-        android:name="com.example.frontend_android.ui.messages.MessageFragment"
-        tools:layout="@layout/fragment_messages"/>
+
 
     <fragment
         android:id="@+id/navigation_add_message"
@@ -161,6 +158,33 @@
         <argument
             android:name="userId"
             app:argType="long" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_messages"
+        android:name="com.example.frontend_android.ui.messages.ShowMessagesFragment"
+        tools:layout="@layout/create_message">
+
+        <action
+            android:id="@+id/dash_to_writeMessage"
+            app:destination="@id/navigation_writeMessage" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_writeMessage"
+        android:name="com.example.frontend_android.ui.messages.WriteMessageFragment"
+        tools:layout="@layout/fragment_inchat">
+
+        <argument
+            android:name="recipient_id"
+            app:argType="long" />
+        <argument
+            android:name="recipient_fname"
+            app:argType="string" />
+        <argument
+            android:name="recipient_lname"
+            app:argType="string" />
     </fragment>
 
 

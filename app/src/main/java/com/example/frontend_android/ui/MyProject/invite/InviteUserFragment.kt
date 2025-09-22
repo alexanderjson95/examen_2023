@@ -35,9 +35,8 @@ import kotlin.getValue
         6. lägg på grundläggande kryptering
 
  */
-@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @AndroidEntryPoint
-class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser){
+class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser) {
     private val bvm: BookingsViewModel by activityViewModels()
 
     private var projectId: Long = 0L
@@ -52,14 +51,34 @@ class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser){
         val checkBox = view.findViewById<CheckBox>(R.id.showMembersCheck)
 
         projectId = args.projectId
-        observeViewModel()
 
-        adapter = InviteUserAdapter ( addUser = {userId ->
-            bvm.sendInvite(projectId, userId)
-            bvm.getMember(projectId)
+        bvm.users.observe(viewLifecycleOwner) { users ->
+            val members = bvm.members.value
+            if (users != null && members != null) {
+                val memberIds = members.mapNotNull { it.userId }.toSet()
+                adapter.updateId(memberIds)
+                adapter.submitList(filterMembers(users, members))
+                Log.d("InviteUserFragment", "Fetched users: ${users.map { it.id }}")
+            }
+        }
+
+        bvm.members.observe(viewLifecycleOwner) { members ->
+            val users = bvm.users.value
+            if (users != null && members != null) {
+                val memberIds = members.mapNotNull { it.userId }.toSet()
+                adapter.updateId(memberIds)
+                adapter.submitList(filterMembers(users, members))
+                Log.d("InviteUserFragment", "Fetched users: ${users.map { it.id }}")
+            }
+        }
+
+
+        adapter = InviteUserAdapter(
+            addUser = { userId ->
+                bvm.sendInvite(projectId, userId)
+                bvm.getMember(projectId)
             },
-            removeUser = {
-                userId ->
+            removeUser = { userId ->
                 bvm.removeUserRequest(projectId, userId)
                 bvm.getMember(projectId)
             }
@@ -68,18 +87,7 @@ class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser){
 
         checkBox.setOnCheckedChangeListener { _, isChecked ->
             showMembers = isChecked
-            val users = bvm.users.value
-            val members = bvm.members.value
-            if (users != null && members != null) {
-                val memberIds = members.mapNotNull { it.userId }
-                val userIds = users.mapNotNull { it.id }
-                adapter.updateId(memberIds)
-                val filteredId = filterData(memberIds,userIds,showMembers)
-                val filterMembers = users.filter { it.id in filteredId }
-                adapter.submitList(filterMembers)
-            }
         }
-
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -92,87 +100,79 @@ class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser){
             val text = input.text.toString()
             bvm.getMember(projectId)
             if (text.isNotEmpty()) {
-                bvm.searchUsers("username", text)
+                bvm.searchUsers("username", text) // fixa knapp sen
             } else {
                 bvm.getUsers()
             }
         }
-
-        //todo error fixa: så den upptaderas även i in
-
-
     }
 
-    private fun observeViewModel(){
-        bvm.users.observe(viewLifecycleOwner){
-                users ->
+
+    private fun observeViewModel() {
+        bvm.users.observe(viewLifecycleOwner) { users ->
             val members = bvm.members.value
-            if (users != null && members != null){
-                val userIds: List<Long> = users.map { it.id }
-                val memberIds: List<Long>  = members.mapNotNull { it.userId }
+            if (users != null && members != null) {
+                val memberIds = members.mapNotNull { it.userId }.toSet()
                 adapter.updateId(memberIds)
-                val filteredId = filterData(memberIds,userIds,showMembers)
-                val filterMembers = users.filter { it.id in filteredId }
-                Log.d("InviteUserFragment", "resultfilter: $memberIds")
-                adapter.submitList(filterMembers)
+                adapter.submitList(filterMembers(users, members)
+                )
                 Log.d("InviteUserFragment", "Fetched users: ${users.map { it.id }}")
             }
         }
-        bvm.members.observe(viewLifecycleOwner) { members ->
-            val users = bvm.users.value
-            if (users != null && members != null){
-                val memberIds = members.mapNotNull { it.userId }
-                val userIds: List<Long> = users.map { it.id }
-                adapter.updateId(memberIds)
-                val filteredId = filterData(memberIds,userIds,showMembers)
-                val filterMembers = users.filter { it.id in filteredId }
-                adapter.submitList(filterMembers)
-                Log.d("InviteUserFragment", "Fetched users: ${users.map { it.id }}")
-            }
+
+    }
+    private fun filterMembers(
+        userList: List<UserResponse>,
+        memberList: List<UserProjectResponse>
+    ): List<UserResponse> {
+        val membersIds = memberList.mapNotNull { it.userId }.toHashSet()
+        return if (showMembers) {
+            userList.filter { it.id in membersIds }
+        } else {
+            userList.filter { it.id !in membersIds }
         }
     }
-
-
-
-
-    /**
-     *  Helper funktion för att filtera ut data. Fungerar endast i scenariot
-     *  där vi har två ordnade listor där lista B är större än A.
-     *
-     *  Denna är skapad för att kunna filtrera ID nummer där lista A (small list)
-     *  är en hämtad SQL tabell med foreign key i lista B. Exempel är om vi
-     *  har användare i ett projekt (där users = FK till Users) och en lista
-     *  med alla användare. Då skapar vi två bitset i storlek av users.
-     *  I vardera lista fyller vi varsitt BitSet och jämnför index istället för heltal.
-     *  Så om userID finns i userprojects och i users, då är den 1 i båda listorna.
-     *
-     *
-     *  Users bitset kommer vara en lista med bara 1:or, och members bitset
-     *  en lista med 1:or och 0:or. Så vi kan nu kolla på index, om t.ex index 17
-     *  och 1 på båda listona, då är id 17 både en medlem i projektet och en user.
-     *
-     */
-    private fun filterData(smallList: List<Long>, bigList: List<Long>, include: Boolean) : List<Long> {
-        val bigBits = BitSet(bigList.size)
-        val smallBits = BitSet(bigList.size)
-        bigList.forEach { bigBits.set(it.toInt()) }
-        smallList.forEach { smallBits.set(it.toInt()) }
-        val result = bigBits.clone() as BitSet
-        //tar endast fram gemensamma ID
-        if (include) {
-            result.and(smallBits)
-        }
-        else {
-            // tar endast fram exkluderade ID
-            result.andNot(smallBits)
-        }
-        val output =  result.stream().mapToObj { it.toLong() }.toList()
-        Log.d("InviteUserFragment: ", "showing members: $include and number of members: $output")
-        return output
-    }
-
 }
-
+//
+//
+//    /**
+//     *  Helper funktion för att filtera ut data. Fungerar endast i scenariot
+//     *  där vi har två ordnade listor där lista B är större än A.
+//     *
+//     *  Denna är skapad för att kunna filtrera ID nummer där lista A (small list)
+//     *  är en hämtad SQL tabell med foreign key i lista B. Exempel är om vi
+//     *  har användare i ett projekt (där users = FK till Users) och en lista
+//     *  med alla användare. Då skapar vi två bitset i storlek av users.
+//     *  I vardera lista fyller vi varsitt BitSet och jämnför index istället för heltal.
+//     *  Så om userID finns i userprojects och i users, då är den 1 i båda listorna.
+//     *
+//     *
+//     *  Users bitset kommer vara en lista med bara 1:or, och members bitset
+//     *  en lista med 1:or och 0:or. Så vi kan nu kolla på index, om t.ex index 17
+//     *  och 1 på båda listona, då är id 17 både en medlem i projektet och en user.
+//     *
+//     */
+//    private fun filterData(smallList: List<Long>, bigList: List<Long>, include: Boolean) : List<Long> {
+//        val bigBits = BitSet(bigList.size)
+//        val smallBits = BitSet(bigList.size)
+//        bigList.forEach { bigBits.set(it.toInt()) }
+//        smallList.forEach { smallBits.set(it.toInt()) }
+//        val result = bigBits.clone() as BitSet
+//        //tar endast fram gemensamma ID
+//        if (include) {
+//            result.and(smallBits)
+//        }
+//        else {
+//            // tar endast fram exkluderade ID
+//            result.andNot(smallBits)
+//        }
+//        val output =  result.stream().mapToObj { it.toLong() }.toList()
+//        Log.d("InviteUserFragment: ", "showing members: $include and number of members: $output")
+//        return output
+//    }
+//
+//}
+//
 
 
 

@@ -30,7 +30,7 @@ class UsersAdapter @Inject constructor():
         var user_fname: TextView = view.findViewById(R.id.fname_value)
         var user_lname: TextView = view.findViewById(R.id.lname_value)
 
-        val writeBtn = view.findViewById<MaterialButton>(R.id.write_btn)
+        val writeBtn = view.findViewById<MaterialButton>(R.id.open_btn)
     }
 
     fun submitList(newList: List<UserResponse>){

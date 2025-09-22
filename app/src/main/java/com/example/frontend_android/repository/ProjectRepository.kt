@@ -27,8 +27,6 @@ class ProjectRepository @Inject constructor(
 
     override suspend fun performGet(
         api: API,
-        userId: Long?,
-        targetId: Long?
     ): Response<List<ProjectResponse>>{
         TODO("Not yet implemented")
     }
@@ -38,6 +36,21 @@ class ProjectRepository @Inject constructor(
         data: ProjectRequest,
         bookingId: Long
     ): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun performGetById(
+        api: API,
+        targetId: Long
+    ): Response<List<ProjectResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun performGetByPairs(
+        api: API,
+        first: Long,
+        second: Long
+    ): Response<List<ProjectResponse>> {
         TODO("Not yet implemented")
     }
 

@@ -60,19 +60,6 @@
             android:backgroundTint="@color/royal_blue"
             android:layout_margin="10dp"
             android:textColor="@color/white"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/removeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/remove_req"
-            android:backgroundTint="@color/royal_blue"
-            android:layout_margin="10dp"
-            android:textColor="@color/white"/>
-
-
-
     </LinearLayout>
 
 

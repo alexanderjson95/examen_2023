@@ -4,8 +4,8 @@ import com.example.frontend_android.model.roles.RoleResponse
 
 
 data class UserProjectResponse (
-    val projectId: Long? = null,
-    val userId: Long? = null,
+    val projectId: Long,
+    val userId: Long,
     val projectName: String? = null,
     val projectDescription: String? = null,
     val username: String? = null,

@@ -254,7 +254,7 @@ class BookingsViewModel  @Inject constructor(
         }
     }
 
-    fun getBooking(targetId: Long?){
+    fun getBooking(targetId: Long){
         Log.e("BookingsViewModel", "loaded bookingss: $targetId")
         viewModelScope.launch {
             val result = repo.getDataById(targetId)

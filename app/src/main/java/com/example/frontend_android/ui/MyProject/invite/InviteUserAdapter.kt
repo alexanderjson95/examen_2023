@@ -15,7 +15,7 @@ import com.example.frontend_android.ui.schedule.MemberAdapter
 import com.google.android.material.button.MaterialButton
 
 class InviteUserAdapter  (
-    private val addUser: (Long) -> Unit,private val removeUser: (Long) -> Unit, private var memberIds: List<Long> = emptyList()):
+    private val addUser: (Long) -> Unit,private val removeUser: (Long) -> Unit, private var memberIds: Set<Long> = emptySet()):
     ListAdapter<UserResponse, InviteUserAdapter.InviteUserViewHolder>(DiffCallback())
 {
 
@@ -75,7 +75,7 @@ class InviteUserAdapter  (
         }
     }
 
-    fun updateId(newMemberIds: List<Long>) {
+    fun updateId(newMemberIds: Set<Long>) {
         memberIds = newMemberIds
         notifyDataSetChanged()
     }

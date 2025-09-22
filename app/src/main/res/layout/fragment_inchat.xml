@@ -23,7 +23,17 @@
             android:background="@color/white"
             android:paddingTop="8dp">
             <TextView
-                android:id="@+id/name_key"
+                android:id="@+id/fname_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textAlignment="textEnd"
+                android:text="Benjamin Giordano"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/lname_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -55,7 +65,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messagesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

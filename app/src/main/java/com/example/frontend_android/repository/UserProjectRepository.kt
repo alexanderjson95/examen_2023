@@ -24,15 +24,13 @@ class UserProjectRepository @Inject constructor(
         return apiInterface.addUserProject(projectId = data.projectId, userId = data.userId, req = data)
     }
 
+
+
     override suspend fun performGet(
         api: API,
-        userId: Long?,
-        targetId: Long?
     ): Response<List<UserProjectResponse>>{
-        return apiInterface.getUserProject(
-            projectId = targetId,
-            userId = userId,
-        )
+        TODO("Not yet implemented")
+
     }
 
     override suspend fun performPatch(
@@ -41,6 +39,24 @@ class UserProjectRepository @Inject constructor(
         bookingId: Long
     ): Response<Unit> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun performGetById(
+        api: API,
+        targetId: Long
+    ): Response<List<UserProjectResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun performGetByPairs(
+        api: API,
+        first: Long,
+        second: Long
+    ): Response<List<UserProjectResponse>> {
+        return apiInterface.getUserProject(
+            projectId = first,
+            userId = second,
+        )
     }
 
     suspend fun getAllDataById(): Result<List<UserProjectResponse>> =

@@ -36,8 +36,8 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
     private lateinit var selectedBooking: BookingResponse
     private val args: MyBookingFragmentArgs by navArgs()
     private val bookedMap = mutableMapOf<CalendarDay, List<BookingResponse>>()
-    private var projectId: Long? = null
-    private var userId: Long? = null
+    private var userId: Long = 0L
+    private var projectId: Long = args.projectId
     private var bookingId: Long? = null
 
     // Default att man sätter upp tillänglig tid, annars false = bokning
@@ -48,9 +48,8 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        projectId = args.projectId
         bookingVM.getUser()
-        bookingVM.user.observe(viewLifecycleOwner) { u -> userId = u?.id }
+        bookingVM.user.observe(viewLifecycleOwner) { u -> userId = u?.id ?: 0L }
         bookingVM.getBooking(userId)
         bookingVM.bookings.observe(viewLifecycleOwner) { b ->
             calendarView.removeDecorators()

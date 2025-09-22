@@ -61,7 +61,15 @@ interface API {
         @Query("value") value: String
     ): Response<List<ProjectResponse>>
 
+    @GET("/recieved/{userId}")
+    suspend fun getRecievedMessages(
+        @Path("projectId") projectId: Long,
+    ): Response<List<MessageResponse>>
 
+    @GET("messages/convo/{recipientId}")
+    suspend fun openConvo(
+        @Path("recipientId") recipientId: Long,
+    ): Response<List<MessageResponse>>
 
     @GET("projects/{projectId}/users/{userId}")
     suspend fun getUserProject(
@@ -119,6 +127,7 @@ interface API {
     suspend fun getUserBookings(@Path("userId") userId: Long?): Response<List<BookingResponse>>
     @GET("/bookings/projects/{projectId}")
     suspend fun getBookingsByProject(@Path("projectId") projectId: Long?): Response<List<BookingResponse>>
+
     @PATCH("/bookings/{bookingId}/update")
     suspend fun patchBooking(@Path("bookingId") bookingId: Long?, @Body req: BookingRequest): Response<Unit>
 

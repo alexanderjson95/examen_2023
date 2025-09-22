@@ -25,15 +25,11 @@ class BookingRepository @Inject constructor(
         return apiInterface.createBooking(data)
     }
 
+
     override suspend fun performGet(
-        api: API,
-        userId: Long?,
-        targetId: Long?
+        api: API
     ): Response<List<BookingResponse>> {
-        val response = apiInterface.getUserBookings(userId)
-        val rawBody = response.errorBody()?.string() ?: response.body()?.toString()
-        Log.d("GetMemberRaw", "Raw response: $rawBody and $userId")
-        return response
+        TODO("Not yet implemented")
     }
 
     override suspend fun performPatch(
@@ -42,6 +38,21 @@ class BookingRepository @Inject constructor(
         bookingId: Long
     ): Response<Unit> {
         return apiInterface.patchBooking(bookingId, data)
+    }
+
+    override suspend fun performGetById(
+        api: API,
+        targetId: Long
+    ): Response<List<BookingResponse>> {
+        return apiInterface.getUserBookings(targetId)
+    }
+
+    override suspend fun performGetByPairs(
+        api: API,
+        first: Long,
+        second: Long
+    ): Response<List<BookingResponse>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun deleteData(id: BookingRequest): Result<Unit> {
