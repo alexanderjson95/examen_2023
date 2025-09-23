@@ -2,16 +2,21 @@ package com.example.backend.service;
 
 import com.example.backend.model.Chat.Message;
 import com.example.backend.model.Chat.MessageRequest;
+import com.example.backend.model.Chat.MessageResponse;
 import com.example.backend.model.Chat.UserMessages;
 import com.example.backend.model.Users.Users;
 import com.example.backend.repository.MessageRepository;
 import com.example.backend.repository.UserMessageRepository;
 import jakarta.transaction.Transactional;
+import org.bouncycastle.util.encoders.UrlBase64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.List;
+import java.util.Random;
+
 
 @Service
 public class UserMessageService {
@@ -32,30 +37,32 @@ public class UserMessageService {
 
     /* READ */
 
-    // Hämtar alla användare i projekt, transactional då vi har lazy loading på entity, så vi måste kunna hämta både projects, users, och userprojects utan att db connection stängs.
-    public List<UserMessages> getSenderMessages(MessageRequest req){
-        // Null check sker i service
-        Users user = uService.findUserById(req.getSenderId());
-        return userMessageRepository.findBySender_Id(user.getId());
+    public List<MessageResponse> getConversation(Long userId, Long recipientId){
+        return userMessageRepository.getConvo(userId, recipientId)
+                .stream().map(MessageResponse::fromMessageResponse).toList();
     }
 
-    // Hämtar alla användare i projekt, transactional då vi har lazy loading på entity, så vi måste kunna hämta både projects, users, och userprojects utan att db connection stängs.
-    public List<UserMessages> getRecipientMessages(MessageRequest req){
-        // Null check sker i service
-        Users user = uService.findUserById(req.getRecipientId());
-        return userMessageRepository.findByRecipient_Id(user.getId());
+
+    public List<MessageResponse> getSenderMessages(Long userId){
+        return userMessageRepository.findAllUsersMessages(userId)
+                .stream().map(MessageResponse::fromMessageResponse).toList();
     }
 
-    public List<UserMessages> getAllUsersMessages(Long userId){
-        return userMessageRepository.findAllUsersMessages(userId);
+    public List<MessageResponse> getRecipientMessages(Long recipientId){
+        return userMessageRepository.findByRecipient_Id(recipientId)
+                .stream().map(MessageResponse::fromMessageResponse).toList();
     }
 
-    //lägg på "room" så man kan konversera innanför utrymme
+    public List<MessageResponse> getAllUsersMessages(Long userId){
+        return userMessageRepository.findAllUsersMessages(userId)
+                .stream().map(MessageResponse::fromMessageResponse).toList();
+    }
+
     @Transactional
-    public void sendMessage(MessageRequest req){
-        Users user = uService.findUserById(req.getSenderId());
-        Users recipient = uService.findUserById(req.getRecipientId());
+    public void sendMessage(Users user, MessageRequest req){
+        System.out.println(" Reciever: " + req.getRecipientId() +  " Message: " + req.getEncryptedValue() + "Convo Key: ");
 
+        Users recipient = uService.findUserById(req.getRecipientId());
         Message msg = new Message();
         msg.setEncryptedValue(req.getEncryptedValue());
         messageRepository.save(msg);
@@ -66,5 +73,6 @@ public class UserMessageService {
         // Sparar projektet
         userMessageRepository.save(uMsg);
     }
+
 
 }

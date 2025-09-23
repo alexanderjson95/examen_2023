@@ -1,8 +1,10 @@
 package com.example.backend;
 
 import com.example.backend.Exceptions.DataTakenException;
+import com.example.backend.model.Projects.DataFramework;
 import com.example.backend.model.Users.Users;
 import com.example.backend.repository.UserRepository;
+import com.example.backend.service.TestUserService;
 import com.example.backend.service.UserService;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
@@ -46,6 +48,9 @@ public class UsersRepoTest {
 
 
     @Autowired
+    private DataFramework framework;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -53,6 +58,8 @@ public class UsersRepoTest {
 
     @Autowired
     private PasswordEncoder enc;
+    @Autowired
+    TestUserService seeerv;
 
     String username = "Alexander";
     String password = "Alexander123";
@@ -78,6 +85,18 @@ public class UsersRepoTest {
     }
 
 
+    @Test
+    void testing(){
+        Users user = new Users();
+        user.setUsername("hkelefs");
+        user.setPassword("hkelefs");
+        user.setEmail("hkelefs@ldkd.com");
+        user.setPublicKey("323423234");
+
+        seeerv.save(user);
+        Optional<Users> alexander = seeerv.findById(user.getId());
+        Assertions.assertFalse(alexander.isEmpty());
+    }
 
     /**
      * Test: Användaren försöker registrera sig med taget användarnamn. Testar med lowercase här med.
@@ -117,6 +136,7 @@ public class UsersRepoTest {
         Optional<Users> foundU = userRepo.findById(alexander.getId());
         Assertions.assertTrue(foundU.isEmpty());
     }
+
 
     @Test
     void shouldUpdateUser_update() throws NoSuchAlgorithmException {

@@ -1,6 +1,7 @@
 package com.example.backend.model.Chat;
 
 
+import com.example.backend.ToExport;
 import com.example.backend.model.Users.Users;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -16,10 +17,10 @@ import lombok.Setter;
 /**
  * DTO för meddelanden
  */
+@ToExport
 @Getter
 @Setter
 public class MessageRequest {
-    private Long senderId;
     private Long recipientId;
     private String encryptedValue;
 }

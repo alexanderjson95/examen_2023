@@ -7,7 +7,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface BookingRepository extends JpaRepository<Bookings, Integer> {
+public interface BookingRepository extends JpaRepository<Bookings, Long> {
 
 
 }

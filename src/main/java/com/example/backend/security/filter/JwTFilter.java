@@ -68,6 +68,11 @@ public class JwTFilter extends OncePerRequestFilter {
         catch (Exception e){
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT token!");
         }
+    }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return path.startsWith("/users/register") || path.startsWith("/users/roles") || path.startsWith("/authenticate") || path.startsWith("/refresh");
     }
 }

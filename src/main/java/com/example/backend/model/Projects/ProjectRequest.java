@@ -1,5 +1,6 @@
 package com.example.backend.model.Projects;
 
+import com.example.backend.ToExport;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -12,17 +13,15 @@ import java.time.LocalDateTime;
 /**
  * DTO för projekt
  */
+@ToExport
 
 @Getter
 @Setter
 public class ProjectRequest {
-    private Long userId;
     @NotNull
     @Size(max = 50)
     private String projectName;
     @Size(max = 100)
     private String description;
-    private Boolean isPublic;
-    private double salary = 0.0;
     private String type;
 }

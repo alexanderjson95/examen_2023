@@ -1,31 +1,19 @@
 package com.example.backend;
 
-import com.example.backend.model.Users.RegisterRequest;
-import com.example.backend.repository.ProjectRepository;
 import com.example.backend.repository.UserMessageRepository;
-import com.example.backend.repository.UserProjectRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.CryptoService;
-import com.example.backend.service.ProjectService;
 import com.example.backend.service.UserMessageService;
 import com.example.backend.service.UserService;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.http.ResponseEntity;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @SpringBootTest
 @Testcontainers

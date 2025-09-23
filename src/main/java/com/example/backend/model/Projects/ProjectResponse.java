@@ -1,12 +1,16 @@
 package com.example.backend.model.Projects;
 
 
+import com.example.backend.ToExport;
 import lombok.*;
 
 import java.time.LocalDateTime;
+@ToExport
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class ProjectResponse {
     private Long id;
@@ -24,7 +28,7 @@ public class ProjectResponse {
                 project.getDescription(),
                 project.isPublic(),
                 project.getSalary(),
-                project.getType(),
+                project.getGenre(),
                 project.getCreated()
         );
     }

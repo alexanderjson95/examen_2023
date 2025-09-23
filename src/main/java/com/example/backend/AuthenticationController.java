@@ -1,22 +1,14 @@
 package com.example.backend;
 
 
-import com.example.backend.model.Users.UserRequest;
-import com.example.backend.model.Users.Users;
-import com.example.backend.repository.UserRepository;
 import com.example.backend.service.JwtService;
 import com.example.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/")
@@ -35,11 +27,16 @@ public class AuthenticationController {
         }
     }
 
+
+
+
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> createJwTToken(@RequestBody AuthRequest req) throws Exception {
         Authenticate(req.getUsername(),req.getPassword());
         UserDetails u = service.findUserByUsername(req.getUsername());
         String token = jwtService.generateToken(u);
+        System.out.println(token);
         return ResponseEntity.ok(new AuthenticationResponse(token));
     }
 

@@ -22,12 +22,19 @@ public class Bookings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String title;
-    private String description;
-    @NotNull(message = "Måste sätta starttid")
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private Long dateMillis;
+
+    @NotNull(message = "Starttid saknas")
+    private Integer startHour;
+    @NotNull(message = "Starttid saknas")
+    private Integer startMinute;
+    @NotNull(message = "Sluttid saknas")
+    private Integer endHour;
+    @NotNull(message = "Sluttid saknas")
+    private Integer endMinute;
+
     @CreationTimestamp
     private LocalDateTime created;
 }
+
 
