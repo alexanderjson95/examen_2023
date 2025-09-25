@@ -33,8 +33,7 @@ class MessageRepository @Inject constructor(
 
     override suspend fun performPatch(
         api: API,
-        data: MessageRequest,
-        bookingId: Long
+        data: MessageRequest
     ): Response<Unit> {
         TODO("Not yet implemented")
     }
@@ -54,9 +53,14 @@ class MessageRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteData(id: MessageRequest): Result<Unit> {
+    override suspend fun performRemove(
+        api: API,
+        toRemove: Long,
+        fromTableId: Long
+    ): Response<Unit> {
         TODO("Not yet implemented")
     }
+
 //
 //    suspend fun getAllMessages(): Result<List<MessageResponse>> =
 //        withContext(Dispatchers.IO){

@@ -37,25 +37,25 @@ class DashboardViewModel  @Inject constructor(
     val text: LiveData<String> = _text
 
 
-    fun addProject(name: String?, description: String?, genre: String?) {
+    fun addProject(name: String?, description: String?) {
+        Log.d("AddProject: ", "Response: ${_status.value}")
         viewModelScope.launch {
             request = ProjectRequest(
                 projectName = name,
                 description = description,
-                genre = genre
             )
             val result = repo.addData(request)
             _status.value = result.fold(
                 onSuccess = { "success" },
                 onFailure = { "Error" }
             )
-            Log.d("AddReportViewModel: ", "Response: ${_status.value}")
-        }
+            Log.d("AddProject: ",
+                "Response: ${_status.value}") }
     }
 
     fun getAllUserProjects() {
         viewModelScope.launch {
-            val result = userProjectRepo.getAllDataById()
+            val result = userProjectRepo.getAcceptedProjectsUser()
             result.fold(
                 onSuccess = {
                         list -> _projects.postValue(list)

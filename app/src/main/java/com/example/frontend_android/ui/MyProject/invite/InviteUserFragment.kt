@@ -70,16 +70,6 @@ class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser) {
         }
 
 
-//        bvm.users.observe(viewLifecycleOwner) { users ->
-//            val members = bvm.members.value
-//            if (users != null && members != null) {
-//                val memberIds = members.mapNotNull { it.userId }.toSet()
-//                adapter.updateId(memberIds)
-//                adapter.submitList(filterMembers(users, members))
-//                Log.d("InviteUserFragment", "Fetched users: ${users.map { it.id }}")
-//            }
-//        }
-
         bvm.members.observe(viewLifecycleOwner) { members ->
             val users = bvm.userroles.value
             if (users != null && members != null) {
@@ -125,19 +115,7 @@ class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser) {
     }
 
 
-//    private fun observeViewModel() {
-//        bvm.users.observe(viewLifecycleOwner) { users ->
-//            val members = bvm.members.value
-//            if (users != null && members != null) {
-//                val memberIds = members.mapNotNull { it.userId }.toSet()
-//                adapter.updateId(memberIds)
-//                adapter.submitList(filterMembers(users, members)
-//                )
-//                Log.d("InviteUserFragment", "Fetched users: ${users.map { it.id }}")
-//            }
-//        }
-//
-//    }
+
     private fun filterMembers(
         userList: List<UserRoleResponse>,
         memberList: List<UserProjectResponse>

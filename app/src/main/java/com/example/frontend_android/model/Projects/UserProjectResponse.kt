@@ -16,5 +16,7 @@ data class UserProjectResponse (
     val isAdmin: Boolean? = null,
     val hasJoined: Boolean? = null,
     val isBlocked: Boolean? = null,
-    val requestedDate: String? = null
+    val requestedDate: String,
+    val requestType: String
+
 )

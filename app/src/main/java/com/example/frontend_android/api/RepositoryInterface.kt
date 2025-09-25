@@ -1,5 +1,7 @@
 package com.example.frontend_android.api
 
+import retrofit2.Response
+
 /**
  * Mall för alla CRUD repos
  */
@@ -9,10 +11,10 @@ sealed interface  RepositoryInterface <req,resp> {
     suspend fun getDataById(id: Long): Result<List<resp>>
     suspend fun getDataByPair(first: Long, second: Long): Result<List<resp>>
 
-    suspend fun updateData(id: Long, data: req): Result<Unit>
+    suspend fun updateData(data: req): Result<Unit>
     suspend fun getData():Result<List<resp>>
 
-    suspend fun deleteData(id: req): Result<Unit>
+    suspend fun deleteData(toRemove: Long, fromTableId: Long): Result<Unit>
 
 
 

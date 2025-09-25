@@ -39,6 +39,8 @@ class BookingsViewModel  @Inject constructor(
     private val _projects = MutableLiveData<List<UserProjectResponse>>()
     val projects: LiveData<List<UserProjectResponse>> = _projects
 
+
+
     private val _user = MutableLiveData<UserResponse?>()
     val user: MutableLiveData<UserResponse?> = _user
 
@@ -68,13 +70,11 @@ class BookingsViewModel  @Inject constructor(
 
     fun getAllProjects(){
         viewModelScope.launch {
-            val result = upRepo.getAllDataById()
+            val result = upRepo.getData()
             result.fold(
                 onSuccess = { list ->
                     _projects.postValue(list)
                     _status.value = "success"
-                    Log.d("getprojekt", "project function works: ID:  ${list.first().projectId}", )
-
                 },
                 onFailure = { e ->
                     Log.e("AllProjectsViewModel", "Error loading userprojects", e)
@@ -93,14 +93,15 @@ class BookingsViewModel  @Inject constructor(
 
 
 
-
-
-
     fun sendInvite(projectId: Long, userId: Long){
         viewModelScope.launch {
             Log.d("AddReportViewModel: ", "USER ID: ${userId}")
 
-            requestP = UserProjectRequest(userId = userId, projectId = projectId, isAdmin = false, joined = false)
+            requestP = UserProjectRequest(
+                userId = userId, projectId = projectId, isAdmin = false, joined = false,
+                role = " ",
+                requestType = "INVITE"
+            )
 
             val result = upRepo.addData(requestP)
             _status.value = result.fold(
@@ -114,17 +115,15 @@ class BookingsViewModel  @Inject constructor(
 
     private val _members = MutableLiveData<List<UserProjectResponse>>()
     val members: LiveData<List<UserProjectResponse>> = _members
-    fun getMember(projectId: Long?){
+    fun getMember(projectId: Long){
         viewModelScope.launch {
-            val result = upRepo.getAllMembersById(projectId)
+            val result = upRepo.getDataById(projectId)
             result.fold(
                 onSuccess = { list ->
                     _members.postValue(list)
-                    Log.d("GetMember", "Member function works: Fetched:  ${list.first().firstName}", )
                     _status.value = "success"
                 },
                 onFailure = { e ->
-                    Log.e("GetMember", "Member function Error: Error loading userprojects", e)
                     _status.value = "error"
                 }
             )
@@ -132,20 +131,10 @@ class BookingsViewModel  @Inject constructor(
     }
 
 
-    fun removeUserRequest(projectId: Long?, userId: Long){
+    fun removeUserRequest(userId: Long,projectId: Long){
         viewModelScope.launch {
-            val result = upRepo.getAllMembersById(projectId)
-            result.fold(
-                onSuccess = { list ->
-                    _members.postValue(list)
-                    Log.d("GetMember", "Member function works: Fetched:  ${list.first().firstName}", )
-                    _status.value = "success"
-                },
-                onFailure = { e ->
-                    Log.e("GetMember", "Member function Error: Error loading userprojects", e)
-                    _status.value = "error"
-                }
-            )
+            val response = upRepo.deleteData(userId,projectId)
+            //TODO
         }
     }
 
@@ -237,8 +226,9 @@ class BookingsViewModel  @Inject constructor(
                 availability = availability,
                 endMinute = endMinute,
                 accepted = accepted,
-                )
-            val result = repo.updateData(bookingId,request)
+                bookingId = bookingId,
+            )
+            val result = repo.updateData(request)
             _status.value = result.fold(
                 onSuccess = { "success" },
                 onFailure = { "Error" }
@@ -247,7 +237,7 @@ class BookingsViewModel  @Inject constructor(
         }
     }
 
-    fun addBooking(projectId: Long?, userId: Long?, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int, availability: Boolean, dateMillis: Long) {
+    fun addBooking(bookingId: Long,projectId: Long?, userId: Long?, startHour: Int, startMinute: Int, endHour: Int, endMinute: Int, availability: Boolean, dateMillis: Long) {
         viewModelScope.launch {
             request = BookingRequest(
                 projectId = projectId,
@@ -259,6 +249,7 @@ class BookingsViewModel  @Inject constructor(
                 availability = availability,
                 endMinute = endMinute,
                 accepted = false,
+                bookingId = bookingId,
             )
             val result = repo.addData(request)
             _status.value = result.fold(

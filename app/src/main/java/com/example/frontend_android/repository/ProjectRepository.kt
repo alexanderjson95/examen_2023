@@ -5,11 +5,13 @@ import com.example.frontend_android.api.API
 import com.example.frontend_android.api.RepositoryAbstract
 import com.example.frontend_android.model.Projects.ProjectRequest
 import com.example.frontend_android.model.Projects.ProjectResponse
+import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.example.frontend_android.model.Users.UserResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
+import retrofit2.http.GET
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,16 +27,16 @@ class ProjectRepository @Inject constructor(
         return apiInterface.createProject(data)
     }
 
+
     override suspend fun performGet(
         api: API,
     ): Response<List<ProjectResponse>>{
-        TODO("Not yet implemented")
+        return api.getProjectsUserIsNotIn()
     }
 
     override suspend fun performPatch(
         api: API,
-        data: ProjectRequest,
-        bookingId: Long
+        data: ProjectRequest
     ): Response<Unit> {
         TODO("Not yet implemented")
     }
@@ -51,6 +53,14 @@ class ProjectRepository @Inject constructor(
         first: Long,
         second: Long
     ): Response<List<ProjectResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun performRemove(
+        api: API,
+        toRemove: Long,
+        fromTableId: Long
+    ): Response<Unit> {
         TODO("Not yet implemented")
     }
 
@@ -72,12 +82,10 @@ class ProjectRepository @Inject constructor(
                 Result.failure(e)
             }
         }
-
-
-    suspend fun getAllProjects(): Result<List<ProjectResponse>> =
+    suspend fun getAllUnaddedProjects(): Result<List<ProjectResponse>> =
         withContext(Dispatchers.IO) {
             try {
-                val response = apiInterface.getAllProjects()
+                val response = apiInterface.getProjectsUserIsNotIn()
                 if (response.isSuccessful) {
                     Result.success(response.body().orEmpty())
                 } else {
@@ -88,9 +96,10 @@ class ProjectRepository @Inject constructor(
             }
         }
 
-    override suspend fun deleteData(id: ProjectRequest): Result<Unit> {
-        TODO("Not yet implemented")
-    }
+
+
+
+
 }
 
 

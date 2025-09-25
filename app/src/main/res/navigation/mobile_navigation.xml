@@ -45,7 +45,10 @@
         android:name="com.example.frontend_android.ui.project.AddProjectDialog"
         tools:layout="@layout/add_project_form"/>
 
-
+    <fragment
+        android:id="@+id/navigation_UserProjectRequestFragment"
+        android:name="com.example.frontend_android.ui.project.UserProjectRequestFragment"
+        tools:layout="@layout/fragment_my_project_adduser"/>
 
     <fragment
         android:id="@+id/navigation_projects"
@@ -109,6 +112,10 @@
         tools:layout="@layout/fragment_users"/>
 
 
+    <fragment
+        android:id="@+id/navigation_user_invites"
+        android:name="com.example.frontend_android.test.UserInviteRequestFragment"
+        tools:layout="@layout/fragment_users"/>
 
 
 
@@ -193,6 +200,17 @@
         android:name="com.example.frontend_android.ui.project.AddProjectDialog"
         android:label="@string/skapa_projekt"
         tools:layout="@layout/add_project_form">
+
+        <action
+            android:id="@+id/dash_to_userProject"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_project_requests"
+        android:name="com.example.frontend_android.ui.project.UserProjectRequestFragment"
+        android:label="@string/skapa_projekt"
+        tools:layout="@layout/fragment_my_project_requests">
     </fragment>
 
     <fragment

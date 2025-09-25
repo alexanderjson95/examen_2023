@@ -34,10 +34,9 @@ class BookingRepository @Inject constructor(
 
     override suspend fun performPatch(
         api: API,
-        data: BookingRequest,
-        bookingId: Long
+        data: BookingRequest
     ): Response<Unit> {
-        return apiInterface.patchBooking(bookingId, data)
+        return apiInterface.patchBooking(data.bookingId, data)
     }
 
     override suspend fun performGetById(
@@ -55,8 +54,13 @@ class BookingRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteData(id: BookingRequest): Result<Unit> {
+    override suspend fun performRemove(
+        api: API,
+        toRemove: Long,
+        fromTableId: Long
+    ): Response<Unit> {
         TODO("Not yet implemented")
     }
+
 
 }

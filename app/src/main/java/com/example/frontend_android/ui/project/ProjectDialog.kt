@@ -30,7 +30,6 @@ class ProjectDialog : DialogFragment() {
 
         val projectName = view.findViewById<EditText>(R.id.projectName)
         val projectDescription = view.findViewById<EditText>(R.id.description_key)
-        val projectGenre = view.findViewById<EditText>(R.id.genre_key)
         val addBtn = view.findViewById<MaterialButton>(R.id.create_project_btn)
         val closeBtn = view.findViewById<MaterialButton>(R.id.close_dialog_btn)
 

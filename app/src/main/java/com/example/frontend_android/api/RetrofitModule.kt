@@ -63,8 +63,10 @@ object RetrofitModule {
     fun provideOkHttpClient(tokenInterceptor: TokenInterceptor ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(tokenInterceptor)
+            .addInterceptor(provideLoggingInterceptor())
             .build()
     }
+
 
 
     @Provides

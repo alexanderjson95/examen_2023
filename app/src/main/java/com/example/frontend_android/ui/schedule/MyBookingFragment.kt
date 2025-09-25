@@ -38,7 +38,7 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
     private val bookedMap = mutableMapOf<CalendarDay, List<BookingResponse>>()
     private var userId: Long = 0L
     private var projectId: Long = args.projectId
-    private var bookingId: Long? = null
+    private var bookingId: Long = 0L
 
     // Default att man sätter upp tillänglig tid, annars false = bokning
     private var availability: Boolean = true
@@ -110,7 +110,7 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
 
             calendarView = view.findViewById(R.id.calendarView)
             calendarView.setCurrentDate(CalendarDay.today())
-            bookingVM.getMember(projectId!!)
+            bookingVM.getMember(projectId)
             bookingVM.members.observe(viewLifecycleOwner) { members ->
                 if (!members.isNullOrEmpty()) {
                     membersList = members
@@ -163,7 +163,7 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
                     val bookingsForDay = bookedMap[date]
                     if (!bookingsForDay.isNullOrEmpty()) {
                         isBooked = true
-                        bookingId = bookingsForDay.firstOrNull()?.bookingId
+                        bookingsForDay.firstOrNull()?.let { bookingId = it.bookingId }
 
                         Toast.makeText(
                             requireContext(),
@@ -232,6 +232,7 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
                         }
                     } else {
                         bookingVM.addBooking(
+                            bookingId,
                             projectId,
                             userId,
                             startHour,
@@ -239,7 +240,7 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
                             endHour,
                             endMinute,
                             availability,
-                            dateMillis
+                            dateMillis,
                         )
                     }
                 }

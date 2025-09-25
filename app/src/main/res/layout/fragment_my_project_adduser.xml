@@ -27,7 +27,7 @@
         android:id="@+id/showMembersCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/OnlyMembers"
+        android:text="@string/showReq"
         android:padding="8dp" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/usersAddRecyclerView"

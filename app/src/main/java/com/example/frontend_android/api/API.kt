@@ -16,6 +16,7 @@ import com.example.frontend_android.model.roles.RoleResponse
 import com.example.frontend_android.model.roles.UserRoleResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -96,12 +97,12 @@ interface API {
             @Path("userId") userId: Long
         ): List<String>
 
-    @PATCH("projects/{projectId}/users/{userId}")
+    @PATCH("projects/{projectId}/{userId}")
     suspend fun updateUserProject(
         @Path("projectId") projectId: Long,
         @Path("userId") userId: Long,
         @Body req: UserProjectRequest
-    ): Response<UserProjectResponse>
+    ): Response<Unit>
 
     @POST("projects/{projectId}/users/{userId}")
     suspend fun addUserProject(
@@ -109,6 +110,27 @@ interface API {
         @Path("userId") userId: Long?,
         @Body req: UserProjectRequest
         ): Response<Unit>
+
+    @GET("projects/{projectId}/requests")
+    suspend fun  getRequestsFromProject(@Path("projectId") projectId: Long): Response<List<UserProjectResponse>>
+
+    @GET("projects/{projectId}/invites")
+    suspend fun  getInvitesFromProject(@Path("projectId") projectId: Long): Response<List<UserProjectResponse>>
+
+
+    @GET("projects/requests")
+    suspend fun  getRequestsForUser(): Response<List<UserProjectResponse>>
+
+    @GET("projects/invites")
+    suspend fun  getInvitesFromUser(): Response<List<UserProjectResponse>>
+
+    @GET("projects/accepted")
+    suspend fun  getAcceptedUserProjects(): Response<List<UserProjectResponse>>
+
+
+    @GET("projects/not-in")
+    suspend fun  getProjectsUserIsNotIn(): Response<List<ProjectResponse>>
+
 
     @GET("/projects/user/projects")
     suspend fun getAllUsersProjects(): Response<List<UserProjectResponse>>
@@ -133,5 +155,10 @@ interface API {
 
     @PATCH("/bookings/{bookingId}/update")
     suspend fun patchBooking(@Path("bookingId") bookingId: Long?, @Body req: BookingRequest): Response<Unit>
+
+
+    @DELETE("/projects/{projectId}/users/{userId}")
+    suspend fun removeUserFromProject(@Path("projectId") projectId: Long, @Path("userId") userId: Long ): Response<Unit>
+
 
 }

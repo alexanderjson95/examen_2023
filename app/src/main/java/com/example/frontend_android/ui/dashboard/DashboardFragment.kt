@@ -38,8 +38,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard){
         parentFragmentManager.setFragmentResultListener("addProjectRequest", viewLifecycleOwner) { _, bundle ->
             val name = bundle.getString("projectName")
             val desc = bundle.getString("projectDescription")
-            val genre = bundle.getString("projectGenre")
-            projectVM.addProject(name,desc,genre)
+            projectVM.addProject(name,desc)
         }
 
 

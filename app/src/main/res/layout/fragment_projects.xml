@@ -22,6 +22,8 @@
         android:layout_height="wrap_content"
         android:text="@string/Search"
         />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/projectsRecyclerView"
         android:layout_width="match_parent"

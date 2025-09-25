@@ -28,9 +28,8 @@ class UserRoleRepository@Inject constructor(
 
     override suspend fun performPatch(
         api: API,
-        data: UserRoleRequest,
-        targetId: Long
-    ): Response<Unit> {
+        data: UserRoleRequest
+        ): Response<Unit> {
         TODO("Not yet implemented")
     }
 
@@ -49,7 +48,12 @@ class UserRoleRepository@Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteData(id: UserRoleRequest): Result<Unit> {
+    override suspend fun performRemove(
+        api: API,
+        toRemove: Long,
+        fromTableId: Long
+    ): Response<Unit> {
         TODO("Not yet implemented")
     }
+
 }

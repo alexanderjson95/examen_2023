@@ -4,11 +4,12 @@ import java.time.LocalDateTime
 
 
 data class ProjectResponse (
-    private val id: Long? = null,
-    val projectName: String? = null,
-    private val description: String? = null,
-    private val isPublic: Boolean = false,
-    private val salary: Double = 0.0,
+     val id: Long,
+    val projectName: String,
+     val description: String,
+     val isPublic: Boolean = false,
+     val salary: Double = 0.0,
     val type: String? = null,
-    private val created: String? = null
+     val created: String? = null,
+     val requestRule: String? = null
 )

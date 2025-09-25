@@ -70,4 +70,10 @@
     <string name="OnlyMembers">Visa endast medlemmar</string>
     <string name="remove_req">Ta bort inbjudan</string>
     <string name="searchUser">Sök efter användare</string>
+    <string name="alexander">Alexander</string>
+    <string name="title_requests_projects">Förfrågningar(Projekt)</string>
+    <string name="join">Skicka förfrågan att gå med</string>
+    <string name="OnlyRequests">Visa mina förfrågningar</string>
+    <string name="showReq">Visa förfrågade/inbjudna</string>
+    <string name="NoInvittes">Inga förfrågningar eller inbjudningar</string>
 </resources>

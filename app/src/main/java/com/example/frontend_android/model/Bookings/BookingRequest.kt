@@ -1,6 +1,7 @@
 package com.example.frontend_android.model.Bookings
 
 data class BookingRequest(
+    val bookingId: Long,
     val userId: Long,
     val projectId: Long?,
     val startHour: Int,
