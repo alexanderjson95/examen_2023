@@ -15,4 +15,10 @@
     <color name="font_color_inactive">#B4B4B5</color>
     <color name="background_layer_1">#B4B4B5</color>
 
+
+
+    <color name="theme_one_yellow">#F0CF65</color>
+    <color name="theme_one_red">#E07A5F</color>
+
+
 </resources>

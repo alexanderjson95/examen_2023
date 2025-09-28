@@ -26,7 +26,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val regBtn = view.findViewById<MaterialButton>(R.id.regBtn)
+       // val regBtn = view.findViewById<MaterialButton>(R.id.regBtn)
         val username = view.findViewById<EditText>(R.id.usernameEditText)
         val password = view.findViewById<EditText>(R.id.passwordEditText)
         val firstName = view.findViewById<EditText>(R.id.firstNameEditText)
@@ -39,7 +39,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         registerViewModel.getRoles()
         registerViewModel.status.observe(viewLifecycleOwner) { status ->
             if (status) {
-                val action = RegisterFragmentDirections.actionRegToLogin()
+                val action = RegFragmentDirections.actionRegToLogin()
                 findNavController().navigate(action)
                 Toast.makeText(requireContext(), "Registrering lyckades!", Toast.LENGTH_SHORT)
                     .show()
@@ -66,32 +66,32 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
             loginMenuItem.setOnClickListener {
-                val action = RegisterFragmentDirections.actionRegToLogin()
+                val action = RegFragmentDirections.actionRegToLogin()
                 findNavController().navigate(action)
             }
 
 
 
-            regBtn.setOnClickListener {
-                if(!checkInputs(inputs)) {
-                    Toast.makeText(requireContext(), "GÖR OM GÖR RÄTT!", Toast.LENGTH_SHORT).show()
-                } else {
-                    val selectedRole = roleSpinner.selectedItem.toString()
-                    val roleList = listOfNotNull(
-                        RoleRequest(selectedRole)
-                    )
-
-                    registerViewModel.register(
-                        username = username.text.toString(),
-                        firstName = firstName.text.toString(),
-                        lastName = lastName.text.toString(),
-                        password = password.text.toString(),
-                        email = email.text.toString(),
-                        publicKey = null,
-                        roles = roleList
-                    )
-                }
-            }
+//            regBtn.setOnClickListener {
+//                if(!checkInputs(inputs)) {
+//                    Toast.makeText(requireContext(), "GÖR OM GÖR RÄTT!", Toast.LENGTH_SHORT).show()
+//                } else {
+//                    val selectedRole = roleSpinner.selectedItem.toString()
+//                    val roleList = listOfNotNull(
+//                        RoleRequest(selectedRole)
+//                    )
+//
+//                    registerViewModel.register(
+//                        username = username.text.toString(),
+//                        firstName = firstName.text.toString(),
+//                        lastName = lastName.text.toString(),
+//                        password = password.text.toString(),
+//                        email = email.text.toString(),
+//                        publicKey = null,
+//                        roles = roleList
+//                    )
+//                }
+//            }
         }
     }
     fun checkInputs(list: List<EditText>): Boolean {

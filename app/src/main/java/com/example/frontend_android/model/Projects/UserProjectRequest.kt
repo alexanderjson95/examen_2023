@@ -1,6 +1,6 @@
 package com.example.frontend_android.model.Projects
 
-import com.example.frontend_android.test.requestType
+//import com.example.frontend_android.test.requestType
 
 
 /**

@@ -91,4 +91,20 @@
     <string name="msg">Mina meddenden</string>
     <string name="convos">Konversationer</string>
     <string name="noMessage">Du har inte kontakt med någon ännu!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add">Lägg till</string>
+    <string name="flik1">Data ett</string>
+    <string name="data2">Data två</string>
+    <string name="searchTab">Sökflik</string>
+    <string name="addeddata">Hämtad data</string>
+    <string name="inkluderat">Inkluderat</string>
+    <string name="exkluderat">Exkluderat</string>
+    <string name="no_data_found">Inget kunde hittas här ännu!</string>
+    <string name="Next">Vidare</string>
+    <string name="lname">Efternamn</string>
+    <string name="rolePick">Välj roll</string>
+    <string name="back">Bakåt</string>
+    <string name="success_reg">Registreringen lyckades!</string>
+    <string name="nav_login_btn">Ta mig till inloggning</string>
 </resources>

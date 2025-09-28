@@ -5,7 +5,7 @@ import com.example.frontend_android.api.API
 import com.example.frontend_android.api.RepositoryAbstract
 import com.example.frontend_android.model.Projects.UserProjectRequest
 import com.example.frontend_android.model.Projects.UserProjectResponse
-import com.example.frontend_android.test.UserProjectAcceptRequest
+//import com.example.frontend_android.test.UserProjectAcceptRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
