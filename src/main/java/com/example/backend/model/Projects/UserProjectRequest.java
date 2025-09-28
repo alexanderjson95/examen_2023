@@ -22,5 +22,6 @@ public class UserProjectRequest {
     @Size(max = 15)
     private String role;
     private boolean isAdmin;
-    private boolean joined;
+    private boolean hasJoined;
+    private RequestType requestType;
 }

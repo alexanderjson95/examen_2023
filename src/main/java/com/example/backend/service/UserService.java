@@ -151,7 +151,8 @@ public class UserService {
         List<Users> users;
         switch (query.toLowerCase()) {
             case "username" -> users = userRepo.findAllByUsernameContainingIgnoreCase(value);
-
+            case "firstname" -> users = userRepo.findAllByFirstNameContainingIgnoreCase(value);
+            case "lastname" -> users = userRepo.findAllByLastNameContainingIgnoreCase(value);
             default -> throw new IllegalArgumentException("Sökordet finns inte!" + query);
         }
 

@@ -3,6 +3,7 @@ package com.example.backend.model.Projects;
 
 import com.example.backend.ToExport;
 import lombok.*;
+import org.hibernate.mapping.Join;
 
 import java.time.LocalDateTime;
 @ToExport
@@ -20,6 +21,7 @@ public class ProjectResponse {
     private double salary;
     private String type;
     private LocalDateTime created;
+    private JoinType requestRule;
 
     public static ProjectResponse fromProject(Project project) {
         return new ProjectResponse (
@@ -29,7 +31,8 @@ public class ProjectResponse {
                 project.isPublic(),
                 project.getSalary(),
                 project.getGenre(),
-                project.getCreated()
+                project.getCreated(),
+                project.getRequestRule()
         );
     }
 }

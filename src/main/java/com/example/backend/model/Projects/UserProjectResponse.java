@@ -33,6 +33,7 @@ public class UserProjectResponse {
     private boolean hasJoined;
     private boolean isBlocked;
     private LocalDateTime requestedDate;
+    private RequestType requestType;
 
 
 
@@ -50,6 +51,7 @@ public class UserProjectResponse {
                .isAdmin(userProject.isAdmin())
                .hasJoined(userProject.isHasJoined())
                .requestedDate(userProject.getRequestedDate())
+               .requestType(userProject.getRequestType())
                .build();
     }
 }

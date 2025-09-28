@@ -1,6 +1,8 @@
 package com.example.backend.repository;
 
 import com.example.backend.model.Chat.UserMessages;
+import com.example.backend.model.Users.UserResponse;
+import com.example.backend.model.Users.Users;
 import org.hibernate.query.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -43,4 +45,16 @@ public interface UserMessageRepository extends JpaRepository<UserMessages, Long>
             """)
     List<UserMessages> getConvo(@Param("first") Long first, @Param("second") Long second);
 
+    @Query("""
+            SELECT DISTINCT
+                CASE WHEN um.sender.id = :activeuser THEN um.recipient.id
+                     ELSE um.sender.id
+                END
+            FROM UserMessages um
+            WHERE um.sender.id = :activeuser OR um.recipient.id = :activeuser
+            """)
+    List<Long> getAllContacts(@Param("activeuser") Long userId);
+
+
 }
+

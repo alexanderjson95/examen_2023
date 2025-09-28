@@ -1,9 +1,11 @@
 package com.example.backend.repository;
 
+import com.example.backend.model.Projects.RequestType;
 import com.example.backend.model.Projects.UserProject;
 import com.example.backend.model.Projects.UserProjectResponse;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -44,6 +46,23 @@ public interface UserProjectRepository extends JpaRepository<UserProject, Long> 
     @EntityGraph(attributePaths = {"user"})
     List<UserProject> findByUser_IdAndHasJoinedFalseAndIsAdminFalse(Long projectId);
 
+//    @EntityGraph(attributePaths = {"user"})
+//    List<UserProject> findByProject_IdAndRequest(Long projectId);
+//
+//    //todo
+//    @Query("SELECT up.request.request FROM UserProject WHERE ur.user.id = :userId")
+//    List<UserProject> findByUser_IdAndRequest(Long userId);
+
+    @EntityGraph(attributePaths = {"user", "project"})
+    List<UserProject> findByProject_IdAndRequestType(Long projectId, RequestType requestType);
+
+    @Query("SELECT up FROM UserProject up " +
+            "JOIN FETCH up.user u "+
+            "WHERE u.id = :userId AND up.requestType = :requestType")
+    List<UserProject> findByUser_IdAndRequestType(Long userId, RequestType requestType);
+
+
+    long countByProject_IdAndIsAdminTrue(Long projectId);
     boolean existsByProject_IdAndUser_IdAndIsAdminTrue(Long projectId, Long userId);
 
 }

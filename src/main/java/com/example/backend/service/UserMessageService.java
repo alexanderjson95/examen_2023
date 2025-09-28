@@ -4,9 +4,11 @@ import com.example.backend.model.Chat.Message;
 import com.example.backend.model.Chat.MessageRequest;
 import com.example.backend.model.Chat.MessageResponse;
 import com.example.backend.model.Chat.UserMessages;
+import com.example.backend.model.Users.UserResponse;
 import com.example.backend.model.Users.Users;
 import com.example.backend.repository.MessageRepository;
 import com.example.backend.repository.UserMessageRepository;
+import com.example.backend.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.bouncycastle.util.encoders.UrlBase64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,15 @@ public class UserMessageService {
     private final MessageRepository messageRepository;
     private final CryptoService crypto;
     private final UserService uService;
+    private final UserRepository uRepo;
 
     @Autowired
-    public UserMessageService(UserMessageRepository userMessageRepository, MessageRepository messageRepository, CryptoService crypto, UserService uService) {
+    public UserMessageService(UserMessageRepository userMessageRepository, MessageRepository messageRepository, CryptoService crypto, UserService uService, UserRepository uRepo) {
         this.userMessageRepository = userMessageRepository;
         this.messageRepository = messageRepository;
         this.crypto = crypto;
         this.uService = uService;
+        this.uRepo = uRepo;
     }
 
 
@@ -42,6 +46,12 @@ public class UserMessageService {
                 .stream().map(MessageResponse::fromMessageResponse).toList();
     }
 
+    public List<UserResponse> getContacts(Long userId){
+        List<Long> contactIds = userMessageRepository.getAllContacts(userId);
+        return uRepo.findAllById(contactIds).stream()
+                .map(UserResponse::returnUser)
+                .toList();
+    }
 
     public List<MessageResponse> getSenderMessages(Long userId){
         return userMessageRepository.findAllUsersMessages(userId)

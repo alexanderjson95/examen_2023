@@ -2,9 +2,7 @@ package com.example.backend.model.Projects;
 
 
 import com.example.backend.model.Users.Users;
-import com.example.backend.model.roles.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +28,11 @@ public class UserProject {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
-    private boolean isCreator ;
+
+    @Column(name = "join_status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private RequestType requestType; // om admin skickade inbjudan ska bara mottagare kunna acceptera vice versa,
+    private boolean isCreator ; // skapare av projekt, används inte nu men bör dokumenteras
     private boolean isAdmin;
     private boolean hasJoined;
     // när medlem blir inbjuden eller bad om inbjudan

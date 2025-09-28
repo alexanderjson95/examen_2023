@@ -24,4 +24,6 @@ public class ProjectRequest {
     @Size(max = 100)
     private String description;
     private String type;
+    private JoinType requestRule;
+
 }

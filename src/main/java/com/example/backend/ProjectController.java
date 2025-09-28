@@ -43,13 +43,13 @@ public class ProjectController {
     @DeleteMapping("/{projectId}/users/{userId}")
     public ResponseEntity<Void> removeUserFromProject(@PathVariable("projectId") Long projectId, @PathVariable("userId") Long userId, Principal principal){
         Long id = fetchLoggedIn(principal);
-        projectService.removeUserFromProject(id, userId,projectId);
+        projectService.removeUserFromProject(userId,projectId,id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 
     // Behörigheter: admin, joined, blocked
-    @PatchMapping("/{projectId}/users/{userId}")
+    @PatchMapping("/{projectId}/{userId}")
     public ResponseEntity<UserProjectResponse> updateUserToProject(
             @PathVariable("projectId") Long projectId,
             @PathVariable("userId") Long userId ,
@@ -59,6 +59,13 @@ public class ProjectController {
         projectService.updateUserProject(id,userId, projectId, req);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @GetMapping("/not-in")
+    public ResponseEntity<List<ProjectResponse>> getProjectsUserIsNotIn( Principal principal){
+        List<ProjectResponse> projects = projectService.getProjectsUserIsNotIn(fetchLoggedIn(principal));
+        return ResponseEntity.ok(projects);
+    }
+
 
 
     @GetMapping("/user/projects")
@@ -98,21 +105,20 @@ public class ProjectController {
 
 
     @GetMapping("{projectId}/admin/requested")
-    public ResponseEntity<List<UserProjectResponse>> findRequestedToAdmin( Principal principal, @RequestParam Long projectId){
-        String username = principal.getName();
-        Long user = userService.findUserByUsername(username).getId();
-        List<UserProjectResponse> projects = projectService.findRequestedToAdmin(user,projectId);
+    public ResponseEntity<List<UserProjectResponse>> findRequestedToAdmin(@PathVariable Long projectId,Principal principal){
+        Long loggedIn = fetchLoggedIn(principal);
+        List<UserProjectResponse> projects = projectService.findRequestedToAdmin(loggedIn,projectId);
         return ResponseEntity.ok(projects);
     }
 
-    @GetMapping("/users/requested")
-    public ResponseEntity<List<UserProjectResponse>> findRequestedToUser(Principal principal){
-        String username = principal.getName();
-        Users user = userService.findUserByUsername(username);
-        System.out.println(principal.getName());
-        List<UserProjectResponse> projects = projectService.findRequestedToUser(user.getId());
-        return ResponseEntity.ok(projects);
-    }
+//    @GetMapping("/users/requested")
+//    public ResponseEntity<List<UserProjectResponse>> findRequestedToUser(Principal principal){
+//        String username = principal.getName();
+//        Users user = userService.findUserByUsername(username);
+//        System.out.println(principal.getName());
+//        List<UserProjectResponse> projects = projectService.findRequestedToUser(user.getId());
+//        return ResponseEntity.ok(projects);
+//    }
 
     @GetMapping("/search")
     public ResponseEntity<List<ProjectResponse>> searchUsers(
@@ -127,6 +133,41 @@ public class ProjectController {
     private Long fetchLoggedIn(Principal p){
         String username = p.getName();
         return userService.findUserByUsername(username).getId();
+    }
+
+
+    @GetMapping("/{projectId}/requests")
+    public ResponseEntity<List<UserProjectResponse>> findRequestedToProject(@PathVariable Long projectId){
+        List<UserProjectResponse> projects = projectService.getRequestsForProject(projectId);
+        return ResponseEntity.ok(projects);
+    }
+
+
+    @GetMapping("/{projectId}/invites")
+    public ResponseEntity<List<UserProjectResponse>> findInvitedToProject(@PathVariable Long projectId){
+        List<UserProjectResponse> projects = projectService.getInvitesForProject(projectId);
+        return ResponseEntity.ok(projects);
+    }
+
+
+    @GetMapping("/requests")
+    public ResponseEntity<List<UserProjectResponse>> findRequestedToUser(Principal principal){
+        Long loggedIn = fetchLoggedIn(principal);
+        List<UserProjectResponse> projects = projectService.getRequestsForUsers(loggedIn);
+        return ResponseEntity.ok(projects);
+    }
+
+    @GetMapping("/accepted")
+    public ResponseEntity<List<UserProjectResponse>> findAcceptedProjectToUser(Principal principal){
+        Long loggedIn = fetchLoggedIn(principal);
+        List<UserProjectResponse> projects = projectService.getJoinedForUsers(loggedIn);
+        return ResponseEntity.ok(projects);
+    }
+    @GetMapping("/invites")
+    public ResponseEntity<List<UserProjectResponse>> findInvitedToUser(Principal principal){
+        Long loggedIn = fetchLoggedIn(principal);
+        List<UserProjectResponse> projects = projectService.getInvitesForUsers(loggedIn);
+        return ResponseEntity.ok(projects);
     }
 
 }

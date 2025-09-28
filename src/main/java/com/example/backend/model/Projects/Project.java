@@ -29,6 +29,9 @@ public class Project {
     private String genre;
     @CreationTimestamp
     private LocalDateTime created;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "request_rule")
+    private JoinType requestRule = JoinType.MANUAL;
 }
 
 
