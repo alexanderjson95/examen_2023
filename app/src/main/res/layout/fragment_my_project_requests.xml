@@ -14,14 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:singleSelection="true"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="16dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRequests"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="58dp"
             android:layout_weight="1"
+            android:backgroundTint="#577590"
+            android:textColor="@color/white"
             android:text="Förfrågningar"
             android:textAllCaps="false"/>
 
@@ -29,27 +32,31 @@
             android:id="@+id/btnInvites"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="58dp"
             android:layout_weight="1"
+            android:backgroundTint="#F9F8F8"
+            android:textColor="@color/black"
             android:text="Inbjudningar"
             android:textAllCaps="false"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <com.google.android.material.textview.MaterialTextView
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/no_invite_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/NoInvittes"
-        android:textAlignment="center"
-        android:padding="24dp"
-        android:textColor="@color/font_color_active"
-        app:textAllCaps="true"
-        android:visibility="gone">
+        android:layout_margin="16dp"
+        app:cardElevation="4dp"
+        android:backgroundTint="@color/card_layout_color">
 
-    </com.google.android.material.textview.MaterialTextView>
-
-
-
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/NoInvittes"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/projectRequestRecycler"

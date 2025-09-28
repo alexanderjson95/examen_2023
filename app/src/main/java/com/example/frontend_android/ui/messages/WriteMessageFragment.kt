@@ -18,6 +18,7 @@ import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.example.frontend_android.model.Users.UserResponse
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textview.MaterialTextView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import kotlin.getValue
@@ -33,8 +34,8 @@ class WriteMessageFragment : Fragment(R.layout.fragment_inchat) {
     private val args: WriteMessageFragmentArgs by navArgs()
     @Inject lateinit var adapter: ChatAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
+        super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.messagesRecyclerView)
         recipientId = args.recipientId
         fName = args.recipientFname
@@ -47,8 +48,6 @@ class WriteMessageFragment : Fragment(R.layout.fragment_inchat) {
                 val sender = m.map { it.senderFirstname }
                 val recipient = m.map { it.recipientId }
                 adapter.submitList(m){recyclerView.scrollToPosition(adapter.itemCount - 1)}
-                Log.d("Messages", "MESSAGE: TYPE IN TEXT!!!!")
-                Log.d("Messages", "MESSAGE: sender: $sender and recipient $recipient  ")
             }
         }
 
@@ -58,11 +57,9 @@ class WriteMessageFragment : Fragment(R.layout.fragment_inchat) {
 
         val input = view.findViewById<TextInputEditText>(R.id.message_edit_text)
         val sendBtn = view.findViewById<MaterialButton>(R.id.sendBtn)
-        val fname_value = view.findViewById<TextView>(R.id.fname_value)
-        val lName_value = view.findViewById<TextView>(R.id.lname_value)
+        val header = view.findViewById<MaterialTextView>(R.id.contact_header)
 
-        fname_value.text = fName
-        lName_value.text = lName
+        header.text = fName
 
         sendBtn.setOnClickListener {
             val text = input.text.toString()

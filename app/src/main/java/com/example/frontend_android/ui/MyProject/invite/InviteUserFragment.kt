@@ -69,7 +69,6 @@ class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser) {
             }
         }
 
-
         bvm.members.observe(viewLifecycleOwner) { members ->
             val users = bvm.userroles.value
             if (users != null && members != null) {

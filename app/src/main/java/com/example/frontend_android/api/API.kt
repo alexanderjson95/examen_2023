@@ -63,7 +63,7 @@ interface API {
         @Query("value") value: String
     ): Response<List<ProjectResponse>>
 
-    @GET("/recieved/{userId}")
+    @GET("messages/recieved/{userId}")
     suspend fun getRecievedMessages(
         @Path("projectId") projectId: Long,
     ): Response<List<MessageResponse>>
@@ -72,6 +72,11 @@ interface API {
     suspend fun openConvo(
         @Path("recipientId") recipientId: Long,
     ): Response<List<MessageResponse>>
+
+    @GET("messages/contacts")
+    suspend fun getContacts(): Response<List<UserResponse>>
+
+
 
     @GET("projects/{projectId}/users/{userId}")
     suspend fun getUserProject(
@@ -116,8 +121,6 @@ interface API {
 
     @GET("projects/{projectId}/invites")
     suspend fun  getInvitesFromProject(@Path("projectId") projectId: Long): Response<List<UserProjectResponse>>
-
-
     @GET("projects/requests")
     suspend fun  getRequestsForUser(): Response<List<UserProjectResponse>>
 

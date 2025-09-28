@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend_android.R
+import com.example.frontend_android.model.Chat.MessageResponse
 import com.example.frontend_android.model.Users.UserResponse
 import com.google.android.material.button.MaterialButton
 
@@ -24,6 +26,8 @@ class ShowMessagesAdapter  (
         var recipient_key: TextView = view.findViewById(R.id.fname_value)
         var recipient_value: TextView = view.findViewById(R.id.lname_value)
         var openBtn: MaterialButton = view.findViewById(R.id.open_btn)
+        var contactCard: CardView = view.findViewById(R.id.contactCard)
+
     }
 
 
@@ -32,7 +36,7 @@ class ShowMessagesAdapter  (
         viewType: Int
     ): ShowMessagesViewHolder {
         val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_user, parent, false)
+            .inflate(R.layout.item_contact, parent, false)
         return ShowMessagesViewHolder(itemView)
     }
 
@@ -47,7 +51,7 @@ class ShowMessagesAdapter  (
 
 
 
-        holder.openBtn.setOnClickListener {
+        holder.contactCard.setOnClickListener {
             openMessage(users.id, users.firstName, users.lastName)
         }
     }

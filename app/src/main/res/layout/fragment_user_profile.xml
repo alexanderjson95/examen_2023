@@ -1,0 +1,116 @@
+<LinearLayout android:id="@+id/message_form"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:elevation="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="#212738" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="22dp"
+            app:textAllCaps="true"
+            android:textAlignment="center"
+            android:text="@string/benjamin"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="62dp"
+            app:textAllCaps="true"
+            android:textAlignment="center"
+            android:text="@string/role_value"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            />
+
+        <ImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:layout_gravity="center|bottom"
+            android:src="@drawable/outline_face_24"
+            android:scaleType="centerCrop"
+            android:translationY="0dp"
+            android:backgroundTint="#EDF2EF"
+            android:background="@drawable/background_shape"/>
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:id="@+id/recyclerbox"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:orientation="horizontal"
+        style="@style/CustomEditTextStyle">
+
+        <LinearLayout
+            android:id="@+id/loginMenuLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:elevation="4dp">
+
+            <LinearLayout
+                android:id="@+id/user_form"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:elevation="4dp">
+
+                <EditText
+                    android:id="@+id/firstNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fname"
+                    android:inputType="textPersonName"
+                    android:layout_marginBottom="12dp"/>
+
+                <EditText
+                    android:id="@+id/lastNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/eName"
+                    android:inputType="textPersonName"
+                    android:layout_marginBottom="12dp"/>
+                <EditText
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/password"
+                    android:text=""
+                    android:inputType="textPassword"
+                    android:layout_marginBottom="16dp">
+                </EditText>
+
+                <Spinner
+                    android:id="@+id/roleSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"/>
+
+            </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+
+</LinearLayout>

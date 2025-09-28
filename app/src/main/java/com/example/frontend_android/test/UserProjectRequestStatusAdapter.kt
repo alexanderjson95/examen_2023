@@ -64,6 +64,4 @@ class UserProjectRequestStatusAdapter @Inject constructor(private val accept: (L
     override fun getItemCount(): Int {
         return projectList.size
     }
-
-
 }

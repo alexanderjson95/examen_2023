@@ -17,6 +17,7 @@ import com.example.frontend_android.R
 import com.example.frontend_android.model.Bookings.BookingResponse
 import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
@@ -34,10 +35,9 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
     private val bookingVM: BookingsViewModel by activityViewModels()
     private lateinit var selectedUser: String
     private lateinit var selectedBooking: BookingResponse
-    private val args: MyBookingFragmentArgs by navArgs()
     private val bookedMap = mutableMapOf<CalendarDay, List<BookingResponse>>()
     private var userId: Long = 0L
-    private var projectId: Long = args.projectId
+
     private var bookingId: Long = 0L
 
     // Default att man sätter upp tillänglig tid, annars false = bokning
@@ -49,13 +49,19 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
 
         super.onViewCreated(view, savedInstanceState)
         bookingVM.getUser()
+
+
+
         bookingVM.user.observe(viewLifecycleOwner) { u -> userId = u?.id ?: 0L }
         bookingVM.getBooking(userId)
+
+
         bookingVM.bookings.observe(viewLifecycleOwner) { b ->
             calendarView.removeDecorators()
             bookedMap.clear()
+
             if (!b.isNullOrEmpty()) {
-                val bookedDates = b.map { booking ->
+                    b.map { booking ->
                     booking.dateMillis.let { m ->
                         val localDate = Instant.ofEpochMilli(m)
                             .atZone(ZoneId.systemDefault())
@@ -84,28 +90,45 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
                             }
 
                         if (requestedDays.isNotEmpty()) {
-                            calendarView.addDecorator(ScheduleDecorator(requestedDays, Color.YELLOW))
+                            calendarView.addDecorator(ScheduleDecorator(requestedDays, Color.BLUE))
                             }
                         }
                     }
-                } }
+                }
+            }
 
-            val availableBtn = view.findViewById<MaterialButton>(R.id.available_btn)
-            val bookBtn = view.findViewById<MaterialButton>(R.id.booking_btn)
 
+             val args: MyBookingFragmentArgs by navArgs()
+             val projectId: Long = args.projectId
+
+        Toast.makeText(
+            requireContext(),
+            "Vald projekt: $projectId",
+            Toast.LENGTH_SHORT
+        ).show()
 
             val memberSpinner = view.findViewById<Spinner>(R.id.memberSpinner)
             var membersList: List<UserProjectResponse>? = null
+            val toggleGroup = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleGroup)
 
 
             memberSpinner.visibility = View.INVISIBLE
-            bookBtn.setOnClickListener {
-                availability = false
-                memberSpinner.visibility = View.VISIBLE
-            }
-            availableBtn.setOnClickListener {
-                availability = true
-                memberSpinner.visibility = View.INVISIBLE
+            toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+                if (isChecked) {
+                    when (checkedId) {
+                        R.id.btnBook -> {
+                            availability = false
+                            memberSpinner.visibility = View.VISIBLE
+                        }
+                        R.id.btnAvailable  -> {
+                            availability = true
+                            memberSpinner.visibility = View.INVISIBLE
+                            selectedUser = bookingVM.user.value?.username ?: "";
+                            userId = bookingVM.user.value?.id ?: 0L
+                            bookingVM.getBooking(userId)
+                        }
+                    }
+                }
             }
 
             calendarView = view.findViewById(R.id.calendarView)
@@ -124,7 +147,6 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     memberSpinner.adapter = adapter
 
-
                     memberSpinner.onItemSelectedListener =
                         object : AdapterView.OnItemSelectedListener {
                             override fun onItemSelected(
@@ -142,7 +164,6 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
-
                             override fun onNothingSelected(parent: AdapterView<*>?) {}
                         }
                 }
@@ -164,7 +185,6 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
                     if (!bookingsForDay.isNullOrEmpty()) {
                         isBooked = true
                         bookingsForDay.firstOrNull()?.let { bookingId = it.bookingId }
-
                         Toast.makeText(
                             requireContext(),
                             "booking id: $bookingId",
@@ -177,12 +197,13 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
                     }
 
 
+
+
                     val sHour = bookingsForDay?.map { it.startHour }
                     val sMin = bookingsForDay?.map { it.startMinute }
                     val eHour = bookingsForDay?.map { it.endHour }
                     val eMin = bookingsForDay?.map { it.endMinute }
                     val acception = bookingsForDay?.map { it.accepted }
-
                     val projectBooking = bookingsForDay?.map { it.projectName }
                     val bookingFormat =
                         "Project: $projectBooking - Time: $sHour:$sMin - $eHour:$eMin - Accepted: $acception"
@@ -216,7 +237,7 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
                     val endHour = bundle.getInt("endHour")
                     val endMinute = bundle.getInt("endMinute")
                     if (isBooked) {
-                        bookingId?.let {
+                        bookingId.let {
                             bookingVM.patchBooking(
                                 it,
                                 projectId,
@@ -259,6 +280,7 @@ class MyBookingFragment : Fragment(R.layout.fragment_booking) {
 
         override fun decorate(view: DayViewFacade?) {
             view?.addSpan(DotSpan(10f, color))
+
         }
     }
 

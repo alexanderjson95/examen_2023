@@ -101,10 +101,7 @@
 
 
 
-    <fragment
-        android:id="@+id/navigation_add_message"
-        android:name="com.example.frontend_android.ui.messages.AddMessageDialog"
-        tools:layout="@layout/add_message_form"/>
+
 
     <fragment
         android:id="@+id/navigation_users"
@@ -116,6 +113,70 @@
         android:id="@+id/navigation_user_invites"
         android:name="com.example.frontend_android.test.UserInviteRequestFragment"
         tools:layout="@layout/fragment_users"/>
+
+    <fragment
+        android:id="@+id/navigation_user_project_settings"
+        android:name="com.example.frontend_android.ui.MyProject.MyProjectSettings"
+        tools:layout="@layout/fragment_my_project_settings">
+
+        <action
+            android:id="@+id/dash_to_up_admin_settings"
+            app:destination="@id/navigation_up_admin" />
+
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_user_add"
+        android:name="com.example.frontend_android.ui.MyProject.admin.UpAdminAddMemberFragment"
+        tools:layout="@layout/fragment_projects">
+
+        <action
+            android:id="@+id/dash_to_up_admin_settings"
+            app:destination="@id/navigation_up_admin" />
+
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/navigation_up_admin"
+        android:name="com.example.frontend_android.ui.MyProject.UProjectAdminFragment"
+        tools:layout="@layout/fragment_up_admin">
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+        <argument
+            android:name="userId"
+            app:argType="long" />
+
+        <action
+            android:id="@+id/dash_to_project_reqs"
+            app:destination="@id/navigation_project_requests" />
+
+        <action
+            android:id="@+id/dash_to_add_user"
+            app:destination="@id/navigation_user_add" />
+
+    </fragment>
+
+
+
+
+
 
 
 
@@ -132,14 +193,21 @@
             android:id="@+id/myProject_to_members"
             app:destination="@id/navigation_members" />
 
-        <action
-            android:id="@+id/myProject_to_addMember"
-            app:destination="@id/navigation_invite" />
 
+
+        <action
+            android:id="@+id/dash_to_up_settings"
+            app:destination="@id/navigation_user_project_settings" />
         <argument
             android:name="projectId"
             app:argType="long" />
     </fragment>
+
+
+
+
+
+
 
     <fragment
         android:id="@+id/navigation_members"
@@ -148,16 +216,17 @@
         <argument
             android:name="projectId"
             app:argType="long" />
-
         <argument
             android:name="userId"
             app:argType="long" />
     </fragment>
 
+
+
     <fragment
-        android:id="@+id/navigation_invite"
-        android:name="com.example.frontend_android.ui.MyProject.invite.InviteUserFragment"
-        tools:layout="@layout/fragment_my_project_adduser">
+        android:id="@+id/navigation_add_member"
+        android:name="com.example.frontend_android.ui.MyProject.admin.MyProjectInviteRequestsFragment"
+        tools:layout="@layout/fragment_my_project_settings">
         <argument
             android:name="projectId"
             app:argType="long" />
@@ -166,6 +235,35 @@
             android:name="userId"
             app:argType="long" />
     </fragment>
+
+
+
+    <fragment
+        android:id="@+id/navigation_edit_members"
+        android:name="com.example.frontend_android.ui.schedule.ProjectUserFragment"
+        tools:layout="@layout/fragment_users">
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_project_requests"
+        android:name="com.example.frontend_android.ui.MyProject.admin.MyProjectInviteRequestsFragment"
+        android:label="@string/skapa_projekt"
+        tools:layout="@layout/fragment_my_project_requests">
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+
 
 
     <fragment
@@ -176,7 +274,27 @@
         <action
             android:id="@+id/dash_to_writeMessage"
             app:destination="@id/navigation_writeMessage" />
+        <action
+            android:id="@+id/dash_to_addConvo"
+            app:destination="@id/navigation_addConvo" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_addConvo"
+        android:name="com.example.frontend_android.test.AddConvoFragment"
+        tools:layout="@layout/fragment_add_convo">
+
+        <action
+            android:id="@+id/dash_to_showMessages"
+            app:destination="@id/navigation_messages" />
+
+        <action
+            android:id="@+id/dash_to_writeMessage"
+            app:destination="@id/navigation_writeMessage" />
+    </fragment>
+
+
 
     <fragment
         android:id="@+id/navigation_writeMessage"
@@ -206,12 +324,7 @@
             app:destination="@id/navigation_dashboard" />
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_project_requests"
-        android:name="com.example.frontend_android.ui.project.UserProjectRequestFragment"
-        android:label="@string/skapa_projekt"
-        tools:layout="@layout/fragment_my_project_requests">
-    </fragment>
+
 
     <fragment
         android:id="@+id/navigation_dashboard"

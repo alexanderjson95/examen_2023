@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:text="@string/showReq"
         android:padding="8dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/usersAddRecyclerView"
         android:layout_width="match_parent"

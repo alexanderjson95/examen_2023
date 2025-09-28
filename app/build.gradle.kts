@@ -80,7 +80,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(platform(libs.androidx.compose.bom.v20240200))
     implementation(libs.mhiew.material.calendarview)
-
+    implementation(libs.material.v140)
     implementation(libs.ui)
     implementation(libs.material3)
     implementation(libs.androidx.lifecycle.runtime.ktx.v270)
@@ -89,6 +89,7 @@ dependencies {
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.pager)
+
     implementation(libs.accompanist.pager.indicators)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
@@ -104,4 +105,5 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.8.9")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.android.material:material:1.13.0")
 }

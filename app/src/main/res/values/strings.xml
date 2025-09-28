@@ -76,4 +76,19 @@
     <string name="OnlyRequests">Visa mina förfrågningar</string>
     <string name="showReq">Visa förfrågade/inbjudna</string>
     <string name="NoInvittes">Inga förfrågningar eller inbjudningar</string>
+    <string name="leave_project">Lämna projekt</string>
+    <string name="admin">Admin</string>
+    <string name="edit_members">Hantera medlemmar</string>
+    <string name="manage_members">Hantera användare</string>
+    <string name="deleteProject">Ta bort projekt\n</string>
+    <string name="go_invite">Hitta projekt</string>
+    <string name="lastname">Giordano</string>
+    <string name="firstname">Benjamin</string>
+    <string name="myProjects">Mina projekt</string>
+    <string name="CreateProject">Skapa projekt</string>
+    <string name="noProjects">Du är inte med i några projekt ännu!</string>
+    <string name="myInbox">Inbox</string>
+    <string name="msg">Mina meddenden</string>
+    <string name="convos">Konversationer</string>
+    <string name="noMessage">Du har inte kontakt med någon ännu!</string>
 </resources>

@@ -95,12 +95,11 @@ class BookingsViewModel  @Inject constructor(
 
     fun sendInvite(projectId: Long, userId: Long){
         viewModelScope.launch {
-            Log.d("AddReportViewModel: ", "USER ID: ${userId}")
 
             requestP = UserProjectRequest(
                 userId = userId, projectId = projectId, isAdmin = false, joined = false,
                 role = " ",
-                requestType = "INVITE"
+                requestType = "REQUEST"
             )
 
             val result = upRepo.addData(requestP)

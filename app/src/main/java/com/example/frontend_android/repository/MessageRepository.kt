@@ -5,6 +5,8 @@ import com.example.frontend_android.api.API
 import com.example.frontend_android.api.RepositoryAbstract
 import com.example.frontend_android.model.Chat.MessageRequest
 import com.example.frontend_android.model.Chat.MessageResponse
+import com.example.frontend_android.model.Users.UserResponse
+import com.google.gson.Gson
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -60,6 +62,23 @@ class MessageRepository @Inject constructor(
     ): Response<Unit> {
         TODO("Not yet implemented")
     }
+
+    suspend fun getContacts()
+             = withContext(Dispatchers.IO){
+         try {
+             val response = apiInterface.getContacts()
+             val rawJson = response.body()?.let { Gson().toJson(it) }
+             Log.d("API_CONTACTS", "Raw JSON: $rawJson")
+             val body = response.body()
+             if (response.isSuccessful && body != null)
+                 Result.success(body)
+             else
+                 Result.failure(Exception("HTTP ${response.code()} ${response.message()}"))
+         } catch (t: Throwable) {
+             Result.failure(t)
+         }
+    }
+
 
 //
 //    suspend fun getAllMessages(): Result<List<MessageResponse>> =

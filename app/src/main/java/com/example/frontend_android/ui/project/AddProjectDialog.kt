@@ -14,6 +14,7 @@ import com.example.frontend_android.R
 import com.example.frontend_android.ui.dashboard.DashboardFragmentDirections
 import com.example.frontend_android.ui.dashboard.DashboardViewModel
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.button.MaterialButtonToggleGroup
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,7 +36,18 @@ class AddProjectDialog : DialogFragment() {
         val addBtn = view.findViewById<MaterialButton>(R.id.create_project_btn)
         val closeBtn = view.findViewById<MaterialButton>(R.id.close_dialog_btn)
         val inputs = listOf<EditText>(projectName, projectDescription)
+        val toggleGroup = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleGroup)
 
+        toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.btnRequests -> {
+                        val action = AddProjectDialogDirections.dashToUserProject()
+                        findNavController().navigate(action)
+                    }
+                }
+            }
+        }
 
 
         addBtn.setOnClickListener {

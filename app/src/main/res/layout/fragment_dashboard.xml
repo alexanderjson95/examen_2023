@@ -10,17 +10,55 @@
     tools:context=".ui.dashboard.DashboardFragment">
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/create_project_btn"
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/royal_blue"
-        app:iconGravity="textTop"
-        app:iconPadding="8dp"
-        app:icon="@drawable/outline_add_24"
-        android:text="@string/skapa_projekt"
-        android:textColor="@color/white" />
+        app:singleSelection="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="16dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMyProjects"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:layout_weight="1"
+            android:backgroundTint="#577590"
+            android:textColor="@color/white"
+            android:text="@string/myProjects"
+            android:textAllCaps="false"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCreateProjects"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:layout_weight="1"
+            android:backgroundTint="#F9F8F8"
+            android:textColor="@color/black"
+            android:text="@string/CreateProject"
+            android:textAllCaps="false"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/no_projects"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardElevation="4dp"
+        android:backgroundTint="@color/card_layout_color">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/noProjects"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+    </com.google.android.material.card.MaterialCardView>
+
 
     <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/projectsRecyclerView"

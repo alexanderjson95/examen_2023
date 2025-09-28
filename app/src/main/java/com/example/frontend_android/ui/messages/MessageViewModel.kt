@@ -26,6 +26,10 @@ class MessageViewModel  @Inject constructor(
     private val _users = MutableLiveData<List<UserResponse>>()
     val users: MutableLiveData<List<UserResponse>> = _users
 
+    private val _contacts = MutableLiveData<List<UserResponse>>()
+    val contacts: MutableLiveData<List<UserResponse>> = _contacts
+
+
     private val _status = MutableLiveData<Boolean?>(null)
     val state: MutableLiveData<Boolean?> = _status
 
@@ -66,10 +70,10 @@ class MessageViewModel  @Inject constructor(
 
     fun getUserMessages(){
         viewModelScope.launch {
-            val result = repo.getData()
+            val result = repo.getContacts()
             _status.value = result.fold(
-                onSuccess = { messageList ->
-                    _messages.value = messageList
+                onSuccess = { contactList ->
+                    _contacts.value = contactList
                     true
                 },
                 onFailure = {false }

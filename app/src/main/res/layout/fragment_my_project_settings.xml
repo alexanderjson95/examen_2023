@@ -37,45 +37,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-
-
-
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/members_btn"
-            android:layout_width="154dp"
-            android:layout_height="154dp"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="#5B9279"
-            app:iconGravity="textTop"
-            app:iconPadding="8dp"
-            app:icon="@drawable/outline_account_circle_24"
-            android:text="@string/invite"
-            android:textColor="@color/white" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/message_btn"
-            android:layout_width="154dp"
-            android:layout_height="154dp"
-            android:layout_gravity="center_horizontal"
-            android:backgroundTint="#5386E4"
-            app:iconGravity="textTop"
-            app:iconPadding="8dp"
-            app:icon="@drawable/outline_delete_forever_24"
-            android:text="@string/remove"
-            android:textColor="@color/white" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/settings_btn"
+            android:id="@+id/admin_btn"
             android:layout_width="154dp"
             android:layout_height="154dp"
             android:layout_gravity="center_horizontal"
             android:backgroundTint="#B84A62"
             app:iconGravity="textTop"
             app:iconPadding="8dp"
-            android:text="@string/change"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="36dp"
+            android:text="@string/admin"
             app:icon="@drawable/outline_admin_panel_settings_24"
             android:textColor="@color/white" />
 
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/leave_btn"
+            android:layout_width="154dp"
+            android:layout_height="154dp"
+            android:layout_gravity="center_horizontal"
+            android:backgroundTint="#5386E4"
+            app:iconGravity="textTop"
+            app:iconPadding="8dp"
+            app:icon="@drawable/outline_door_open_24"
+            android:text="@string/leave_project"
+            android:textColor="@color/white" />
 
     </GridLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

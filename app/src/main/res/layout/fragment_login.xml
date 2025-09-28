@@ -44,9 +44,9 @@
         android:id="@+id/loginMenuLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_shape"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:elevation="4dp">
 
         <LinearLayout
@@ -54,39 +54,67 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
             android:elevation="4dp">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/usernameEditText"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/alexander"
-                android:inputType="text"
-                android:text="Alexander"
-                android:layout_marginBottom="16dp">
-            </EditText>
+                android:hint="@string/username"
+                android:text = "hello"
+                app:editable="true"
+                app:errorEnabled="true"
+                app:errorTextColor="@color/black"
+                app:errorContentDescription ="kskmsdaskda"
+                app:errorIconTint="@color/black"
+                app:drawableLeft="@color/black"
+                app:fontFamily = "sans-serif-black"
+                app:helperTextTextAppearance="@string/username"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/purple_500">
 
-            <EditText
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passwordEditText"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/password"
-                android:text="1234567"
-                android:inputType="textPassword"
-                android:layout_marginBottom="16dp">
-            </EditText>
+                android:text = "hello"
+                app:editable="true"
+                app:errorEnabled="true"
+                app:errorTextColor="@color/black"
+                app:errorContentDescription ="kskmsdaskda"
+                app:errorIconTint="@color/black"
+                app:drawableLeft="@color/black"
+                app:fontFamily = "sans-serif-black"
+                app:helperTextTextAppearance="@string/username"
+                app:boxBackgroundMode="filled"
+                app:boxStrokeColor="@color/purple_500">
 
-
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-
     </LinearLayout>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginButton"
         android:text="@string/login"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:fontFamily="sans-serif"
+        android:backgroundTint="@color/black"
         android:textStyle="bold"
         />
 </LinearLayout>

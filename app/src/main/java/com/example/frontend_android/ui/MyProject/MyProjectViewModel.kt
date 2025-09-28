@@ -25,8 +25,6 @@ import kotlin.collections.forEach
 class MyProjectViewModel  @Inject constructor(
     private val uRepo: UserRepository
 ): ViewModel() {
-
-
     private val _projects = MutableLiveData<List<UserProjectResponse>>()
     val projects: LiveData<List<UserProjectResponse>> = _projects
     private lateinit var request: ProjectRequest
@@ -35,8 +33,6 @@ class MyProjectViewModel  @Inject constructor(
 
     private val _user = MutableLiveData<UserResponse?>()
     val user: MutableLiveData<UserResponse?> = _user
-
-
 
     fun getUser() {
         viewModelScope.launch {
@@ -57,26 +53,18 @@ class MyProjectViewModel  @Inject constructor(
         }
     }
 
-
     private val _roless = MutableLiveData<List<String>>()
     val roless: LiveData<List<String>> get() = _roless
-
     fun getRoless(userId: Long) {
-        Log.d("Roless", "fetch", )
         viewModelScope.launch {
             try {
                 _roless.value = uRepo.getUserRoless(userId)
-                Log.d("Roless", "Member function: Fetched:  ${roless.value}", )
-
-
             } catch (e: Exception) {
                 e.printStackTrace()
                 _roless.value = emptyList()
             }
         }
     }
-
-
     private val _userRoles = MutableLiveData<List<RoleResponse>>()
     val userRoles: LiveData<List<RoleResponse>> = _userRoles
 

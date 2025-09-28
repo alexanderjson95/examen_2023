@@ -78,7 +78,4 @@ class ProjectsFragment : Fragment(R.layout.fragment_projects){
             }
         }
     }
-
-
-
 }

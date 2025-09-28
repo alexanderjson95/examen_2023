@@ -21,6 +21,7 @@ class ChatAdapter @Inject constructor():
     class ChatAdapterViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var fName_value: TextView = view.findViewById(R.id.fname_value)
         var content: TextView = view.findViewById(R.id.content)
+        var date_value: TextView = view.findViewById(R.id.date_value)
     }
 
 
@@ -43,6 +44,8 @@ class ChatAdapter @Inject constructor():
         val message = getItem(position)
         holder.fName_value.text = message.senderFirstname
         holder.content.text = message.content
+        holder.date_value.text = message.created
+
     }
 
 

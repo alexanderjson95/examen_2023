@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend_android.R
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.button.MaterialButtonToggleGroup
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.getValue
@@ -25,13 +27,14 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard){
         findNavController().navigate(action)
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.projectsRecyclerView)
-        val addProject = view.findViewById<MaterialButton>(R.id.create_project_btn)
+        val toggleGroup = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleGroup)
+        val noProjectCard = view.findViewById<MaterialCardView>(R.id.no_projects)
+
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
@@ -40,7 +43,22 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard){
             val desc = bundle.getString("projectDescription")
             projectVM.addProject(name,desc)
         }
-
+        toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (isChecked) {
+                when (checkedId) {
+                    R.id.btnRequests -> {
+                        val actionDialog = DashboardFragmentDirections
+                            .dashToProjectDialog()
+                        findNavController().navigate(actionDialog)
+                    }
+                    R.id.btnCreateProjects  -> {
+                        val actionDialog = DashboardFragmentDirections
+                            .dashToProjectDialog()
+                        findNavController().navigate(actionDialog)
+                    }
+                }
+            }
+        }
 
         // Hämtar användarens projekt
         projectVM.getAllUserProjects()
@@ -48,15 +66,20 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard){
 
         projectVM.projects.observe(viewLifecycleOwner) { projects ->
             adapter.submitList(projects)
+            noProjectCard.visibility = if (projects.isNullOrEmpty()) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
 
 
 
-        addProject.setOnClickListener {
-            val actionDialog = DashboardFragmentDirections
-                .dashToProjectDialog()
-            findNavController().navigate(actionDialog)
-        }
+//        addProject.setOnClickListener {
+//            val actionDialog = DashboardFragmentDirections
+//                .dashToProjectDialog()
+//            findNavController().navigate(actionDialog)
+//        }
 
     }
 
