@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.example.frontend_android.api.sec.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,48 +23,58 @@ import javax.inject.Singleton
 object RetrofitModule {
 
     private const val BASE_URL = "http://10.0.2.2:8080/"
-    /**
-     * @return shared preferences
-     */
-    @Provides
-    @Singleton
-    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
-        val masterKey = MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-
-        val encryptedPref =  EncryptedSharedPreferences.create(
-            context,
-            "Prefs",
-            masterKey,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-        Log.d("TokenEncryption", "Saving token: $encryptedPref")
-        return encryptedPref
-    }
+//    /**
+//     * @return shared preferences
+//     */
+//    @Provides
+//    @Singleton
+//    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+//        val masterKey = MasterKey.Builder(context)
+//            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+//            .build()
+//
+//        val encryptedPref =  EncryptedSharedPreferences.create(
+//            context,
+//            "Prefs",
+//            masterKey,
+//            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+//            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+//        )
+//        Log.d("TokenEncryption", "Saving token: $encryptedPref")
+//        return encryptedPref
+//    }
 
     @Provides
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = HttpLoggingInterceptor.Level.HEADERS
+
         }
     }
 
     @Provides
     @Singleton
-    fun provideTokenInterceptor(sharedPreferences: SharedPreferences): TokenInterceptor {
-        return TokenInterceptor(sharedPreferences)
+    fun provideSessionManager(): SessionManager{
+        return SessionManager()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTokenInterceptor(sm: SessionManager): TokenInterceptor {
+        return TokenInterceptor(sm)
     }
 
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(tokenInterceptor: TokenInterceptor ): OkHttpClient {
+    fun provideOkHttpClient(
+        tokenInterceptor: TokenInterceptor,
+        loggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(tokenInterceptor)
-            .addInterceptor(provideLoggingInterceptor())
+            .addInterceptor(loggingInterceptor)
             .build()
     }
 
@@ -73,7 +84,7 @@ object RetrofitModule {
     @Singleton
     fun provideRetrofit(client: OkHttpClient): retrofit2.Retrofit {
         return Retrofit.Builder()
-            .baseUrl(com.example.frontend_android.api.RetrofitModule.BASE_URL)
+            .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

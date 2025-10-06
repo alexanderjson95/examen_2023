@@ -1,21 +1,18 @@
 package com.example.frontend_android.repository
 
-import android.R
-import android.content.SharedPreferences
-import android.util.Log
 import com.example.frontend_android.api.API
-import com.example.frontend_android.model.Users.UserRequest
 import com.example.frontend_android.model.auth.AuthRequest
-import com.example.frontend_android.model.auth.AuthenticationResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import retrofit2.Response
 import javax.inject.Inject
-import kotlin.math.log
-import androidx.core.content.edit
+
+
+import com.example.frontend_android.api.sec.SessionManager
+
 
 class AuthRepository @Inject constructor(
-    private val apiInterface: API,    private val prefs: SharedPreferences
+    private val apiInterface: API,
+    private val sm: SessionManager
 ){
 
     suspend fun login(username: String, password: String): Result<Unit>
@@ -26,8 +23,7 @@ class AuthRepository @Inject constructor(
             val response = apiInterface.login(req)
             if (response.isSuccessful) {
                 val body = response.body() ?: return@withContext Result.failure(Exception("Empty body"))
-                prefs.edit { putString("token", body.token) }
-                Log.d("LOGIN", "Saved token: ${body.token}")
+                sm.set(body.token, body.userId)
                 Result.success(Unit)
 
             } else {
@@ -36,4 +32,8 @@ class AuthRepository @Inject constructor(
         } catch (t: Throwable) {
             Result.failure(t)
         }
-    }}
+    }
+
+
+
+}

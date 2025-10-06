@@ -6,6 +6,5 @@ data class BookingRequestPatch(
     val startMinute: Int?,
     val endHour: Int?,
     val endMinute: Int?,
-    val availability: Boolean?,
     val dateMillis: Long
 )

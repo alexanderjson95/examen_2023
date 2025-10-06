@@ -3,7 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_login">
+    app:startDestination="@+id/navigation_init">
+
+
+
+    <fragment
+        android:id="@+id/navigation_init"
+        android:name="com.example.frontend_android.ui.login.InitFragment"
+        tools:layout="@layout/fragment_init">
+
+        <action
+            android:id="@+id/action_init_to_reg"
+            app:destination="@id/navigation_register"
+            app:popUpToInclusive="true"/>
+
+        <action
+            android:id="@+id/action_init_to_login"
+            app:destination="@id/navigation_login"
+            app:popUpTo="@id/navigation_login"
+            app:popUpToInclusive="true" />
+    </fragment>
+
 
 
     <fragment
@@ -15,6 +35,8 @@
         <action
             android:id="@+id/action_login_to_reg"
             app:destination="@id/navigation_register" />
+
+
 
         <action
             android:id="@+id/action_login_to_dashboard"
@@ -51,6 +73,335 @@
             app:popUpTo="@id/navigation_success_register"
             app:popUpToInclusive="true" />
     </fragment>
+
+
+    <!-- Dashboard (visa egna projekt, skapa projekt, visa eget schema + inbjudningar, visa meddelanden + skapa samtal  -->
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.frontend_android.ui.dashboard.DashboardFragment"
+        android:label="@string/title_dashboard"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/dash_to_myProject"
+            app:destination="@id/navigation_myProject" />
+
+        <action
+            android:id="@+id/dash_to_project_dialog"
+            app:destination="@id/navigation_create_project_dialog" />
+    </fragment>
+
+
+    <!-- Skapa projekt -->
+
+    <fragment
+        android:id="@+id/navigation_create_project_dialog"
+        android:name="com.example.frontend_android.ui.projects.AddProjectDialog"
+        android:label="@string/skapa_projekt"
+        tools:layout="@layout/add_project_form">
+
+        <action
+            android:id="@+id/dash_to_userProject"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
+
+
+    <!-- Användarens bokningsförfrågningar -->
+    <fragment
+        android:id="@+id/navigation_booking_invites"
+        android:name="com.example.frontend_android.ui.dashboard.invites.bookingInvites.BookingInvites"
+        tools:layout="@layout/fragment_booking_invites">
+
+        <action
+            android:id="@+id/toProjectInvites"
+            app:destination="@id/navigation_user_invites" />
+    </fragment>
+
+
+
+
+    <!-- Se användarens inbjudningar/förfrågningar till projekt -->
+    <fragment
+        android:id="@+id/navigation_user_invites"
+        android:name="com.example.frontend_android.ui.dashboard.invites.projectInvites.ProjectInvites"
+        tools:layout="@layout/fragment_my_project_requests">
+        <action
+            android:id="@+id/projectInv_to_bookingInv"
+            app:destination="@id/navigation_booking_invites" />
+    </fragment>
+
+    <!-- Se projekt -->
+
+    <fragment
+        android:id="@+id/navigation_projects"
+        android:name="com.example.frontend_android.ui.projects.ProjectsFragment"
+        tools:layout="@layout/fragment_projects"/>
+
+
+
+
+
+    <!-- Se meddelanden  -->
+
+    <fragment
+        android:id="@+id/navigation_messages"
+        android:name="com.example.frontend_android.ui.conversations.contacts.ShowContactsFragment"
+        tools:layout="@layout/create_message">
+
+        <action
+            android:id="@+id/dash_to_writeMessage"
+            app:destination="@id/navigation_writeMessage" />
+        <action
+            android:id="@+id/dash_to_addConvo"
+            app:destination="@id/navigation_addConvo" />
+    </fragment>
+
+    <!-- Skapa ny konversation -->
+
+    <fragment
+        android:id="@+id/navigation_addConvo"
+        android:name="com.example.frontend_android.ui.conversations.contacts.AddContactFragment"
+        tools:layout="@layout/fragment_add_convo">
+
+        <action
+            android:id="@+id/dash_to_showMessages"
+            app:destination="@id/navigation_messages" />
+
+        <action
+            android:id="@+id/dash_to_writeMessage"
+            app:destination="@id/navigation_writeMessage" />
+    </fragment>
+
+
+    <!-- Öppna chatt -->
+
+    <fragment
+        android:id="@+id/navigation_writeMessage"
+        android:name="com.example.frontend_android.ui.conversations.chat.OpenChatFragment"
+        tools:layout="@layout/fragment_inchat">
+
+        <argument
+            android:name="recipient_id"
+            app:argType="long" />
+        <argument
+            android:name="recipient_fname"
+            app:argType="string" />
+        <argument
+            android:name="recipient_lname"
+            app:argType="string" />
+    </fragment>
+
+
+
+
+
+    <!--  Navigation inom valt projekt. Leder till: Settings, Medlemmar, Schema  -->
+
+    <fragment
+        android:id="@+id/navigation_myProject"
+        android:name="com.example.frontend_android.ui.userProject.projectDashboard.MyProjectFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_my_project">
+<!--        <action-->
+<!--            android:id="@+id/myProject_to_bookings"-->
+<!--            app:destination="@id/navigation_booking" />-->
+
+        <action
+            android:id="@+id/myProject_to_bookings"
+            app:destination="@id/navigation_projectBookings" />
+
+        <action
+            android:id="@+id/myProject_to_members"
+            app:destination="@id/navigation_add_member" />
+        <action
+            android:id="@+id/myProject_to_invite"
+            app:destination="@id/navigation_userproject_invites" />
+        <action
+            android:id="@+id/dash_to_up_settings"
+            app:destination="@id/navigation_user_project_settings" />
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+
+    </fragment>
+
+    <!-- Se medlemmar i grupp -->
+
+    <fragment
+        android:id="@+id/navigation_add_member"
+        android:name="com.example.frontend_android.ui.userProject.members.InviteUserFragment"
+        tools:layout="@layout/fragment_my_project_adduser">
+
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_group"
+        android:name="com.example.frontend_android.ui.userProject.schedule.CreateGroupFragment"
+        tools:layout="@layout/create_group_dialog">
+
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+        <argument
+            android:name="selectedDate"
+            app:argType="long"
+            android:defaultValue="0L" />
+
+
+        <action
+            android:id="@+id/groupFrag_to_AddDateDialog"
+            app:destination="@id/navigation_booking_dialog" />
+
+    </fragment>
+
+
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_members"-->
+<!--        android:name="com.example.frontend_android.ui.userProject."-->
+<!--        tools:layout="@layout/fragment_my_project_requests">-->
+<!--        <argument-->
+<!--            android:name="projectId"-->
+<!--            app:argType="long" />-->
+<!--        <argument-->
+<!--            android:name="userId"-->
+<!--            app:argType="long" />-->
+<!--    </fragment>-->
+
+    <!-- Se scheman för alla medlemmar -->
+
+
+
+
+    <fragment
+        android:id="@+id/navigation_projectbooking_invites"
+        android:name="com.example.frontend_android.ui.userProject.bookingInvites.UserBookingInvites"
+        tools:layout="@layout/fragment_booking_invites">
+
+        <action
+            android:id="@+id/projectbookingInv_to_projectInv"
+            app:destination="@id/navigation_userproject_invites" />
+
+
+
+    </fragment>
+
+    <!-- Se användarens inbjudningar/förfrågningar till projekt -->
+    <fragment
+        android:id="@+id/navigation_userproject_invites"
+        android:name="com.example.frontend_android.ui.userProject.projectInvites.UserProjectInvites"
+        tools:layout="@layout/fragment_my_project_requests">
+        <action
+            android:id="@+id/userproject_to_bookingproject"
+            app:destination="@id/navigation_projectbooking_invites" />
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_projectBookings"
+        android:name="com.example.frontend_android.ui.userProject.schedule.ProjectBookings"
+        android:label="Calendar"
+        tools:layout="@layout/fragment_booking">
+
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_projectBookings_to_createBookingFragment"
+            app:destination="@id/navigation_create_group" />
+
+    </fragment>
+
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_booking"-->
+<!--        android:label="@string/booking"-->
+<!--        tools:layout="@layout/fragment_booking">-->
+
+<!--        <action-->
+<!--            android:id="@+id/action_projectBookings_to_createGroupFragment"-->
+<!--            app:destination="@id/navigation_create_group" />-->
+<!--        <argument-->
+<!--            android:name="projectId"-->
+<!--            app:argType="long" />-->
+<!--        <argument-->
+<!--            android:name="userId"-->
+<!--            app:argType="long" />-->
+<!--    </fragment>-->
+
+
+    <!-- Ändra användare -->
+
+    <fragment
+        android:id="@+id/navigation_user_settings"
+        android:name="com.example.frontend_android.ui.userSettings.UserSettingsFragment"
+        android:label="@string/username"
+        tools:layout="@layout/fragment_user_settings">
+    </fragment>
+
+
+    <!-- Lägg till bokning/tillänglighet på schema -->
+
+
+    <dialog
+        android:id="@+id/navigation_booking_dialog"
+        android:name="com.example.frontend_android.ui.userProject.schedule.BookingDialog"
+        tools:layout="@layout/add_booking_form">
+        <argument
+            android:name="dateMillis"
+            app:argType="long" />
+<!--        <argument-->
+<!--            android:name="selectedProject"-->
+<!--            app:argType="string" />-->
+
+<!--        <argument-->
+<!--            android:name="selectedUser"-->
+<!--            app:argType="string" />-->
+        <argument
+            android:name="startHour"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="startMin"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="endHour"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="endMin"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </dialog>
+
+
+    <!-- Settings för projekt -->
+
+    <fragment
+        android:id="@+id/navigation_user_project_settings"
+        android:name="com.example.frontend_android.ui.userProject.settings.MyProjectSettings"
+        tools:layout="@layout/fragment_my_project_settings">
+
+        <argument
+            android:name="projectId"
+            app:argType="long" />
+
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+
+
 
 
 </navigation>

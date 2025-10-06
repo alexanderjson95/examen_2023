@@ -36,7 +36,7 @@ class ThreeRegFragment : Fragment(R.layout.fragment_register_third) {
 
 
     private val registerViewModel: RegViewModel by hiltNavGraphViewModels(R.id.navigation_register)
-    private var selectedRole: String? = RoleType.Övrigt.toString()
+    private var selectedRole: String? = RoleType.övrigt.toString()
     private lateinit var alert_card: CardView
     private lateinit var alert_value: TextView
     private lateinit var konfetti: KonfettiView

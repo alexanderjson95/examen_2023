@@ -1,14 +1,17 @@
 package com.example.frontend_android.model.Bookings
 
+import java.time.LocalDateTime
+
+
 data class BookingRequest(
-    val bookingId: Long,
-    val userId: Long,
-    val projectId: Long?,
+    val projectId: Long,
+    val dateMillis: Long?,
     val startHour: Int,
     val startMinute: Int,
     val endHour: Int,
     val endMinute: Int,
-    val availability: Boolean,
-    val accepted: Boolean? = false,
-    val dateMillis: Long
+    val bookingTitle: String? = "Default",
+    val bookingDescription: String,
+    val userIds: List<Long> = emptyList()
 )
+

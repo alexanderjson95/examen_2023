@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/theme_one_backdrop"
+
     android:gravity="center"
     android:padding="16dp">
     <!-- MENU -->
@@ -42,7 +44,8 @@
                 android:hint="@string/username"
                 app:errorEnabled="true"
                 app:boxBackgroundMode="filled"
-                app:boxStrokeColor="@color/purple_500">
+                app:hintTextColor="@color/black"
+                app:boxStrokeColor="@color/theme_one_inactiveBtn">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/usernameEditText"
@@ -60,7 +63,8 @@
                 android:hint="@string/password"
                 app:errorEnabled="true"
                 app:boxBackgroundMode="filled"
-                app:boxStrokeColor="@color/purple_500">
+                app:hintTextColor="@color/black"
+                app:boxStrokeColor="@color/theme_one_inactiveBtn">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordEditText"
@@ -69,12 +73,10 @@
                     android:inputType="textPassword"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-
-        </LinearLayout>
-
-
     </LinearLayout>
 
 
     </LinearLayout>
+
+</LinearLayout>
 

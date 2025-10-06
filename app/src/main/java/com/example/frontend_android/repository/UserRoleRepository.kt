@@ -4,8 +4,11 @@ import com.example.frontend_android.api.API
 import com.example.frontend_android.api.RepositoryAbstract
 import com.example.frontend_android.model.Projects.ProjectRequest
 import com.example.frontend_android.model.Projects.ProjectResponse
+import com.example.frontend_android.model.roles.RoleResponse
 import com.example.frontend_android.model.roles.UserRoleRequest
 import com.example.frontend_android.model.roles.UserRoleResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -13,7 +16,7 @@ import javax.inject.Singleton
 @Singleton
 class UserRoleRepository@Inject constructor(
     override val apiInterface: API,
-) : RepositoryAbstract<UserRoleRequest, UserRoleResponse, API>()  {
+) : RepositoryAbstract<UserRoleRequest, UserRoleResponse,UserRoleRequest, API>()  {
 
     override suspend fun performAdd(
         api: API,
@@ -51,9 +54,23 @@ class UserRoleRepository@Inject constructor(
     override suspend fun performRemove(
         api: API,
         toRemove: Long,
-        fromTableId: Long
     ): Response<Unit> {
         TODO("Not yet implemented")
+    }
+
+
+    suspend fun getLoggedInRole(): Result<List<String>>
+            = withContext(Dispatchers.IO){
+        try {
+            val response = apiInterface.getLoggedInRole()
+            val body = response.body()
+            if (response.isSuccessful && body != null)
+                Result.success(body)
+            else
+                Result.failure(Exception("HTTP ${response.code()} ${response.message()}"))
+        } catch (t: Throwable) {
+            Result.failure(t)
+        }
     }
 
 }

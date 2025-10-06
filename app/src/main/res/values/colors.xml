@@ -20,5 +20,13 @@
     <color name="theme_one_yellow">#F0CF65</color>
     <color name="theme_one_red">#E07A5F</color>
 
+    <color name="theme_one_activeBtn">#F1FAEE</color>
+    <color name="theme_one_inactiveBtn">#FF686B</color>
+    <color name="theme_one_backdrop">#382633</color>
+    <color name="theme_one_inactiveToggle">#F1FAEE</color>
+    <color name="theme_one_activeToggle">#d8e2dc</color>
+    <color name="theme_one_black">#1E1B18</color>
+
+
 
 </resources>

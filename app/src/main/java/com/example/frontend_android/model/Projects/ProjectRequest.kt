@@ -8,7 +8,4 @@ data class ProjectRequest (
      val projectName: String? = null,
 
      val description: String? = null,
-     val isPublic: Boolean? = null,
-
-     val genre: String? = null
-)
+     )

@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.frontend_android.api.API
 import com.example.frontend_android.api.RepositoryAbstract
 import com.example.frontend_android.model.Chat.MessageRequest
+import com.example.frontend_android.model.Chat.MessageRequestPatch
 import com.example.frontend_android.model.Chat.MessageResponse
 import com.example.frontend_android.model.Users.UserResponse
 import com.google.gson.Gson
@@ -17,7 +18,7 @@ import javax.inject.Singleton
 @Singleton
 class MessageRepository @Inject constructor(
     override val apiInterface: API,
-) : RepositoryAbstract<MessageRequest, MessageResponse, API>(){
+) : RepositoryAbstract<MessageRequest, MessageResponse, MessageRequestPatch, API>(){
 
 
     override suspend fun performAdd(
@@ -35,7 +36,7 @@ class MessageRepository @Inject constructor(
 
     override suspend fun performPatch(
         api: API,
-        data: MessageRequest
+        data: MessageRequestPatch
     ): Response<Unit> {
         TODO("Not yet implemented")
     }
@@ -58,7 +59,6 @@ class MessageRepository @Inject constructor(
     override suspend fun performRemove(
         api: API,
         toRemove: Long,
-        fromTableId: Long
     ): Response<Unit> {
         TODO("Not yet implemented")
     }

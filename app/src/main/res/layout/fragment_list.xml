@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:backgroundTint="#577590"
             android:textColor="@color/white"
-            android:text="@string/inkluderat"
+            android:text="@string/myProjects"
             android:textAllCaps="false"/>
 
         <com.google.android.material.button.MaterialButton
@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:backgroundTint="#F9F8F8"
             android:textColor="@color/black"
-            android:text="@string/exkluderat"
+            android:text="@string/CreateProject"
             android:textAllCaps="false"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@string/no_data_found"
+            android:text="@string/noProjects"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:gravity="center"/>
@@ -61,7 +61,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/projectsRecyclerView"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"

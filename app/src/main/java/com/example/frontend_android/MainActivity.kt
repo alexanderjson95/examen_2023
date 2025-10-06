@@ -1,6 +1,7 @@
 package com.example.frontend_android
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val vm: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,16 +30,30 @@ class MainActivity : AppCompatActivity() {
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.navigation_myProject, R.id.navigation_dashboard, R.id.navigation_projects
-//            )
-//        )
-//
-//
-//
-//
-//        setupActionBarWithNavController(navController, appBarConfiguration)
-//        navView.setupWithNavController(navController)
+
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_myProject, R.id.navigation_dashboard, R.id.navigation_projects
+            )
+        )
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, arguments ->
+            when (destination.id) {
+                R.id.navigation_success_register,
+                R.id.navigation_init,
+                R.id.navigation_register,
+                R.id.navigation_login -> {
+                    navView.visibility = View.GONE
+                    supportActionBar?.hide()
+                }
+
+                else -> {
+                    navView.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 }

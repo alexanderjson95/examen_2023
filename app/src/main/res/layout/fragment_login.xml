@@ -5,20 +5,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@color/theme_one_backdrop"
+
     android:padding="16dp">
     <!-- MENU -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/menuLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="28dp">
+
 
         <TextView
             android:id="@+id/loginMenuItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:textColor="@color/font_color_active"
+            android:textColor="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:textStyle="bold"
             android:textSize="20sp"
             android:padding="16dp"/>
         <TextView
@@ -26,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register"
-            android:textColor="@color/font_color_inactive"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:padding="16dp"/>
     </LinearLayout>
@@ -39,14 +50,14 @@
         android:gravity="center"
         android:padding="30dp">
     </View>
-    <!-- Login form -->
+
+
     <LinearLayout
         android:id="@+id/loginMenuLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
+        android:padding="16dp"
         android:elevation="4dp">
 
         <LinearLayout
@@ -54,6 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:padding="16dp"
             android:elevation="4dp">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -63,8 +75,10 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/username"
                 app:errorEnabled="true"
+                android:text="Alex123"
                 app:boxBackgroundMode="filled"
-                app:boxStrokeColor="@color/purple_500">
+                app:hintTextColor="@color/black"
+                app:boxStrokeColor="@color/theme_one_inactiveBtn">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/usernameEditText"
@@ -80,9 +94,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
+                android:text="123456"
                 app:errorEnabled="true"
                 app:boxBackgroundMode="filled"
-                app:boxStrokeColor="@color/purple_500">
+                app:hintTextColor="@color/black"
+                app:boxStrokeColor="@color/theme_one_inactiveBtn">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordEditText"
@@ -90,15 +106,23 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+
         </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/loginButton"
+            android:text="@string/login"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/theme_one_activeBtn"
+            android:textStyle="bold" />
+
     </LinearLayout>
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/loginButton"
-        android:text="@string/login"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:fontFamily="sans-serif"
-        android:textStyle="bold" />
+
+
+
 </LinearLayout>

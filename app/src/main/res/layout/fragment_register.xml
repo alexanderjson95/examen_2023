@@ -2,6 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/theme_one_backdrop"
+
     android:layout_height="match_parent">
 
 
@@ -34,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:textColor="@color/font_color_inactive"
+            android:textColor="@color/white"
             android:clickable="true"
             android:focusable="true"
             android:textSize="20sp"
@@ -44,14 +46,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register"
-            android:textColor="@color/font_color_active"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:padding="16dp"/>
     </LinearLayout>
+
+
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@id/indicator"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,22 +67,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/back"
-        android:backgroundTint="#344966"/>
-
-        <Space
-            android:layout_width="16dp"
-            android:layout_height="0dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/nextBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Next"
-            android:backgroundTint="#344966"/>
-
+        android:textColor="@color/black"
+        android:backgroundTint="@color/theme_one_activeBtn"/>
     </LinearLayout>
 
-
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/nextBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nästa"
+        android:backgroundTint="@color/theme_one_inactiveBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.7"
+        android:layout_margin="16dp"/>
 
     <me.relex.circleindicator.CircleIndicator3
         android:id="@+id/indicator"
@@ -93,4 +97,5 @@
         app:ci_width="8dp"
         app:ci_height="8dp"
         app:ci_margin="8dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

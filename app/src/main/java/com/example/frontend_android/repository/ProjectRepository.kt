@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.frontend_android.api.API
 import com.example.frontend_android.api.RepositoryAbstract
 import com.example.frontend_android.model.Projects.ProjectRequest
+import com.example.frontend_android.model.Projects.ProjectRequestPatch
 import com.example.frontend_android.model.Projects.ProjectResponse
 import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.example.frontend_android.model.Users.UserResponse
@@ -18,7 +19,7 @@ import javax.inject.Singleton
 @Singleton
 class ProjectRepository @Inject constructor(
     override val apiInterface: API,
-) : RepositoryAbstract<ProjectRequest, ProjectResponse, API>() {
+) : RepositoryAbstract<ProjectRequest, ProjectResponse, ProjectRequestPatch,API>() {
 
     override suspend fun performAdd(
         api: API,
@@ -36,7 +37,7 @@ class ProjectRepository @Inject constructor(
 
     override suspend fun performPatch(
         api: API,
-        data: ProjectRequest
+        data: ProjectRequestPatch
     ): Response<Unit> {
         TODO("Not yet implemented")
     }
@@ -59,7 +60,6 @@ class ProjectRepository @Inject constructor(
     override suspend fun performRemove(
         api: API,
         toRemove: Long,
-        fromTableId: Long
     ): Response<Unit> {
         TODO("Not yet implemented")
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -27,8 +27,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="VIKTIGAST DATA"
-                android:textStyle="bold"
+                android:text=""
+                android:maxLines="1"
                 android:textSize="22sp"
                 android:textColor="@color/black" />
 
@@ -43,51 +43,52 @@
             android:paddingTop="8dp">
 
             <TextView
+                android:id="@+id/request_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="jjjkjk"
+                android:maxLines="1"
+                android:textSize="16sp"
+                android:textColor="@color/font_color_inactive"
+                 />
+
+            <TextView
                 android:id="@+id/description_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="ANDRA VIKTIG DATA"
+                android:text=""
+                android:maxLines="1"
                 android:textSize="16sp"
                 android:gravity="start" />
 
-            <TextView
-                android:id="@+id/date_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="DATUM PÅ DATA (ALT)"
-                android:textSize="16sp"
-                android:gravity="start" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/acceptBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="8dp">
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/acceptBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/add"
-                android:backgroundTint="#577590"
-                android:layout_margin="10dp"
-                android:visibility="visible"
-                android:textColor="@color/white"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/removeBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/remove"
-                android:backgroundTint="#577590"
-                android:layout_margin="10dp"
-                android:visibility="visible"
-                android:textColor="@color/white"/>
-        </LinearLayout>
+            android:layout_weight="1"
+            android:text="@string/accept"
+            android:layout_margin="10dp"
+            android:visibility="visible"
+            android:textColor="@color/white"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/removeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/remove"
+            android:layout_margin="10dp"
+            android:visibility="visible"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>

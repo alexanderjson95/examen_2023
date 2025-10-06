@@ -1,12 +1,12 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout android:id="@+id/message_form"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:id="@+id/main"
-    android:background="@android:color/white"
-    android:padding="16dp">
-
+    android:padding="16dp"
+    android:elevation="4dp"
+    android:layout_marginTop="36dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggleGroup"
@@ -16,31 +16,26 @@
         android:layout_marginBottom="16dp">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnMyConvos"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="58dp"
-            android:layout_weight="1"
-            android:backgroundTint="#F9F8F8"
-            android:textColor="@color/black"
-            android:text="@string/addeddata"
-            android:textAllCaps="false"/>
-
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAddConvo"
+            android:id="@+id/btnMyProjects"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="58dp"
             android:layout_weight="1"
             android:backgroundTint="#577590"
             android:textColor="@color/white"
-            android:text="@string/searchTab"
+            android:text="@string/SearchMember"
+            android:textAllCaps="false"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCreateProjects"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/add_member"
             android:textAllCaps="false"/>
     </com.google.android.material.button.MaterialButtonToggleGroup>
-
-
     <LinearLayout
         android:id="@+id/recyclerbox"
         android:layout_width="match_parent"
@@ -49,19 +44,21 @@
         android:paddingBottom="8dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        style="@style/CustomEditTextStyle"
         android:gravity="end"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:paddingTop="8dp">
 
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/usersAddRecyclerView"
+            android:id="@+id/projectsRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@id/searchBtn"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_weight="1" />
+            app:layout_constraintBottom_toTopOf="@id/chatbox"
+            android:layout_margin="16dp" />
 
     </LinearLayout>
 
@@ -79,25 +76,25 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/user_edit_query"
+            android:id="@+id/edit_query"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="@string/msg_hint"
             android:inputType="textMultiLine"
             android:background="@null"
-            android:maxLines="1"
+            android:maxLines="5"
             style="@style/ChatEditTextTwo"
             android:padding="8dp"/>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/searchBtn"
             android:layout_width="50dp"
             android:layout_height="60dp"
+            android:maxLines="1"
             app:icon="@drawable/outline_person_search_24"
-            style="@style/SendMaterialBtn">
-        </com.google.android.material.button.MaterialButton>
+            style="@style/SendMaterialBtn"/>
     </LinearLayout>
 
 
 </LinearLayout>
+

@@ -2,6 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/theme_one_backdrop"
+
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -46,13 +48,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Jag har mest\n erfenhet som"
+        android:textColor="@color/theme_one_activeBtn"
         style="@style/TextAppearance.Material3.TitleLarge.Emphasized"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/roleTitle"
         android:text=""
-        android:textColor="@color/theme_one_red"
+        android:textColor="@color/theme_one_inactiveBtn"
         android:textStyle="bold"
         style="@style/TextAppearance.Material3.TitleLarge.Emphasized"/>
 
@@ -97,6 +100,7 @@
                 android:layout_marginTop="18dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
+                android:backgroundTint="@color/theme_one_inactiveBtn"
                 android:fontFamily="sans-serif"
                 android:textStyle="bold" />
 

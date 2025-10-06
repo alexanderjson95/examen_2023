@@ -9,5 +9,5 @@ enum class RoleType {
         ljudtekniker,
         redigerare,
         manusförfattare,
-        Övrigt
+        övrigt
     }

@@ -1,22 +1,85 @@
 package com.example.frontend_android.repository
 
+import android.content.Context
 import android.util.Log
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import com.example.frontend_android.api.API
+import com.example.frontend_android.api.RepositoryAbstract
 import com.example.frontend_android.model.Users.UserRequest
+import com.example.frontend_android.model.Users.UserRequestPatch
 import com.example.frontend_android.model.Users.UserResponse
 import com.example.frontend_android.model.roles.RoleResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class UserRepository @Inject constructor(
-    private val apiInterface: API,
-) {
+    override val apiInterface: API,
+) : RepositoryAbstract<UserRequest, UserResponse,UserRequestPatch, API>(){
     private lateinit var userRequest: UserRequest
 
+
+    override suspend fun performAdd(
+        api: API,
+        data: UserRequest
+    ): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun performGet(
+        api: API
+    ): Response<List<UserResponse>> {
+        return api.getAllUsers()
+    }
+
+    override suspend fun performPatch(
+        api: API,
+        data: UserRequestPatch
+    ): Response<Unit> {
+        return api.updateUser(data)
+    }
+
+    override suspend fun performGetById(
+        api: API,
+        targetId: Long
+    ): Response<List<UserResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun performGetByPairs(
+        api: API,
+        first: Long,
+        second: Long
+    ): Response<List<UserResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun performRemove(
+        api: API,
+        toRemove: Long,
+    ): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    suspend fun updateUser(userRequestPatch: UserRequestPatch): Result<Unit> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = apiInterface.updateUser(userRequestPatch)
+                Log.d("role","${response.body()}")
+                if (response.isSuccessful) {
+                    Result.success(Unit)
+                } else {
+                    Result.failure(Exception("Role error: ${response.code()} - ${response.message()}"))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
 
     suspend fun getAllRoleTypes(): Result<List<RoleResponse>> =
         withContext(Dispatchers.IO) {
@@ -108,8 +171,8 @@ class UserRepository @Inject constructor(
                 if (response.isSuccessful) {
                     Result.success(Unit)
                 } else {
-                    Result.failure(Exception("Register error´: ${response.code()} - ${response.message()}"))
-                }
+                    Log.e("ADD ERROR", "HTTP ${response.code()} ${response.message()} - ${response.errorBody()?.string()}")
+                    Result.failure(Exception("ADD ERROR ${response.code()} ${response.message()}"))                }
             } catch (e: Exception) {
                 Result.failure(e)
             }
