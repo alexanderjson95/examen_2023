@@ -46,12 +46,6 @@ public interface UserProjectRepository extends JpaRepository<UserProject, Long> 
     @EntityGraph(attributePaths = {"user"})
     List<UserProject> findByUser_IdAndHasJoinedFalseAndIsAdminFalse(Long projectId);
 
-//    @EntityGraph(attributePaths = {"user"})
-//    List<UserProject> findByProject_IdAndRequest(Long projectId);
-//
-//    //todo
-//    @Query("SELECT up.request.request FROM UserProject WHERE ur.user.id = :userId")
-//    List<UserProject> findByUser_IdAndRequest(Long userId);
 
     @EntityGraph(attributePaths = {"user", "project"})
     List<UserProject> findByProject_IdAndRequestType(Long projectId, RequestType requestType);

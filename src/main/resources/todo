@@ -1,0 +1,18 @@
+- ta bort user
+- ta bort projekt (om admin)
+- admin check i frontend
+- admincheck måste blockera att bjuda in och acceptera medlem, och ta bort
+- kryptering läggas på
+- uppdatera livedata direkt (tablehastabell)
+- logout knapp
+- lägg till "lämna grupp om admin och sigb sjävlk"
+- ta bort projekt
+- lämna projekt
+- ändra "neka inbjudan/request" så det bara tar bort UP
+- tömma textsfields efter skcikad
+
+
+
+- lägg till toastbar för success/fail
+- lägg till "skickat meddelande"
+

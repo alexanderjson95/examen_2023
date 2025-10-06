@@ -215,7 +215,6 @@ public class ProjectService  {
         Project project = findProjectById(projectId);
         project.setProjectName(req.getProjectName());
         project.setDescription(req.getDescription());
-        project.setGenre(req.getType());
         projectRepository.save(project);
     }
 
@@ -238,6 +237,36 @@ public class ProjectService  {
         Project project = findProjectById(projectId);
         userProjectRepository.deleteByProjectId(projectId);
         projectRepository.delete(project);
+    }
+
+
+    public void removeUserProject(Long loggedInUserId,Long targetId){
+        _adminExceptionHelper(loggedInUserId,loggedInUserId,targetId);
+        userProjectRepository.deleteById(targetId);
+    }
+
+
+    public List<UserProjectResponse> findUserProjectsByRequestType(String query, Long  projectId){
+
+        RequestType type;
+        try{
+            type = RequestType.valueOf(query.toUpperCase());
+
+        }catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Sökordet fanns inte med!");
+        }
+        List<UserProject> projects = userProjectRepository.findByProject_IdAndRequestType(projectId, type);
+
+        return projects.stream().map(project ->  UserProjectResponse.builder()
+                .userId(project.getUser().getId())
+                .firstName(project.getUser().getFirstName())
+                .lastName(project.getUser().getLastName())
+                .requestType(project.getRequestType())
+                .isAdmin(project.isAdmin())
+                .isCreator(project.isCreator())
+                .role(project.getUser().getUserRoles().stream().map(userRole -> userRole.getRole().getRole())
+                        .toList())
+                .build()).toList();
     }
 
 
@@ -319,11 +348,11 @@ public class ProjectService  {
         if 0,1 -> false
         if 0,0 -> throw
      */
-    private boolean _adminExceptionHelper(Long loggedInUserId, Long userId, Long tableId){
-        boolean isAdmin = isUserAdmin(tableId,loggedInUserId);
+    private boolean _adminExceptionHelper(Long loggedInUserId, Long userId, Long tableId) {
+        boolean isAdmin = isUserAdmin(tableId, loggedInUserId);
         boolean targetSelf = loggedInUserId.equals(userId);
-        if (!isAdmin && !targetSelf) throw new NotAdminException("Du saknar behörighet för detta");
-        return isAdmin;
+        if (isAdmin || targetSelf) return true;
+        throw new NotAdminException("Du saknar behörighet för detta");
+    }
     }
 
-}

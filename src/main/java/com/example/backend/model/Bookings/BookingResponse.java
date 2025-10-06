@@ -22,16 +22,17 @@ public class BookingResponse {
     private Long bookingId;
     private Long projectId;
     private String projectName;
+    private String bookingTitle;
+    private String bookingDescription;
     private Long userId;
     private String firstName;
     private String lastName;
-    private boolean accepted;
     private Integer startHour;
     private Integer startMinute;
     private Integer endHour;
     private Integer endMinute;
     private Long dateMillis;
-    private boolean availability;
+    private BookingStatusType status;
     private LocalDateTime created;
 
 
@@ -40,16 +41,17 @@ public class BookingResponse {
                 .bookingId(userBooking.getBooking().getId())
                 .projectId(userBooking.getProject().getId())
                 .projectName(userBooking.getProject().getProjectName())
+                .bookingTitle(userBooking.getBooking().getBookingTitle())
+                .bookingDescription(userBooking.getBooking().getBookingDescription())
                 .userId(userBooking.getUser().getId())
                 .firstName(userBooking.getUser().getFirstName())
                 .lastName(userBooking.getUser().getLastName())
-                .accepted(userBooking.isAccepted())
                 .startHour(userBooking.getBooking().getStartHour())
                 .startMinute(userBooking.getBooking().getStartMinute())
                 .endHour(userBooking.getBooking().getEndHour())
                 .endMinute(userBooking.getBooking().getEndMinute())
                 .dateMillis(userBooking.getBooking().getDateMillis())
-                .availability(userBooking.isAvailability())
+                .status(userBooking.getStatus())
                 .created(userBooking.getBooking().getCreated())
                 .build();
     }

@@ -1,6 +1,7 @@
 package com.example.backend;
 
 
+import com.example.backend.model.Users.Users;
 import com.example.backend.service.JwtService;
 import com.example.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,15 +35,14 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> createJwTToken(@RequestBody AuthRequest req) throws Exception {
         Authenticate(req.getUsername(),req.getPassword());
-        UserDetails u = service.findUserByUsername(req.getUsername());
+        Users u = service.findUserByUsername(req.getUsername());
         String token = jwtService.generateToken(u);
-        System.out.println(token);
-        return ResponseEntity.ok(new AuthenticationResponse(token));
+        return ResponseEntity.ok(new AuthenticationResponse(token, u.getId()));
     }
 
     @PostMapping("/refresh")
     public ResponseEntity<AuthenticationResponse> refreshToken(@RequestBody AuthRequest req) throws Exception {
-        UserDetails u = service.findUserByUsername(req.getUsername());
+        Users u = service.findUserByUsername(req.getUsername());
         String refreshedToken = jwtService.generateToken(u);
-        return ResponseEntity.ok(new AuthenticationResponse(refreshedToken));
+        return ResponseEntity.ok(new AuthenticationResponse(refreshedToken, u.getId()));
     }}

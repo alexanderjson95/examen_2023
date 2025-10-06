@@ -2,6 +2,7 @@ package com.example.backend.model.Bookings;
 
 
 import com.example.backend.model.Projects.Project;
+import com.example.backend.model.Projects.RequestType;
 import com.example.backend.model.Users.Users;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,11 +37,14 @@ public class UserBooking {
     @JoinColumn(name = "user_id")
     private Users user;
 
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private BookingStatusType status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
-    private boolean accepted;
-    private boolean availability;
+
 
 
 }

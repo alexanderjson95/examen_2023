@@ -2,11 +2,13 @@ package com.example.backend;
 
 
 import com.example.backend.model.Users.UserRequest;
+import com.example.backend.model.Users.UserRequestPatch;
 import com.example.backend.model.Users.UserResponse;
 import com.example.backend.model.Users.Users;
 import com.example.backend.model.roles.RoleResponse;
 import com.example.backend.model.roles.UserRoleResponse;
 import com.example.backend.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserRequest req) throws NoSuchAlgorithmException {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRequest req) throws NoSuchAlgorithmException {
         System.out.println("DEBUG Request: " + req.getFirstName());
         service.addUser(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -33,17 +35,19 @@ public class UserController {
 
     @GetMapping("/roles")
     public ResponseEntity<List<RoleResponse>> getAllRoleTypes(){
-        System.out.println("wefjewpoiwjpifjpeifij");
         return ResponseEntity.ok(service.findAllRoles());
     }
-//
-//    @GetMapping("/roles/{userId}")
-//    public ResponseEntity<List<UserRoleResponse>> getUserRole(@PathVariable Long userId){
-//        return ResponseEntity.ok(service.findUserRoles(userId));
-//    }
+
 
     @GetMapping("/{userId}/roles")
     public ResponseEntity<List<String>> getUserRoles(@PathVariable Long userId) {
+        List<String> roles = service.getRoleNamesByUserId(userId);
+        return ResponseEntity.ok(roles);
+    }
+
+    @GetMapping("/role")
+    public ResponseEntity<List<String>> getMyRoles(Principal principal) {
+        Long userId = service.findUserByUsername(principal.getName()).getId();
         List<String> roles = service.getRoleNamesByUserId(userId);
         return ResponseEntity.ok(roles);
     }
@@ -78,7 +82,7 @@ public class UserController {
     @GetMapping("/returnUser")
     public ResponseEntity<UserResponse> returnUser(Principal principal){
         String username = principal.getName();
-        Users user = service.findUserByUsername(username);System.out.println("wefjewpoiwjpifjpeifij");
+        Users user = service.findUserByUsername(username);
         return ResponseEntity.ok(UserResponse.returnUser(user));
     }
 
@@ -91,16 +95,12 @@ public class UserController {
 
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserRequest req) throws NoSuchAlgorithmException {
-        Users updatedUser = service.updateUser(
-                id,
-                req.getUsername(),
-                req.getPassword(),
-                req.getEmail(),
-                req.getPublicKey()
-        );
-        return ResponseEntity.ok(UserResponse.returnUser(updatedUser));
+    @PatchMapping("/update")
+    public ResponseEntity<Void> updateUser(Principal principal, @RequestBody UserRequestPatch req) throws NoSuchAlgorithmException {
+        String username = principal.getName();
+        Users user = service.findUserByUsername(username);
+        service.updateUser(user,req);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 }

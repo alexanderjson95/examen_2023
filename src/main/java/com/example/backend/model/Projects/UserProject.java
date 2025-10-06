@@ -2,6 +2,7 @@ package com.example.backend.model.Projects;
 
 
 import com.example.backend.model.Users.Users;
+import com.example.backend.model.roles.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +29,7 @@ public class UserProject {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
-
+    private String role;
     @Column(name = "join_status", nullable = false)
     @Enumerated(EnumType.STRING)
     private RequestType requestType; // om admin skickade inbjudan ska bara mottagare kunna acceptera vice versa,

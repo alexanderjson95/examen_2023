@@ -80,6 +80,14 @@ public class UserService {
         return roles;
     }
 
+    public List<Users> findAllByIdIn(List<Long> userId) {
+        List<Users> users =  userRepo.findAllByIdIn(userId);
+        if (users.isEmpty()){
+            throw new ResourceNotFoundException("Bokningen kunde inte hitta");
+        }
+        return users;
+    }
+
 
     // hämtar userid, roleid och yoe(om inte null)
     public List<UserRoleResponse> findAllUserRoles() {
@@ -170,16 +178,36 @@ public class UserService {
         Users foundUser = findUserById(id);
         userRepo.delete(foundUser);
     }
-    public Users updateUser(Long id, String username, String password, String email, String publicKey) throws NoSuchAlgorithmException {
-        Users existing = findUserById(id);
-        existing.setUsername(username);
-        existing.setPassword(enc.encode(password));
-        existing.setEmail(email);
-        existing.setPublicKey(publicKey);
-        return userRepo.save(existing);
+//    public Users updateUser(Long id, String username, String password, String email, String publicKey) throws NoSuchAlgorithmException {
+//        Users existing = findUserById(id);
+//        existing.setUsername(username);
+//        existing.setPassword(enc.encode(password));
+//        existing.setEmail(email);
+//        existing.setPublicKey(publicKey);
+//        return userRepo.save(existing);
+//    }
+
+
+    public void updateUser(Users user, UserRequestPatch req) throws NoSuchAlgorithmException {
+        if (!req.getFirstName().isEmpty()) user.setFirstName(req.getFirstName());
+        if (!req.getLastName().isEmpty()) user.setLastName(req.getLastName());
+        if (!req.getPassword().isEmpty()) {
+            String encodedPassword = enc.encode(req.getPassword());
+            user.setPassword(encodedPassword);}
+
+        userRepo.save(user);
+
+        if (req.getRoles() != null && !req.getRoles().isEmpty()) {
+            userRoleRepo.deleteByUserId(user.getId());
+            for(RoleRequest roleReq : req.getRoles()) {
+                Role role = roleRepo.findByRole(roleReq.getRoleType())
+                        .orElseThrow(() -> new ResourceNotFoundException("Rollen finns inte: " + roleReq.getRoleType()));
+                UserRole userRole = new UserRole();
+                userRole.setUser(user);
+                userRole.setRole(role);
+                userRoleRepo.save(userRole);
+            }
+            }
+        }
     }
 
-
-
-
-}

@@ -13,15 +13,15 @@ import java.util.Base64;
 public class EllipticalDiffieHellman {
 
 
-    /* Använder för end-to-end kryptering. Istället för en standard secret key skapar vi en
-    * delad nyckel som kan delas mellan flera parter. Jag använder ECDH för detta.
+    /* Använder för end-to-end kryptering. Vi skapar en  delad nyckel som kan delas mellan flera parter. Jag använder ECDH för detta.
     *
     * 1.
-    * Vi skapar en elliptisk kurva över ett ändligt fält, dessa punkter är en grupp i fältet.
-    * Snabbare att gå fram, långsammare att gå bak: https://sebastiaagramunt.medium.com/discrete-logarithm-problem-and-diffie-hellman-key-exchange-821a45202d26
+    * Vi väljer en elliptiskt kurva (ex. secp256r1 etc), vilket avgör lösningarna
+    *
+    * Snabbare att gå fram, långsammare att gå bak pga discrete logarithm problem
     *
     * 2.
-    * Nu skapar vi en private key (konstant) och public key till användaren. Private key är alltid helt hemlig,
+    * Nu skapar vi en private key (generator) och public key till användaren. Private key är alltid helt hemlig,
     * public key kan vi skicka mellan parterna.
     *
     * 3.

@@ -24,11 +24,10 @@ public class Project {
     private String projectName;
     @Size(max = 100)
     private String description;
-    private boolean isPublic = false;
-    private double salary = 0.0;
-    private String genre;
+
     @CreationTimestamp
     private LocalDateTime created;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "request_rule")
     private JoinType requestRule = JoinType.MANUAL;

@@ -28,7 +28,7 @@ public class AESEncryptDecrypt {
      * Skapar en initiliaserings vektor på 12 bytes med random värden
      * för att förhindra att kryptering blir för förutsägbart
      */
-    public  GCMParameterSpec generateInitVector(){
+    public  GCMParameterSpec generateGCMParams(){
         // Skapar vektor med 12 byte "längd"
         byte[] iv = new byte[iv_length];
         // Fyller med random bytes
@@ -40,7 +40,7 @@ public class AESEncryptDecrypt {
     public  String encryptString(String input, SecretKey key)  {
         try{
             // Skapar IV vektor (12 bytes längd ) + längden på auth vektor
-            GCMParameterSpec ivSpec = generateInitVector();
+            GCMParameterSpec ivSpec = generateGCMParams();
             // Hämtar IV bytes så IV kan förvaras med datan (behöver ej krypteras som nyckeln)
             byte[] iv = ivSpec.getIV();
             // Skapar round keys (15 i mitt fall) och skapar startblocket (IV)
@@ -50,8 +50,11 @@ public class AESEncryptDecrypt {
             byte[] inputB = input.getBytes(StandardCharsets.UTF_8);
             // Skapar och fyller auth tag vektorn och krypterar allt
             byte[] encodedString = cipher.doFinal(inputB);
+
+
+
             // Skapar en matris med längd av iv + input och fyller med iv data + input data
-            byte[] output = ByteBuffer.allocate(iv.length + encodedString.length).put(iv).put(encodedString).array();
+            byte[] output = ByteBuffer.allocate(iv.length + encodedString.length).put(iv).put(encodedString).array(); // NÖDVÄNDIG???
             return Base64.getEncoder().encodeToString(output);
         }catch (Exception e){
             throw new RuntimeException("Failed to encrypt", e);

@@ -1,5 +1,6 @@
 package com.example.backend.repository;
 
+import com.example.backend.model.Bookings.BookingStatusType;
 import com.example.backend.model.Bookings.UserBooking;
 import com.example.backend.model.Users.Users;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -22,9 +23,18 @@ public interface UserBookingRepository extends JpaRepository<UserBooking, Long> 
     @EntityGraph(attributePaths = {"user", "project", "booking"})
     List<UserBooking> findByUser_IdAndProject_Id(Long userId, Long projectId);
 
-    @EntityGraph(attributePaths = {"user", "project", "booking"})
-    List<UserBooking> findByUser_IdAndProject_IdAndAccepted(Long userId, Long projectId, Boolean accepted);
-    Optional<UserBooking> findByBooking_Id(Long bookingId);
+    void deleteByUser_Id(Long userId);
+    void deleteByUser_IdAndBooking_Id(Long userId, Long bookingId);
 
-    boolean existsByUser_IdAndBooking_DateMillisAndAvailabilityFalse(Long userId, Long dateMillis);
+
+
+    List<UserBooking> findAllByBooking_Id(Long bookingId);
+    Optional<UserBooking> findByBooking_IdAndUser_Id(Long bookingId, Long userId);
+    boolean existsByUser_IdAndBooking_DateMillis(Long userId, Long dateMillis);
+    // Helper för att kolla så användare inte redan är bokad på dagen
+    boolean existsByUser_IdAndBooking_DateMillisAndStatus(Long userId, Long dateMillis, BookingStatusType status);
+    boolean existsByUser_IdAndBooking_DateMillisAndStatusIn(Long userId, Long dateMillis, List<BookingStatusType>status);
+
+    List<UserBooking> findAllByBooking_IdAndStatus(Long bookingId,  BookingStatusType status);
+
 }

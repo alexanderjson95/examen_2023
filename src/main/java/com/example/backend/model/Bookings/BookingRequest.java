@@ -1,12 +1,14 @@
 package com.example.backend.model.Bookings;
 
 import com.example.backend.ToExport;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,8 +17,10 @@ public class BookingRequest {
     @NotNull(message = "Projekt saknas")
     private Long projectId;
 
-    private Long userId;
+    @NotNull(message = "Måste innehålla minst en användare i bokningen!")
+    private List<Long> userIds;
 
+    @NotNull(message = "Datum saknas")
     private Long dateMillis;
 
 
@@ -29,6 +33,8 @@ public class BookingRequest {
     private Integer endHour;
     @NotNull(message = "Sluttid saknas")
     private Integer endMinute;
-    private boolean accepted;
-    private boolean availability;
+    private BookingStatusType status;
+    private String bookingTitle;
+
+
 }

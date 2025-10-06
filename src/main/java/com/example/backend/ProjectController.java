@@ -40,13 +40,18 @@ public class ProjectController {
 
     }
 
-    @DeleteMapping("/{projectId}/users/{userId}")
-    public ResponseEntity<Void> removeUserFromProject(@PathVariable("projectId") Long projectId, @PathVariable("userId") Long userId, Principal principal){
+//    @DeleteMapping("/{projectId}/users/{userId}")
+//    public ResponseEntity<Void> removeUserFromProject(@PathVariable("projectId") Long projectId, @PathVariable("userId") Long userId, Principal principal){
+//        Long id = fetchLoggedIn(principal);
+//        projectService.removeUserFromProject(userId,projectId,id);
+//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//    }
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<Void> removeUserProject(@PathVariable("id") Long userProjectId, Principal principal){
         Long id = fetchLoggedIn(principal);
-        projectService.removeUserFromProject(userId,projectId,id);
+        projectService.removeUserProject(id,userProjectId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
 
     // Behörigheter: admin, joined, blocked
     @PatchMapping("/{projectId}/{userId}")
@@ -101,6 +106,11 @@ public class ProjectController {
 
 
 
+    @GetMapping("{projectId}/admin")
+    public boolean isUserAdmin(@PathVariable Long projectId, Principal principal){
+        Long loggedIn = fetchLoggedIn(principal);
+        return projectService.isUserAdmin(projectId,loggedIn);
+    }
 
 
 
@@ -125,8 +135,15 @@ public class ProjectController {
             @RequestParam String query,
             @RequestParam String value
     ) {
-        System.out.println("Kör denna!! SÖKNING! + fick : " + query + " och " + value);
         return ResponseEntity.ok(projectService.findProjectsByQuery(query, value));
+    }
+
+    @GetMapping("/userprojects")
+    public ResponseEntity<List<UserProjectResponse>> searchUserProjects(
+            @RequestParam String query,
+            @RequestParam Long projectId
+    ) {
+        return ResponseEntity.ok(projectService.findUserProjectsByRequestType(query, projectId));
     }
 
     // Helper för att få ut userId av inloggad användare

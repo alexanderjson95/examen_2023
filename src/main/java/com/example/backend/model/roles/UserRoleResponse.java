@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 @Builder
 public class UserRoleResponse {
     private Long userId;
+    private Long roleId;
     private String roleType;
     private String firstName;
     private String lastName;
