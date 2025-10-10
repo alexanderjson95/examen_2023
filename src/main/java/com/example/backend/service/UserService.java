@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.math.BigDecimal;
+import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -66,13 +68,7 @@ public class UserService {
                         .roleType(role.getRole())
                         .build()).toList();
     }
-//
-//    public List<UserRoleResponse> findUserRoles(Long userId) {
-//        return userRoleRepo.findRoleNamesByUserId(userId)
-//                .stream()
-//                .map(UserRoleResponse::fromUserRole)
-//                .collect(Collectors.toList());
-//    }
+
 
     public List<String> getRoleNamesByUserId(Long userId) {
         List<String> roles = userRoleRepo.findRoleNamesByUserId(userId);
@@ -101,17 +97,19 @@ public class UserService {
         if(userRepo.findByUsername(req.getUsername()).isPresent()){
             throw new DataTakenException("Användarnamnet är taget");
         };
+        KeyPair keyPair = crypto.generateKeyPair();
+        String encodedPublicKey = crypto.encodeBase64(keyPair.getPublic());
+        String encodedPrivateKey = Base64.getEncoder().encodeToString(keyPair.getPrivate().getEncoded());
+
         String encodedPassword = enc.encode(req.getPassword());
-        SecretKey aesKey = keyConfig.secretKey();
-        String encodedKey = crypto.encodeBase64_secretKey(aesKey);
         Users nUser = new Users();
         nUser.setUsername(req.getUsername());
         nUser.setFirstName(req.getFirstName());
         nUser.setLastName(req.getLastName());
         nUser.setPassword(encodedPassword);
         nUser.setEmail(req.getEmail());
-        nUser.setPublicKey(req.getPublicKey());
-        nUser.setSecretKey(encodedKey);
+        nUser.setPublicKey(encodedPublicKey);
+        nUser.setSecretKey(encodedPrivateKey);
         userRepo.save(nUser);
 
         for(RoleRequest roleReq : req.getRoles()) {
@@ -175,17 +173,8 @@ public class UserService {
 
 
     public void removeUser(Long id) {
-        Users foundUser = findUserById(id);
-        userRepo.delete(foundUser);
+        userRepo.deleteById(id);
     }
-//    public Users updateUser(Long id, String username, String password, String email, String publicKey) throws NoSuchAlgorithmException {
-//        Users existing = findUserById(id);
-//        existing.setUsername(username);
-//        existing.setPassword(enc.encode(password));
-//        existing.setEmail(email);
-//        existing.setPublicKey(publicKey);
-//        return userRepo.save(existing);
-//    }
 
 
     public void updateUser(Users user, UserRequestPatch req) throws NoSuchAlgorithmException {

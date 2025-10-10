@@ -11,5 +11,6 @@ import lombok.Setter;
 @Setter
 public class PatchUserBookingRequest {
     private Long bookingId;
+    private Long userId;
     private BookingStatusType status;
 }

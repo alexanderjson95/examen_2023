@@ -25,6 +25,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService service;
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId){
+        service.removeUser(userId);
+        return ResponseEntity.noContent().build();
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody UserRequest req) throws NoSuchAlgorithmException {
@@ -32,6 +37,8 @@ public class UserController {
         service.addUser(req);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+
 
     @GetMapping("/roles")
     public ResponseEntity<List<RoleResponse>> getAllRoleTypes(){
@@ -87,11 +94,6 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id){
-        service.removeUser(id);
-        return ResponseEntity.noContent().build();
-    }
 
 
 

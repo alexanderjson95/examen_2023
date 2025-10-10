@@ -12,4 +12,7 @@ import java.util.Optional;
 public interface BookingRepository extends JpaRepository<Bookings, Long> {
 
     long countByIdIn(List<Long> ids);
+    List<Bookings> findByIdIn(List<Long> ids);
+
+
 }

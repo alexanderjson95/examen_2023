@@ -35,7 +35,7 @@ public class UserRequest {
     private String password;
 
     @NotBlank(message = "Email får inte vara tomt")
-    @Size(min = 5, max=15, message = "Email måste vara mellan 5 - 15 tecken" )
+    @Size(min = 5, max=30, message = "Email måste vara mellan 5 - 30 tecken" )
     private String email;
 
 

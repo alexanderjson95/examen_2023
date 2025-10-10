@@ -55,6 +55,7 @@ public interface UserProjectRepository extends JpaRepository<UserProject, Long> 
             "WHERE u.id = :userId AND up.requestType = :requestType")
     List<UserProject> findByUser_IdAndRequestType(Long userId, RequestType requestType);
 
+    int countByProject_Id(Long projectId);
 
     long countByProject_IdAndIsAdminTrue(Long projectId);
     boolean existsByProject_IdAndUser_IdAndIsAdminTrue(Long projectId, Long userId);

@@ -28,7 +28,6 @@ public class UserMessageService {
     private final CryptoService crypto;
     private final UserService uService;
     private final UserRepository uRepo;
-
     @Autowired
     public UserMessageService(UserMessageRepository userMessageRepository, MessageRepository messageRepository, CryptoService crypto, UserService uService, UserRepository uRepo) {
         this.userMessageRepository = userMessageRepository;
@@ -70,8 +69,6 @@ public class UserMessageService {
 
     @Transactional
     public void sendMessage(Users user, MessageRequest req){
-        System.out.println(" Reciever: " + req.getRecipientId() +  " Message: " + req.getEncryptedValue() + "Convo Key: ");
-
         Users recipient = uService.findUserById(req.getRecipientId());
         Message msg = new Message();
         msg.setEncryptedValue(req.getEncryptedValue());

@@ -27,6 +27,7 @@ public interface UserBookingRepository extends JpaRepository<UserBooking, Long> 
     void deleteByUser_IdAndBooking_Id(Long userId, Long bookingId);
 
 
+    int countByBooking_Id(Long bookingId);
 
     List<UserBooking> findAllByBooking_Id(Long bookingId);
     Optional<UserBooking> findByBooking_IdAndUser_Id(Long bookingId, Long userId);

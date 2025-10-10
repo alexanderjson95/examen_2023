@@ -4,6 +4,7 @@ import com.example.backend.model.Projects.*;
 import com.example.backend.model.Users.Users;
 import com.example.backend.service.ProjectService;
 import com.example.backend.service.UserService;
+import jakarta.servlet.annotation.HttpConstraint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,8 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+
+
     @GetMapping
     public ResponseEntity<List<ProjectResponse>> getAllProjects(){
         List<Project> projects = projectService.getAllProjects();
@@ -40,16 +43,22 @@ public class ProjectController {
 
     }
 
-//    @DeleteMapping("/{projectId}/users/{userId}")
-//    public ResponseEntity<Void> removeUserFromProject(@PathVariable("projectId") Long projectId, @PathVariable("userId") Long userId, Principal principal){
-//        Long id = fetchLoggedIn(principal);
-//        projectService.removeUserFromProject(userId,projectId,id);
-//        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-//    }
-    @DeleteMapping("/user/{id}")
-    public ResponseEntity<Void> removeUserProject(@PathVariable("id") Long userProjectId, Principal principal){
+
+
+    @DeleteMapping("/{projectId}/users/{userId}")
+    public ResponseEntity<Void> removeUserProject( @PathVariable("projectId") Long projectId,@PathVariable("userId") Long userId,Principal principal){
         Long id = fetchLoggedIn(principal);
-        projectService.removeUserProject(id,userProjectId);
+        projectService.removeUserFromProject(userId,projectId,id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/{projectId}/{userId}")
+    public ResponseEntity<Void> removeProject(
+            @PathVariable("projectId") Long projectId,
+            @PathVariable("userId") Long userId
+            , Principal principal){
+        Long id = fetchLoggedIn(principal);
+        projectService.removeProject(projectId,userId,id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

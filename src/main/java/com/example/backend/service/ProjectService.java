@@ -87,7 +87,7 @@ public class ProjectService  {
 
     @Transactional()
     public List<UserProjectResponse> findRequestedToAdmin(Long loggedInUserId,Long projectId)  {
-        _adminExceptionHelper(loggedInUserId,loggedInUserId,projectId); // sätter att admin targets sig själv här, för vi hämtar ingen särskild target efter id
+        _AdminExceptionHelper(loggedInUserId,loggedInUserId,projectId); // sätter att admin targets sig själv här, för vi hämtar ingen särskild target efter id
         return userProjectRepository.findByProject_IdAndHasJoinedFalse(projectId)
                 .stream()
                 .map(UserProjectResponse::fromUserProject)
@@ -122,7 +122,7 @@ public class ProjectService  {
      */
     @Transactional
     public void addUserToProject(Long loggedInUserIdUser, Long projectId, Long userId, UserProjectRequest req){
-        _adminExceptionHelper(loggedInUserIdUser,userId,projectId);
+        _adminSelfExceptionHelper(loggedInUserIdUser,userId,projectId);
         _duplicateExceptionHelper(userId,projectId);
 
         Users user = userService.findUserById(userId);
@@ -210,7 +210,7 @@ public class ProjectService  {
 
     @Transactional
     public void updateProject(Long loggedInUserId, Long projectId, Long userId, ProjectRequest req){
-        _adminExceptionHelper(loggedInUserId,userId,projectId);
+        _AdminExceptionHelper(loggedInUserId,userId,projectId);
 
         Project project = findProjectById(projectId);
         project.setProjectName(req.getProjectName());
@@ -218,32 +218,37 @@ public class ProjectService  {
         projectRepository.save(project);
     }
 
+
+
     /* DELETE */
-    @Transactional
-    public void removeUserFromProject(Long userId, Long projectId, Long loggedInUserId){
-        _adminExceptionHelper(loggedInUserId,userId,projectId);
-        UserProject userProject = findUserAndProject(userId, projectId);
-        userProjectRepository.delete(userProject);
-    }
+
 
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
+    }    @Transactional
+    public void removeUserFromProject(Long userId, Long projectId, Long loggedInUserId){
+        _adminSelfExceptionHelper(loggedInUserId,userId,projectId);
+        UserProject userProject = findUserAndProject(userId, projectId);
+        int participantsLeft = userProjectRepository.countByProject_Id(projectId);
+        Project project = findProjectById(projectId);
+        if (participantsLeft <= 1)  {
+            removeProject(projectId,userId,loggedInUserId);
+            projectRepository.delete(project);
+        }
+        userProjectRepository.delete(userProject);
     }
 
 
     @Transactional
-    public void removeProject(Long loggedInUserId,Long projectId){
-        _adminExceptionHelper(loggedInUserId,loggedInUserId,projectId);
+    public void removeProject(Long projectId,Long userId, Long loggedInUserId){
+        _AdminExceptionHelper(loggedInUserId,userId,projectId);
         Project project = findProjectById(projectId);
         userProjectRepository.deleteByProjectId(projectId);
         projectRepository.delete(project);
     }
 
 
-    public void removeUserProject(Long loggedInUserId,Long targetId){
-        _adminExceptionHelper(loggedInUserId,loggedInUserId,targetId);
-        userProjectRepository.deleteById(targetId);
-    }
+
 
 
     public List<UserProjectResponse> findUserProjectsByRequestType(String query, Long  projectId){
@@ -276,7 +281,6 @@ public class ProjectService  {
                 .stream()
                 .map(UserProjectResponse::fromUserProject)
                 .toList();
-        System.out.println("RESPONSEEEEEEEEEEEEEEe" + getI);
         return getI;
     }
 
@@ -348,10 +352,16 @@ public class ProjectService  {
         if 0,1 -> false
         if 0,0 -> throw
      */
-    private boolean _adminExceptionHelper(Long loggedInUserId, Long userId, Long tableId) {
+    private boolean _adminSelfExceptionHelper(Long loggedInUserId, Long userId, Long tableId) {
         boolean isAdmin = isUserAdmin(tableId, loggedInUserId);
         boolean targetSelf = loggedInUserId.equals(userId);
         if (isAdmin || targetSelf) return true;
+        throw new NotAdminException("Du saknar behörighet för detta");
+    }
+
+    private boolean _AdminExceptionHelper(Long loggedInUserId, Long userId, Long tableId) {
+        boolean isAdmin = isUserAdmin(tableId, loggedInUserId);
+        if (isAdmin) return true;
         throw new NotAdminException("Du saknar behörighet för detta");
     }
     }

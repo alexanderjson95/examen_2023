@@ -5,5 +5,6 @@ public enum BookingStatusType {
     AVAILABLE,        // AKA request
     ACCEPTED,
     DECLINED,      // om user/admin nekar andra part, behåller vi dem som nekad i db
-    REMOVED
+    REMOVED,
+    ADMIN
 }

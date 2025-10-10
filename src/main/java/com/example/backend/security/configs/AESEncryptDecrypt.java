@@ -6,9 +6,15 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.*;
 import javax.crypto.spec.GCMParameterSpec;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.cert.CertificateException;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -54,12 +60,13 @@ public class AESEncryptDecrypt {
 
 
             // Skapar en matris med längd av iv + input och fyller med iv data + input data
-            byte[] output = ByteBuffer.allocate(iv.length + encodedString.length).put(iv).put(encodedString).array(); // NÖDVÄNDIG???
+            byte[] output = ByteBuffer.allocate(iv.length + encodedString.length).put(iv).put(encodedString).array();
             return Base64.getEncoder().encodeToString(output);
         }catch (Exception e){
             throw new RuntimeException("Failed to encrypt", e);
         }
     }
+
 
     public  String decryptString(String crypted_data, SecretKey key) {
         try {

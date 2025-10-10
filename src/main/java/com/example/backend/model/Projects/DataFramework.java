@@ -1,98 +1,120 @@
-package com.example.backend.model.Projects;
-
-import com.example.backend.ToExport;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.annotation.Generated;
-import jakarta.annotation.PostConstruct;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import org.reflections.Reflections;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import javax.sound.midi.Patch;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.*;
-
-import static org.reflections.ReflectionUtils.Methods;
-
-@Component
-public class DataFramework {
-
-    String pck = "com.example";
-    Reflections ref = new Reflections(pck);
-    Set<Class<?>> entities = ref.getTypesAnnotatedWith(ToExport.class);
-
-    public void createCMD(String name, String path, String ext) throws IOException {
-        String full = path+name+ext;
-        System.out.println("Path: " + full);
-        Path outputPath = Paths.get(full);
-        Files.createDirectories(outputPath.getParent());
-        try(BufferedWriter w = Files.newBufferedWriter(outputPath)) {
-            w.write("@echo off\n");
-            w.write("echo Hello\n");
-            w.write("pause\n");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    record FieldRow(String name_field, String type){}
-    record EntityRow(String name_class, List<FieldRow> fields){}
-
-    private void JsonWriter(List<?> data) throws IOException {
-        ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
-
-
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("models.json"), data);
-    }
-
-        @PostConstruct
-        public void findTableAnnotations() throws IOException {
-
-            List<EntityRow> s = new ArrayList<>();
-            for (Class<?> clazz : entities) {
-                    List<FieldRow> rows = new ArrayList<>();
-                    for (Field f : clazz.getDeclaredFields()) {
-                        rows.add(new FieldRow(f.getName(), f.getType().getSimpleName()));
-                    }
-                    s.add(new EntityRow(clazz.getSimpleName(), rows));
-
-
-            }    JsonWriter(s);
-        }
-
-        }
-
-
-
-
-//@PostConstruct
-//public void findTableAnnotations() throws IOException {
+//package com.example.backend.model.Projects;
 //
-//    List<EntityRow> s = new ArrayList<>();
-//    for (Class<?> clazz : entities) {
-//        if (clazz.isAnnotationPresent(Table.class)) {
-//            List<FieldRow> rows = new ArrayList<>();
-//            for (Field f : clazz.getDeclaredFields()) {
-//                rows.add(new FieldRow(f.getName(), f.getType().getSimpleName()));
-//            }
-//            s.add(new EntityRow(clazz.getSimpleName(), rows));
+//import com.example.backend.ToExport;
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//import jakarta.annotation.Generated;
+//import jakarta.annotation.PostConstruct;
+//import jakarta.persistence.Entity;
+//import jakarta.persistence.Table;
+//import org.reflections.Reflections;
+//import org.springframework.stereotype.Component;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.web.bind.annotation.*;
+//
+//import javax.sound.midi.Patch;
+//import java.io.BufferedWriter;
+//import java.io.File;
+//import java.io.IOException;
+//import java.io.InputStream;
+//import java.lang.reflect.Field;
+//import java.lang.reflect.Method;
+//import java.lang.reflect.Modifier;
+//import java.net.URL;
+//import java.nio.file.Files;
+//import java.nio.file.Path;
+//import java.nio.file.Paths;
+//import java.util.*;
+//
+//import static org.reflections.ReflectionUtils.Methods;
+//
+//@Component
+//public class DataFramework {
+//
+//    String pck = "com.example";
+//    Reflections ref = new Reflections(pck);
+//    Set<Class<?>> entities = ref.getTypesAnnotatedWith(ToExport.class);
+//
+////    public void createCMD(String name, String path, String ext) throws IOException {
+////        String full = path+name+ext;
+////        System.out.println("Path: " + full);
+////        Path outputPath = Paths.get(full);
+////        Files.createDirectories(outputPath.getParent());
+////        try(BufferedWriter w = Files.newBufferedWriter(outputPath)) {
+////            w.write("@echo off\n");
+////            w.write("echo Hello\n");
+////            w.write("pause\n");
+////        } catch (IOException e) {
+////            throw new RuntimeException(e);
+////        }
+////    }
+////
+////    record FieldRow(String name_field, String type){}
+////    record EntityRow(String name_class, List<FieldRow> fields){}
+////
+//    private void JsonWriter(List<?> data) throws IOException {
+//        ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
+//
+//
+//        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("models.json"), data);
+//    }
+//
+////        @PostConstruct
+////        public void findTableAnnotations() throws IOException {
+////
+////            List<EntityRow> s = new ArrayList<>();
+////            for (Class<?> clazz : entities) {
+////                    List<FieldRow> rows = new ArrayList<>();
+////                    for (Field f : clazz.getDeclaredFields()) {
+////                        rows.add(new FieldRow(f.getName(), f.getType().getSimpleName()));
+////                    }
+////                    s.add(new EntityRow(clazz.getSimpleName(), rows));
+////
+////
+////            }    JsonWriter(s);
+////        }
+////
+////
+////
+//
+//    record FieldRow(String name_field, String type){}
+//    record EntityRow(String name_class, List<FieldRow> fields){}
+//
+//
+//
+//    @PostConstruct
+//    public void findTableAnnotations() throws IOException {
+//        List<EntityRow> s = new ArrayList<>();
+//        for (Class<?> clazz : entities) {
+//            ToExport ann = clazz.getAnnotation(ToExport.class);
+//                String className = clazz.getSimpleName();
+//
+//
+//                System.out.println("Class: " + className);
+//                System.out.println("Annotations: " + Arrays.toString(clazz.getAnnotations()));
+//
+//
+//                for (Field f : clazz.getDeclaredFields()) {
+//                    System.out.println("Field: " + f.getName());
+//                    System.out.println("  Type: " + f.getType().getSimpleName());
+//                    System.out.println("  GenericType: " + f.getGenericType().getTypeName());
+//                    System.out.println("  Modifiers: " + Modifier.toString(f.getModifiers()));
+//                    System.out.println("  Annotations: " + Arrays.toString(f.getAnnotations()));
+//                    System.out.println("------------------------------------");
+//                }
+//
+//
+//                for (Method m : clazz.getDeclaredMethods()) {
+//                    System.out.println("Method: " + m.getName());
+//                    System.out.println("  ReturnType: " + m.getReturnType().getSimpleName());
+//                    System.out.println("  Modifiers: " + Modifier.toString(m.getModifiers()));
+//                    System.out.println("  Annotations: " + Arrays.toString(m.getAnnotations()));
+//                }
+//            System.out.println("------------------------------------");
+//
+//                System.out.println("--- Entity " + className + " ---");
+//
 //        }
-//
-//    }    JsonWriter(s);
-//}
-
+//    }
 
 //                Method[] method = clazz.getDeclaredMethods();
 //
@@ -102,12 +124,12 @@ public class DataFramework {
 //                    m.getGenericReturnType();
 //
 //                }
-
-
-
-
-
-
+//
+//
+//
+//
+//
+//
 //
 //                List<FieldRow> rows = new ArrayList<>();
 //                if (ann.value().equals("Controller")){
@@ -142,6 +164,7 @@ public class DataFramework {
 //        sb.append("}\n");
 //        return sb.toString();
 //    }
+//}
 
 //@PostConstruct
 //public void findTableAnnotations() throws IOException {
@@ -173,28 +196,3 @@ public class DataFramework {
 //}
 
 
-/*
-'
-    @PostConstruct
-    public void findTableAnnotations() throws IOException {
-        List<EntityRow> s = new ArrayList<>();
-        for (Class<?> clazz : entities) {
-                ToExport ann = clazz.getAnnotation(ToExport.class);
-                if (ann.value().equals("controller")){
-                    RequestMapping req = clazz.getAnnotation(RequestMapping.class);
-                    GetMapping get = clazz.getAnnotation(GetMapping.class);
-                    PostMapping post = clazz.getAnnotation(PostMapping.class);
-                    PutMapping put = clazz.getAnnotation(PutMapping.class);
-                    PatchMapping patch = clazz.getAnnotation(PatchMapping.class);
-                    DeleteMapping delete = clazz.getAnnotation(DeleteMapping.class);
-
-                    String className = clazz.getSimpleName();
-                    String basePath = Arrays.stream(req.value()).findFirst().orElseThrow();
-                    String getPaths = Arrays.stream(req.value()).findFirst().orElseThrow();
-                    System.out.println(className + " " + getPaths);
-
-                };
-
-                }
-                }
- */
