@@ -1,10 +1,8 @@
 package com.example.backend;
 
 import com.example.backend.Exceptions.DataTakenException;
-import com.example.backend.model.Projects.DataFramework;
 import com.example.backend.model.Users.Users;
 import com.example.backend.repository.UserRepository;
-import com.example.backend.service.TestUserService;
 import com.example.backend.service.UserService;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
