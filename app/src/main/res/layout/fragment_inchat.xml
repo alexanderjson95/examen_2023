@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:elevation="4dp"
-    android:background="@color/white"
     android:layout_marginTop="36dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -66,6 +65,8 @@
         style="@style/CustomEditTextStyle"
         android:gravity="end"
         android:paddingTop="8dp"
+            android:backgroundTint="#17181B"
+
             android:layout_marginBottom="88dp"
             app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +90,7 @@
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="12dp"
-            android:backgroundTint="@color/theme_one_inactiveBtn"
+            android:backgroundTint="#5E6AD2"
             app:icon="@drawable/outline_arrow_circle_right_24"
             style="@style/SendMaterialBtn"/>
     </LinearLayout>

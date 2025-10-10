@@ -56,10 +56,32 @@ class UserBookingRepository @Inject constructor(
 
     override suspend fun performRemove(
         api: API,
-        toRemove: Long): Response<Unit> {
+        toRemove: Long
+    ): Response<Unit> {
         TODO("Not yet implemented")
     }
 
+    override suspend fun performRemovePair(
+        api: API,
+        toRemove: Long,
+        fromTable: Long,
+    ): Response<Unit> {
+        return apiInterface.removeUserBooking(toRemove,fromTable)
+    }
+
+
+    suspend fun removeUserBooking(userId: Long, bookingId:Long): Result<Unit>
+            = withContext(Dispatchers.IO){
+        try {
+            val response = apiInterface.removeUserBooking(bookingId,userId)
+            if (response.isSuccessful)
+                Result.success(Unit)
+            else
+                Result.failure(Exception("HTTP ${response.code()} ${response.message()}"))
+        } catch (t: Throwable) {
+            Result.failure(t)
+        }
+    }
     suspend fun getByProjectId(projectId: Long): Result<List<BookingResponse>>
             = withContext(Dispatchers.IO){
         try {

@@ -54,6 +54,9 @@ interface API {
     @GET("users/returnUser")
     suspend fun returnUser(): Response<UserResponse>
 
+    @DELETE("users/{userId}")
+    suspend fun deleteUser(@Path("userId") userId: Long,
+    ): Response<Unit>
 
 
     @GET("users/search")
@@ -65,6 +68,11 @@ interface API {
     @POST("projects")
     suspend fun createProject(@Body request: ProjectRequest): Response<Unit>
 
+    @DELETE("projects/{projectId}/{userId}")
+    suspend fun deleteProject(
+        @Path("projectId") projectId: Long,
+        @Path("userId") userId: Long?
+    ): Response<Unit>
 
     @GET("projects/search")
     suspend fun searchProjects(
@@ -89,10 +97,9 @@ interface API {
 
     @GET("projects/{projectId}/users/{userId}")
     suspend fun getUserProject(
-        @Path("projectId") projectId: Long?,
-        @Path("userId") userId: Long?
-    ): Response<List<UserProjectResponse>>
-
+        @Path("projectId") projectId: Long,
+        @Path("userId") userId: Long
+    ): Response<UserProjectResponse>
     @GET("projects/{projectId}/users")
     suspend fun getMembers(
         @Path("projectId") projectId: Long?,
@@ -168,8 +175,17 @@ interface API {
     suspend fun sendMessage(@Body request: MessageRequest): Response<Unit>
 
 
-    @GET("bookings/{projectId}")
-    suspend fun  getBookingsByProjectId(@Path("projectId") projectId: Long): Response<List<BookingResponse>>
+    @DELETE("bookings/{id}/delete")
+    suspend fun removeBooking(@Path("id") id: Long): Response<Unit>
+
+    @DELETE("bookings/{bookingId}/user/{userId}/delete")
+    suspend fun removeUserBooking(@Path("bookingId") bookingId: Long, @Path("userId") userId: Long): Response<Unit>
+
+    @GET("bookings/project/{projectId}")
+    suspend fun getBookingsByProjectId(@Path("projectId") projectId: Long): Response<List<BookingResponse>>
+
+    @GET("bookings/{projectId}/available")
+    suspend fun getAvailableUsers(@Path("projectId") projectId: Long, @Query("date") dateMillis: Long): Response<List<UserProjectResponse>>
 
     @POST("bookings")
     suspend fun createBooking(@Body req: BookingRequest): Response<Unit>
@@ -181,20 +197,24 @@ interface API {
     suspend fun getAllBookings(): Response<List<BookingResponse>>
 
 
+    @GET("bookings/booking/{bookingId}")
+    suspend fun getAllBookingsById(@Path("bookingId") bookingId: Long): Response<List<BookingResponse>>
+
+
     @GET("bookings/projects/{projectId}")
     suspend fun getBookingsByProject(@Path("projectId") projectId: Long?): Response<List<BookingResponse>>
 
     @PATCH("bookings/{bookingId}/update")
-    suspend fun patchBooking(@Path("bookingId") bookingId: Long?, @Body req: BookingRequestPatch): Response<Unit>
+    suspend fun patchBooking(@Path("bookingId") bookingId: Long, @Body req: BookingRequestPatch): Response<Unit>
 
     @PATCH("bookings/respond")
     suspend fun respondBooking(@Body req: UserBookingPatch): Response<Unit>
 
-//    @DELETE("projects/{projectId}/users/{userId}")
-//    suspend fun removeUserFromProject(@Path("projectId") projectId: Long, @Path("userId") userId: Long ): Response<Unit>
+    @DELETE("projects/{projectId}/users/{userId}")
+    suspend fun removeUserFromProject(@Path("projectId") projectId: Long, @Path("userId") userId: Long ): Response<Unit>
 
-    @DELETE("projects/user/{id}")
-    suspend fun removeUserFromProject(@Path("id") id: Long ): Response<Unit>
+//    @DELETE("projects/user/{userId}/{projectId}")
+//    suspend fun removeUserFromProject(@Path("userId") userId: Long , @Path("projectId") projectId: Long ): Response<Unit>
 
     @GET("projects/userprojects")
     suspend fun searchUserProjects(

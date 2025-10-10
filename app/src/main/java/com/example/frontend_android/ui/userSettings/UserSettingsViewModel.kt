@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.frontend_android.ErrorMessages
+import com.example.frontend_android.api.sec.SessionManager
 import com.example.frontend_android.model.Projects.ProjectRequest
 import com.example.frontend_android.model.Projects.UserProjectRequest
 import com.example.frontend_android.model.Projects.UserProjectResponse
@@ -34,7 +36,8 @@ class UserSettingsViewModel  @Inject constructor(
     private val urRepo: UserRoleRepository
 ): ViewModel() {
 
-
+    @Inject
+    lateinit var sessionManager: SessionManager
     private lateinit var request: UserRequestPatch
 
 
@@ -42,6 +45,7 @@ class UserSettingsViewModel  @Inject constructor(
 
     private val _user = MutableLiveData<UserResponse?>()
     val user: MutableLiveData<UserResponse?> = _user
+
     fun getUser() {
         viewModelScope.launch {
             Log.d("GetMemberUser", "TRYING", )
@@ -93,12 +97,39 @@ class UserSettingsViewModel  @Inject constructor(
                     _userRoles.postValue(user)
                             },
                 onFailure = { e ->
-                    Log.e("getLoggedInRole", " function Error: Error loading userprojects", e)
+                    ErrorMessages.get_error("Logged In: ", "Logged in")
                 }
             )
         }
     }
 
+    fun getId(): Long {
+        val id = sessionManager.getId()
+        if (id != null){
+
+            return id
+        }
+        return 0L
+    }
+
+    fun removeUser(){
+
+        viewModelScope.launch {
+            val result = uRepo.removeSelf(getId())
+            Log.d("Remove Run ViewModel", "Running remove with id: ${getId()}")
+
+            result.fold(
+                onSuccess = {
+                    sessionManager.clear()
+                    "success"
+                            },
+                onFailure = { ErrorMessages.patch_error("User Settings", "Delete") }
+            )
+        }
+    }
+
+    private val _updateStatus = MutableLiveData<Boolean?>()
+    val updateStatus: MutableLiveData<Boolean?> = _updateStatus
     fun patchUser(firstName: String, lastName: String, password: String, roles: List<RoleRequest>){
 
         viewModelScope.launch {
@@ -108,15 +139,16 @@ class UserSettingsViewModel  @Inject constructor(
                 password = password,
                 roles = roles
             )
-            Log.d("PATCH_USER", "firstName = $firstName")
-            Log.d("PATCH_USER", "lastName = $lastName")
-            Log.d("PATCH_USER", "password = $password")
-            Log.d("PATCH_USER", "roles = ${roles.joinToString { it.role }}")
 
             val result = uRepo.updateUser(request)
             result.fold(
-                onSuccess = { "success" },
-                onFailure = { "Error" }
+                onSuccess = {
+                    "success"
+                       updateStatus.value = true     },
+                onFailure = {
+                    ErrorMessages.patch_error("User Settings", "Patch")
+                    updateStatus.value = false
+                }
             )
         }
     }

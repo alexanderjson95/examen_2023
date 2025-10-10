@@ -59,18 +59,38 @@ class ProjectRepository @Inject constructor(
 
     override suspend fun performRemove(
         api: API,
-        toRemove: Long,
+        toRemove: Long
     ): Response<Unit> {
-        TODO("Not yet implemented")
+        TODO()
     }
 
+    override suspend fun performRemovePair(
+        api: API,
+        toRemove: Long,
+        fromTable: Long,
+    ): Response<Unit> {
+        return api.deleteProject(toRemove,fromTable)
+    }
+
+    suspend fun removeProject(): Result<List<ProjectResponse>> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = apiInterface.getProjectsUserIsNotIn()
+                if (response.isSuccessful) {
+                    Result.success(response.body().orEmpty())
+                } else {
+                    Result.failure(Exception("Error: ${response.code()} - ${response.message()}"))
+                }
+            } catch (e: Exception) {
+                Result.failure(e)
+            }
+        }
 
     suspend fun searchProjects(query: String, value: String): Result<List<ProjectResponse>> =
         withContext(Dispatchers.IO) {
             try {
                 val response = apiInterface.searchProjects(query, value)
                 val rawBody = response.errorBody()?.string() ?: Gson().toJson(response.body())
-                Log.d("GetMemberRaw", "Raw response: $rawBody and $query")
 
                 if (response.isSuccessful) {
 

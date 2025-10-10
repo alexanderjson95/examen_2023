@@ -25,8 +25,8 @@ class DashboardViewModel  @Inject constructor(
 ): ViewModel() {
 
 
-    private val _projects = MutableLiveData<List<UserProjectResponse>>()
-    val projects: LiveData<List<UserProjectResponse>> = _projects
+    private val _projects = MutableStateFlow<List<UserProjectResponse>>(emptyList())
+    val projects: StateFlow <List<UserProjectResponse>> = _projects
     private lateinit var request: ProjectRequest
     private val _status = MutableStateFlow<String?>(null)
     val state: StateFlow<String?> = _status
@@ -56,7 +56,10 @@ class DashboardViewModel  @Inject constructor(
             )
             val result = repo.addData(request)
             _status.value = result.fold(
-                onSuccess = { "success" },
+                onSuccess = {
+                    getAllUserProjects()
+                    "success"
+                            },
                 onFailure = { "Error" }
             )
             Log.d("AddProject: ",
@@ -68,7 +71,7 @@ class DashboardViewModel  @Inject constructor(
             val result = userProjectRepo.getAcceptedProjectsUser()
             result.fold(
                 onSuccess = {
-                        list -> _projects.postValue(list)
+                        list -> _projects.value = list
                     _upstatus.value = "success"
                 },
                 onFailure = { e ->

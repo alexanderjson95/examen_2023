@@ -4,6 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,13 +17,14 @@ import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kotlin.getValue
 
 @AndroidEntryPoint
-class DashboardFragment : Fragment(R.layout.fragment_dashboard){
+class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
 
-    private val projectVM: DashboardViewModel by activityViewModels()
+    private val projectVM: DashboardViewModel by viewModels()
 
     private val adapter = UserProjectAdapter { projectId ->
         val action = DashboardFragmentDirections
@@ -38,10 +43,13 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard){
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        parentFragmentManager.setFragmentResultListener("addProjectRequest", viewLifecycleOwner) { _, bundle ->
+        parentFragmentManager.setFragmentResultListener(
+            "addProjectRequest",
+            viewLifecycleOwner
+        ) { _, bundle ->
             val name = bundle.getString("projectName")
             val desc = bundle.getString("projectDescription")
-            projectVM.addProject(name,desc)
+            projectVM.addProject(name, desc)
         }
 
         toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
@@ -56,16 +64,17 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard){
             }
         }
 
-        projectVM.projects.observe(viewLifecycleOwner) { projects ->
-            adapter.submitList(projects)
-            noProjectCard.visibility = if (projects.isNullOrEmpty()) {
-                View.VISIBLE
-            } else {
-                View.GONE
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                projectVM.projects.collect { projects ->
+                    adapter.submitList(projects)
+                    noProjectCard.visibility = if (projects.isEmpty()) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
+                }
             }
         }
-
-
     }
-
 }

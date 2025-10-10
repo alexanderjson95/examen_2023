@@ -12,12 +12,13 @@ import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 import androidx.core.view.isVisible
 import com.example.frontend_android.model.Bookings.BookingResponse
+import com.example.frontend_android.model.Bookings.BookingStatusType
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZoneId.systemDefault
 
 @FragmentScoped
-class UserBookingsRequestStatusAdapter @Inject constructor(private val accept: (Long) -> Unit,private val remove: (Long) -> Unit):
+class UserBookingsRequestStatusAdapter @Inject constructor(private val add: (Long, Long) -> Unit,private val remove: (Long,Long) -> Unit):
     RecyclerView.Adapter<UserBookingsRequestStatusAdapter.UserBookingsRequestViewholder>(){
     private var BookingResponse: List<BookingResponse> = emptyList()
     class UserBookingsRequestViewholder(view: View) : RecyclerView.ViewHolder(view){
@@ -71,42 +72,31 @@ class UserBookingsRequestStatusAdapter @Inject constructor(private val accept: (
         String.format("%02d", bookings.endMinute).also { holder.minEnd.text = it }
 
 
-        val bList = listOf(BookingResponse)
-
-        when(bList){
-            listOf(true, true) ->
-                {
-                    holder.removeBtn.isVisible = false
-                    holder.acceptBtn.isVisible = false
-                    holder.requestType.text = "Inbokad"
-
-                }
-
-            listOf(true, false) ->
-            {
-                holder.removeBtn.isVisible = true
-                holder.acceptBtn.isVisible = false
-                holder.requestType.text = "Kan jobba"
-            }
-
-            listOf(false, true) ->
-            {
-                holder.removeBtn.isVisible = true
+        when(bookings.status){
+            BookingStatusType.INVITE -> {
                 holder.acceptBtn.isVisible = true
-                holder.requestType.text = "Bokningsförfrågan"
-            } else -> {
-            holder.removeBtn.isVisible = false
-            holder.acceptBtn.isVisible = false
-            holder.requestType.text = "Nekat"
+                holder.removeBtn.isVisible = true
+                "Inbjudan".also { holder.requestType.text = it }
+
+            }
+            BookingStatusType.ADMIN -> {
+                holder.acceptBtn.isVisible = false
+                holder.removeBtn.isVisible = true
+                "Godkänd bokning (skapad av mig)".also { holder.requestType.text = it }
             }
 
+            BookingStatusType.ACCEPTED -> {
+                holder.acceptBtn.isVisible = false
+                holder.removeBtn.isVisible = false
+                "Godkänd bokning".also { holder.requestType.text = it }
+            } else -> false
         }
 
         holder.removeBtn.setOnClickListener {
-            remove(bookings.bookingId)
+            remove(bookings.bookingId, bookings.userId)
         }
         holder.acceptBtn.setOnClickListener {
-            accept(bookings.bookingId)
+            add(bookings.bookingId, bookings.userId)
         }
 
     }

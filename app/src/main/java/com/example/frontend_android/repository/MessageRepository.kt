@@ -63,6 +63,14 @@ class MessageRepository @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun performRemovePair(
+        api: API,
+        toRemove: Long,
+        fromTable: Long,
+    ): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
     suspend fun getContacts()
              = withContext(Dispatchers.IO){
          try {

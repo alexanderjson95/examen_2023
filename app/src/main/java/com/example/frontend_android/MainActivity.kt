@@ -9,15 +9,18 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.frontend_android.api.sec.SessionManager
 import com.example.frontend_android.databinding.ActivityMainBinding
 import com.example.frontend_android.ui.login.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
+    @Inject
+    lateinit var sessionManager: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,14 +29,13 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val bottomMenu = findViewById<BottomNavigationView>(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_myProject, R.id.navigation_dashboard, R.id.navigation_projects
+                R.id.navigation_myProject, R.id.navigation_dashboard, R.id.navigation_projects,R.id.nav_logout
             )
         )
 
@@ -52,6 +54,19 @@ class MainActivity : AppCompatActivity() {
 
                 else -> {
                     navView.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        navView.setOnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.nav_logout -> {
+                    sessionManager.clear()
+                    navController.popBackStack(R.id.navigation_init, false)
+                    true
+                } else-> {
+                    navController.navigate(item.itemId)
+                    true
                 }
             }
         }

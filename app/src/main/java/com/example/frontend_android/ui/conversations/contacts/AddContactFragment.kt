@@ -74,16 +74,5 @@ class AddContactFragment : Fragment(R.layout.fragment_add_convo)
         } }
 
 
-//    private fun filterMembers(
-//        userList: List<UserResponse>,
-//        memberList: List<UserProjectResponse>
-//    ): List<UserResponse> {
-//        val membersIds = memberList.mapNotNull { it.userId }.toHashSet()
-//        return if (showContacts) {
-//            userList.filter { it.id in membersIds }
-//        } else {
-//            userList.filter { it.id !in membersIds }
-//        }
-//    }
 }
 

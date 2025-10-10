@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend_android.R
@@ -18,11 +19,10 @@ class ProjectsFragment : Fragment(R.layout.fragment_projects){
 
     private var userId: Long = 0L
 
-    private val projectVM: ProjectsViewModel by activityViewModels()
+    private val projectVM: ProjectsViewModel by viewModels()
 
     private lateinit var adapter: ProjectAdapter
 
-    private var showMembers: Boolean = false;
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

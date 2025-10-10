@@ -16,6 +16,9 @@ sealed interface  RepositoryInterface <req,resp,reqPatch> {
 
     suspend fun deleteData(toRemove: Long): Result<Unit>
 
+    suspend fun deleteDataPair(toRemove: Long, fromTable: Long): Result<Unit>
+
+
 
 
 }

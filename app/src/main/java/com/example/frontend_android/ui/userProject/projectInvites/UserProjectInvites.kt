@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 import kotlin.getValue
 
 @AndroidEntryPoint
-class UserProjectInvites : Fragment(R.layout.fragment_my_project_requests)
+class UserProjectInvites : Fragment(R.layout.fragment_project_requests)
 {
     private val vm: UserProjectRequestViewmodel by viewModels()
     private lateinit var adapter: ProjectUserRequestStatusAdapter
@@ -42,8 +42,21 @@ class UserProjectInvites : Fragment(R.layout.fragment_my_project_requests)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.projectRequestRecycler)
+
+
+
+        lifecycleScope.launch {
+            vm.removeStatus.collect { p ->
+                if(p){
+                    Toast.makeText(requireContext(), "Användaren utkastad!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Användaren kunde inte kastas ut!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         adapter = ProjectUserRequestStatusAdapter(
-            remove = { p, u -> vm.remove(u) },
+            remove = { p, u -> vm.remove(p,u) },
             accept = { p, u -> vm.acceptRequest(p, u) }
         )
         val no_invite_card = view.findViewById<MaterialCardView>(R.id.no_invite_card)
@@ -63,12 +76,10 @@ class UserProjectInvites : Fragment(R.layout.fragment_my_project_requests)
         }
 
 
-        val toggleGroup = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleGroup)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
 
-        val btnBookingNav = view.findViewById<MaterialButton>(R.id.btnBookingNav)
 
         val toggleFilter = view.findViewById<ChipGroup>(R.id.filterToggleGroup)
         toggleFilter.setOnCheckedStateChangeListener { _, checkedIds ->
@@ -89,26 +100,7 @@ class UserProjectInvites : Fragment(R.layout.fragment_my_project_requests)
             adapter.submitList(filter)
         }
 
-
-
-
-        toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (isChecked) {
-                when (checkedId) {
-                    R.id.btnBookingNav  -> {
-                        val action = UserProjectInvitesDirections.userprojectToBookingproject()
-                        findNavController().navigate(action)
-                    }
-
-
-                }
-            }
-        }
     }
-    private fun showCard(): Boolean {
-        val inv= vm.invites.value
-        val avail = vm.requests.value
-        return inv.isNullOrEmpty() && avail.isNullOrEmpty()
-    }
+
 
 }

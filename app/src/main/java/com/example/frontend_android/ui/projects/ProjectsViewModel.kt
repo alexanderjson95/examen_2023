@@ -73,6 +73,7 @@ class ProjectsViewModel  @Inject constructor(
             )
 
             val result = upRepo.addData(requestP)
+            getAllProjects()
             _status.value = result.fold(
                 onSuccess = { "success" },
                 onFailure = { "Error" }
@@ -177,7 +178,8 @@ class ProjectsViewModel  @Inject constructor(
                 )
                 val result = repo.addData(request)
                 _status.value = result.fold(
-                    onSuccess = { "success" },
+                    onSuccess = {
+                        "success" },
                     onFailure = { "Error" }
                 )
                 Log.d("AddReportViewModel: ", "Response: ${_status.value}")

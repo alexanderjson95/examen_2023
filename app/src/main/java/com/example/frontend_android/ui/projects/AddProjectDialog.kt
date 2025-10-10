@@ -48,7 +48,7 @@ class AddProjectDialog : DialogFragment() {
 
         addBtn.setOnClickListener {
             if (!checkInputs(inputs)) {
-                Toast.makeText(requireContext(), "GÖR OM GÖR RÄTT!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Måste fylla i all input!", Toast.LENGTH_SHORT).show()
             }
             else {
                 val result = Bundle().apply {

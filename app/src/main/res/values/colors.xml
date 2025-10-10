@@ -27,6 +27,7 @@
     <color name="theme_one_activeToggle">#d8e2dc</color>
     <color name="theme_one_black">#1E1B18</color>
 
-
+    <color name="theme_three_activebtn">#17181B</color>
+    <color name="theme_three_inactiveBtn">#4357AD</color>
 
 </resources>

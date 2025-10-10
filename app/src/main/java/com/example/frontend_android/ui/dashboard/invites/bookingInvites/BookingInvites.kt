@@ -27,14 +27,13 @@ class BookingInvites : Fragment(R.layout.fragment_booking_invites)
     private val vm: UserBookingsViewmodel by viewModels()
     private lateinit var adapter: UserBookingsRequestStatusAdapter
 
-    // regissor - 111111
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.projectRequestRecycler)
         adapter = UserBookingsRequestStatusAdapter(
-            remove = { b -> vm.declineBooking(b) },
-            accept = { b -> vm.acceptBooking(b, BookingStatusType.ACCEPTED) }
+            remove = { b,u-> vm.declineBooking(b) },
+            add = { b,u-> vm.acceptBooking(b, u,BookingStatusType.ACCEPTED) }
         )
 
         val toggleGroup = view.findViewById<MaterialButtonToggleGroup>(R.id.toggleGroup)
@@ -43,34 +42,26 @@ class BookingInvites : Fragment(R.layout.fragment_booking_invites)
 
 
         val no_invite_card = view.findViewById<MaterialCardView>(R.id.no_invite_card)
-
+        vm.getBooking()
 
         val toggleFilter = view.findViewById<ChipGroup>(R.id.filterToggleGroup)
         toggleFilter.setOnCheckedStateChangeListener { _, checkedIds ->
-
             val all = vm.bookings.value
             val filter = all.filter  { p ->
                 if (checkedIds.isEmpty()){
                     adapter.submitList(all)
                     return@setOnCheckedStateChangeListener
                 }
-
-
-                /*
-                    1,1 = accepterad    (kommer bytas ut med ENUM längre fram, detta är en gammal lösning)
-                    0,1 = inbjuden
-                    1,0 = tillgänglig
-                 */
-                val bList = listOf(p.status == BookingStatusType.AVAILABLE,p.status == BookingStatusType.ACCEPTED)
-                when(bList){
-                    listOf(true, true) -> R.id.fAccepted in checkedIds
-                    listOf(false, true) -> R.id.fInvite in checkedIds
-                    listOf(true, false) -> R.id.fAvailability in checkedIds
+                when(p.status){
+                    BookingStatusType.ACCEPTED  -> R.id.fAccepted in checkedIds
+                    BookingStatusType.INVITE-> R.id.fInvite in checkedIds
+                    BookingStatusType.ADMIN  -> R.id.fByMe in checkedIds
                     else -> false
                 }
             }
             adapter.submitList(filter)
         }
+
 
 
 

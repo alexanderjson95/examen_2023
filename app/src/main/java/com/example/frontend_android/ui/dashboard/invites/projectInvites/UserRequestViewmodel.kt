@@ -49,6 +49,7 @@ class UserRequestViewmodel @Inject constructor(
             result.fold(
                 onSuccess = {
                         list -> _userprojects.value = list
+
                 },
                 onFailure = { e ->
                     Log.e("ProjectViewModel", "Error loading projects", e)
@@ -70,7 +71,7 @@ class UserRequestViewmodel @Inject constructor(
             )
             result.fold(
                 onSuccess = {
-                    Log.e("ProjectViewModel", "Error loading projects")
+                    getUserProjects()
 
                 },
                 onFailure = { e ->
@@ -80,12 +81,14 @@ class UserRequestViewmodel @Inject constructor(
         }
     }
 
-    fun remove(id: Long){
+    fun remove(userId: Long, projectId: Long){
         viewModelScope.launch {
-            val result = upRepo.deleteData(id)
+            val result = upRepo.deleteDataPair(userId, projectId)
+            getUserProjects()
+
             result.fold(
                 onSuccess = {
-                    Log.e("ProjectViewModel", "Error loading projects")
+                    getUserProjects()
                 },
                 onFailure = { e ->
                     Log.e("ProjectViewModel", "Error loading projects", e)
@@ -93,31 +96,6 @@ class UserRequestViewmodel @Inject constructor(
             )
         }
     }
-
-
-//    fun declineInvite(projectId: Long, userId: Long){
-//        viewModelScope.launch {
-//            Log.e("ProjectViewModel", "running: project: $projectId  and user:   $userId")
-//            val req = UserProjectRequest(
-//                userId = userId,
-//                projectId = projectId,
-//                role = " ",
-//                isAdmin = false,
-//                joined = false,
-//                requestType = "DECLINED"
-//            )
-//            val result = upRepo.updateData(data = req)
-//            result.fold(
-//                onSuccess = {
-//                    Log.e("ProjectViewModel", "success")
-//
-//                },
-//                onFailure = { e ->
-//                    Log.e("ProjectViewModel", "Error loading projects", e)
-//                }
-//            )
-//        }
-//    }
 
 
 }

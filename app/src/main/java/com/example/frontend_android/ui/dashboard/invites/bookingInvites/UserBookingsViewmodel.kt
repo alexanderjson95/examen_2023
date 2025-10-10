@@ -55,21 +55,24 @@ class UserBookingsViewmodel  @Inject constructor(
 
     init {
         getBooking()
-        getAvailableAndInvites(getId())
     }
     
-    fun acceptBooking(userBookingId: Long, status: BookingStatusType){
+    fun acceptBooking(userBookingId: Long,userId: Long, status: BookingStatusType){
         viewModelScope.launch {
             responseRequest = UserBookingPatch(
-                userBookingId = userBookingId,
-                statusType = status,
+                bookingId = userBookingId,
+                userId = userId,
+                status = status,
             )
             repo.respondRequest(responseRequest)
+            getBooking()
         }
     }
     fun declineBooking(id:Long){
         viewModelScope.launch {
             repo.deleteData(id)
+            getBooking()
+
         }
     }
 
@@ -113,7 +116,6 @@ class UserBookingsViewmodel  @Inject constructor(
         }
     }
 
-    fun getAvailable() {}
 
 
     /**
@@ -132,11 +134,9 @@ class UserBookingsViewmodel  @Inject constructor(
                     _status.value = "Success"
                 },
                 onFailure = { e ->
-                    Log.e("BookingsViewModel", "Error loading bookings", e)
                     _status.value = "error"
                 }
             )
-            Log.d("BookingsViewModel: ", "Booking API Response: ${_status.value}")
         }
     }
 
@@ -146,15 +146,12 @@ class UserBookingsViewmodel  @Inject constructor(
             result.fold(
                 onSuccess = { list ->
                     _bookings.value = list
-                    Log.e("BookingsViewModel", "loaded bookings: ${bookings.value}")
                     _status.value = "success"
                 },
                 onFailure = { e ->
-                    Log.e("BookingsViewModel", "Error loading bookings", e)
                     _status.value = "error"
                 }
             )
-            Log.d("BookingsViewModel: ", "Booking API Response: ${_status.value}")
         }
     }
 

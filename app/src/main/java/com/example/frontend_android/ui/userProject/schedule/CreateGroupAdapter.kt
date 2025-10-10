@@ -54,11 +54,21 @@ class CreateGroupAdapter  (
         holder.lname_value.text = users.lastName
 
         val inGroup = groupMembers.contains(users.userId)
-        holder.acceptBtn.isEnabled = !inGroup
-        holder.removeBtn.isEnabled = inGroup
-        holder.acceptBtn.text = if (inGroup) "Inlagd" else "Lägg till"
-        holder.acceptBtn.setOnClickListener { addUser(users.userId) }
-        holder.removeBtn.setOnClickListener { removeUser(users.userId) }
+        holder.acceptBtn.apply {
+            isEnabled = !inGroup
+            text = if (inGroup) "Inlagd" else "Lägg till"
+            setOnClickListener {
+                if (!inGroup) addUser(users.userId)
+            }
+        }
+
+        holder.removeBtn.apply {
+            isEnabled = inGroup
+            visibility = if (inGroup) View.VISIBLE else View.GONE
+            setOnClickListener {
+                if (inGroup) removeUser(users.userId)
+            }
+        }
 
 
 

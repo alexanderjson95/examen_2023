@@ -7,6 +7,7 @@ import com.example.frontend_android.model.Bookings.BookingRequest
 import com.example.frontend_android.model.Bookings.BookingRequestPatch
 import com.example.frontend_android.model.Bookings.BookingResponse
 import com.example.frontend_android.model.Bookings.UserBookingPatch
+import com.example.frontend_android.model.Projects.UserProjectResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -37,7 +38,7 @@ class BookingRepository @Inject constructor(
         api: API,
         data: BookingRequestPatch
     ): Response<Unit> {
-        return api.patchBooking(data.bookingId, data)
+        return api.patchBooking(data.bookingId!!, data)
     }
 
     override suspend fun performGetById(
@@ -57,7 +58,15 @@ class BookingRepository @Inject constructor(
 
     override suspend fun performRemove(
         api: API,
-        toRemove: Long): Response<Unit> {
+        toRemove: Long,): Response<Unit> {
+        return api.removeBooking(toRemove)
+    }
+
+    override suspend fun performRemovePair(
+        api: API,
+        toRemove: Long,
+        fromTable: Long,
+    ): Response<Unit> {
         TODO("Not yet implemented")
     }
 
@@ -65,6 +74,20 @@ class BookingRepository @Inject constructor(
             = withContext(Dispatchers.IO){
         try {
             val response = apiInterface.getBookingsByProjectId(projectId)
+            val body = response.body()
+            if (response.isSuccessful && body != null)
+                Result.success(body)
+            else
+                Result.failure(Exception("HTTP ${response.code()} ${response.message()}"))
+        } catch (t: Throwable) {
+            Result.failure(t)
+        }
+    }
+
+    suspend fun getByBookingId(bookingId: Long): Result<List<BookingResponse>>
+            = withContext(Dispatchers.IO){
+        try {
+            val response = apiInterface.getAllBookingsById(bookingId)
             val body = response.body()
             if (response.isSuccessful && body != null)
                 Result.success(body)
@@ -82,6 +105,20 @@ class BookingRepository @Inject constructor(
             val response = apiInterface.respondBooking(data)
             if (response.isSuccessful)
                 Result.success(Unit)
+            else
+                Result.failure(Exception("HTTP ${response.code()} ${response.message()}"))
+        } catch (t: Throwable) {
+            Result.failure(t)
+        }
+    }
+
+    suspend fun getAvailableUsers(projectId: Long, datemillis: Long): Result<List<UserProjectResponse>>
+            = withContext(Dispatchers.IO){
+        try {
+            val response = apiInterface.getAvailableUsers(projectId, datemillis)
+            val body = response.body()
+            if (response.isSuccessful && body != null)
+                Result.success(body)
             else
                 Result.failure(Exception("HTTP ${response.code()} ${response.message()}"))
         } catch (t: Throwable) {

@@ -16,6 +16,7 @@ abstract class RepositoryAbstract<req,resp,reqPatch,I> : RepositoryInterface<req
     protected abstract suspend fun performGetById(api: I, targetId: Long): Response<List<resp>>
     protected abstract suspend fun performGetByPairs(api: I, first: Long, second: Long): Response<List<resp>>
     protected abstract suspend fun performRemove(api: I, toRemove: Long): Response<Unit>
+    protected abstract suspend fun performRemovePair(api: I, toRemove: Long, fromTable: Long): Response<Unit>
 
 
     override suspend fun addData(data: req): Result<Unit>
@@ -90,6 +91,20 @@ abstract class RepositoryAbstract<req,resp,reqPatch,I> : RepositoryInterface<req
         = withContext(Dispatchers.IO){
         try {
             val response = performRemove(apiInterface, toRemove)
+            if (response.isSuccessful)
+                Result.success(Unit)
+            else
+                Result.failure(Exception("HTTP ${response.code()} ${response.message()}"))
+        } catch (t: Throwable) {
+            Result.failure(t)
+        }
+    }
+
+    override suspend fun deleteDataPair(toRemove: Long, fromTable: Long): Result<Unit>
+            = withContext(Dispatchers.IO){
+        try {
+
+            val response = performRemovePair(apiInterface, toRemove, fromTable)
             if (response.isSuccessful)
                 Result.success(Unit)
             else

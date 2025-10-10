@@ -9,18 +9,24 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.example.frontend_android.R
+import com.example.frontend_android.api.sec.SessionManager
 import com.example.frontend_android.model.roles.RoleRequest
 import com.example.frontend_android.ui.registration.RegViewModel
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.getValue
 
 
@@ -34,6 +40,7 @@ class UserSettingsFragment : Fragment(R.layout.fragment_user_settings) {
     private  var currentRole = ""
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -43,6 +50,7 @@ class UserSettingsFragment : Fragment(R.layout.fragment_user_settings) {
         val roleSpinner = view.findViewById<Spinner>(R.id.roleSpinner)
         val changeBtn = view.findViewById<MaterialButton>(R.id.changeBtn)
         val currentRoleValue = view.findViewById<TextView>(R.id.cRoleInputValue)
+        val removeBtn = view.findViewById<MaterialButton>(R.id.removeBtn)
 
         vm.user.observe(viewLifecycleOwner){ u ->
             firstName.setText(u?.firstName)
@@ -57,7 +65,26 @@ class UserSettingsFragment : Fragment(R.layout.fragment_user_settings) {
 
 
 
+        removeBtn.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Bekräfta borttagning")
+                .setMessage("Vill du verkligen ta bort ditt konto?")
+                .setPositiveButton("TA BORT") { _, _ ->
+                    vm.removeUser()
+                    findNavController().popBackStack(R.id.navigation_init, false)
+                }
+                .setNegativeButton("Avbryt", null)
+                .show()
+        }
 
+        vm.updateStatus.observe(viewLifecycleOwner) { s ->
+            if (s == true){
+                Toast.makeText(requireContext(), "Uppdatering lyckades!", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(requireContext(), "Uppdatering misslyckades!", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         vm.roles.observe(viewLifecycleOwner) { roles ->
 

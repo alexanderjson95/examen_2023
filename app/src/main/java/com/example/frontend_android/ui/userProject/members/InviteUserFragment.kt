@@ -5,8 +5,11 @@ import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,9 +17,11 @@ import com.example.frontend_android.R
 import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.example.frontend_android.model.roles.UserRoleResponse
 import com.example.frontend_android.ui.userProject.projectInvites.UserProjectRequestViewmodel
+import com.example.frontend_android.ui.userProject.schedule.CreateGroupFragmentDirections
 
 import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kotlin.getValue
 
 
@@ -74,12 +79,23 @@ class InviteUserFragment : Fragment(R.layout.fragment_my_project_adduser) {
             }
         }
 
+        lifecycleScope.launch {
+            bvm.removeStatus.collect { p ->
+                if(p){
+                    Toast.makeText(requireContext(), "Bokning skapad!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Bokningen kunde inte skapas!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+
         adapter = InviteUserAdapter(
             addUser = { userId ->
                 bvm.sendInvite(projectId, userId)
             },
             removeUser = { userId ->
-                bvm.remove(userId)//todo
+                bvm.remove(projectId,userId)
             }
         )
 

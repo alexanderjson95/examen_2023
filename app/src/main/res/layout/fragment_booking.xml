@@ -6,47 +6,18 @@
 
 
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:singleSelection="true"
-        android:layout_marginBottom="16dp">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAvailable"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Då kan jag jobba"
-            android:textAllCaps="false"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnBook"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Boka in medlem"
-            android:textAllCaps="false"/>
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
-
-    <Spinner
-        android:id="@+id/memberSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/CustomEditTextStyle"
-        android:layout_margin="16dp"/>
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        app:mcv_selectionColor="#5E6AD2"
         app:mcv_showOtherDates="all"
         app:mcv_selectionMode="single"
-        app:mcv_firstDayOfWeek="monday" />
+        app:mcv_firstDayOfWeek="monday"
+        app:mcv_dateTextAppearance="@style/ChatEditText"
+        app:mcv_headerTextAppearance="@style/ChatEditText" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,12 +25,23 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp">
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/setTimeBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sätt/ändra tid" />
+            android:textColor="@drawable/enabled_btn_selector"
+            android:text="Skapa bokning" />
+
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/removeTimeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#17181B"
+            android:textColor="@drawable/enabled_btn_selector"
+            android:text="Ta bort bokning" />
 
     </LinearLayout>
 

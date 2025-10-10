@@ -60,13 +60,7 @@
             android:text="Förfrågan om jobb">
         </com.google.android.material.chip.Chip>
 
-        <com.google.android.material.chip.Chip
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/fAvailability"
-            style="@style/Widget.MaterialComponents.Chip.Choice"
-            android:text="Då kan jag jobba">
-        </com.google.android.material.chip.Chip>
+
 
         <com.google.android.material.chip.Chip
             android:layout_width="wrap_content"
@@ -74,6 +68,15 @@
             android:id="@+id/fAccepted"
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:text="Godkända">
+        </com.google.android.material.chip.Chip>
+
+
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fByMe"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:text="Från mig">
         </com.google.android.material.chip.Chip>
     </com.google.android.material.chip.ChipGroup>
 

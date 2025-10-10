@@ -12,6 +12,7 @@ import com.example.frontend_android.model.Projects.UserProjectResponse
 import com.example.frontend_android.model.Users.UserResponse
 import com.example.frontend_android.repository.UserRepository
 import com.example.frontend_android.model.roles.RoleResponse
+import com.example.frontend_android.repository.ProjectRepository
 import com.example.frontend_android.repository.UserProjectRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,6 +29,7 @@ import kotlin.collections.forEach
 class MyProjectViewModel  @Inject constructor(
     private val uRepo: UserRepository,
     private val userProjectRepo: UserProjectRepository,
+    private val projectRepo: ProjectRepository,
     private val sm: SessionManager
 ): ViewModel() {
     private val _projects = MutableLiveData<List<UserProjectResponse>>()
@@ -39,13 +41,13 @@ class MyProjectViewModel  @Inject constructor(
     private val _user = MutableLiveData<UserResponse?>()
     val user: MutableLiveData<UserResponse?> = _user
 
-    private val _userproject = MutableLiveData<List<UserProjectResponse>>()
-    val userProject: MutableLiveData<List<UserProjectResponse>> = _userproject
+
     private val _admin = MutableLiveData<Boolean>()
     val admin: MutableLiveData<Boolean> = _admin
 
     init {
         getRoless()
+
     }
 
     fun getId(): Long {
@@ -56,18 +58,46 @@ class MyProjectViewModel  @Inject constructor(
         return 0L
     }
 
+    fun deleteProject(projectId:Long) {
+        viewModelScope.launch {
+            val result = projectRepo.deleteDataPair(projectId, getId())
+            result.fold(
+                onSuccess = { user ->
+                    _status.value = "Success"
+                },
+                onFailure = { e ->
+                    _status.value = "error"
+                }
+            )
+        }
+    }
 
+    fun deleteUserProject(projectId:Long) {
+        viewModelScope.launch {
+            val result = userProjectRepo.deleteDataPair(projectId, getId())
+            result.fold(
+                onSuccess = { user ->
+                    _status.value = "Success"
+                },
+                onFailure = { e ->
+                    _status.value = "error"
+                }
+            )
+        }
+    }
+
+    private val _userproject = MutableLiveData<UserProjectResponse>()
+    val userProject: MutableLiveData<UserProjectResponse> = _userproject
     fun getLoggedInUserProject(projectId: Long) {
         viewModelScope.launch {
-            val result = userProjectRepo.getDataByPair(projectId, getId())
+            val result = userProjectRepo.getUserProject(projectId, getId())
             result.fold(
                 onSuccess = { user ->
                     _userproject.postValue(user)
                     _status.value = "success"
-                    _admin.postValue(user.isUserAdmin())
+                    _admin.postValue(user.isAdmin)
                 },
                 onFailure = { e ->
-                    Log.e("GetMemberUser", "aaaaMember function Error: Error loading userprojects", e)
                     _status.value = "error"
                 }
             )

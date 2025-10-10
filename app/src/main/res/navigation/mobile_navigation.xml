@@ -257,6 +257,11 @@
             android:id="@+id/groupFrag_to_AddDateDialog"
             app:destination="@id/navigation_booking_dialog" />
 
+        <action
+            android:id="@+id/groupFrag_to_Projectbookings"
+            app:destination="@id/navigation_projectBookings" />
+
+
     </fragment>
 
 

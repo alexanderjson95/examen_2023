@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.frontend_android.api.sec.SessionManager
+import com.example.frontend_android.model.Bookings.BookingResponse
 import com.example.frontend_android.model.Projects.UserProjectRequest
 import com.example.frontend_android.model.Projects.UserProjectRequestPatch
 import com.example.frontend_android.model.Projects.UserProjectResponse
@@ -15,8 +16,11 @@ import com.example.frontend_android.repository.UserProjectRepository
 import com.example.frontend_android.repository.UserRepository
 import com.example.frontend_android.repository.UserRoleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -52,6 +56,13 @@ class UserProjectRequestViewmodel @Inject constructor(
     private val _getRequested = MutableStateFlow<List<UserProjectResponse>>(emptyList())
     val getRequested: StateFlow<List<UserProjectResponse>> = _getRequested
 
+
+
+
+
+
+
+
     fun getRequested(projectId: Long){
         viewModelScope.launch {
             val result = upRepo.searchUserProjects("request",projectId)
@@ -72,8 +83,21 @@ class UserProjectRequestViewmodel @Inject constructor(
     private val _userprojects = MutableStateFlow<List<UserProjectResponse>>(emptyList())
     val userprojects: StateFlow<List<UserProjectResponse>> = _userprojects
 
+    val accepted: Flow<List<UserProjectResponse>> = _userprojects.map { it.filter { up -> up.requestType == "ACCEPTED" }}
+
+
     private val _statusUserProjects = MutableStateFlow<Boolean?>(null)
     val statusUserProjects: StateFlow<Boolean?> =  _statusUserProjects
+
+
+    private val _bookingDate = MutableStateFlow<Long?>(null)
+    val bookingDate: StateFlow<Long?> = _bookingDate
+
+    fun setBookingDate(date: Long){
+        _bookingDate.value = date
+    }
+
+
 
 
 
@@ -267,17 +291,28 @@ class UserProjectRequestViewmodel @Inject constructor(
         }
     }
 
-    fun remove(id: Long){
+
+    private val _removeStatus = MutableStateFlow<Boolean>(false)
+    val removeStatus: StateFlow<Boolean> = _removeStatus
+
+    fun remove(projectId: Long, userId: Long){
         viewModelScope.launch {
-            val result = upRepo.deleteData(id)
+            if (userId == getId()){
+                _removeStatus.value = false
+            } else {
+            val result = upRepo.deleteDataPair(projectId,userId)
             result.fold(
                 onSuccess = {
-                    Log.e("ProjectViewModel", "Error loading projects")
+                    _removeStatus.value = true
+                    getUserProjects(projectId)
+
                 },
                 onFailure = { e ->
+                    _removeStatus.value = false
                     Log.e("ProjectViewModel", "Error loading projects", e)
                 }
             )
+            }
         }
     }
 

@@ -26,20 +26,21 @@ class MyProjectFragment : Fragment(R.layout.fragment_my_project){
         super.onViewCreated(view, savedInstanceState)
 
         val projectId = args.projectId
-        Toast.makeText(requireContext(), "ENTERING : $projectId", Toast.LENGTH_SHORT).show()
         vm.getLoggedInUserProject(projectId)
-        val nameHeader = view.findViewById<MaterialTextView>(R.id.name_header)
 
         vm.userProject.observe(viewLifecycleOwner) { u ->
-            Toast.makeText(requireContext(), "userid : $u", Toast.LENGTH_SHORT).show()
-            nameHeader.text = u.map { it.firstName } as CharSequence?
+            Toast.makeText(requireContext(), "Admin result: ${u.firstName}  is:  ${u.isAdmin}", Toast.LENGTH_LONG)
+                .show()
         }
 
 
+        vm.admin.observe(viewLifecycleOwner) { u ->
+            Toast.makeText(requireContext(), "Admin result: $u", Toast.LENGTH_LONG)
+                .show()
+        }
 
 
-
-        vm.roless.observe(viewLifecycleOwner) { roles ->
+            vm.roless.observe(viewLifecycleOwner) { roles ->
             roles.forEach { role ->
                 println("ROLES: $role")
             }

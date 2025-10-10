@@ -4,14 +4,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend_android.R
 import com.example.frontend_android.model.Projects.ProjectResponse
 import com.google.android.material.button.MaterialButton
 
 class ProjectAdapter(private val add: (Long) -> Unit):
-        RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder>(){
-            private var projectList: List<ProjectResponse> = emptyList()
+    ListAdapter<ProjectResponse, ProjectAdapter.ProjectViewHolder>(DiffCallback()){
     class ProjectViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var title_value: TextView = view.findViewById(R.id.name_value)
         var description_value: TextView = view.findViewById(R.id.description_value)
@@ -19,10 +20,6 @@ class ProjectAdapter(private val add: (Long) -> Unit):
 
     }
 
-    fun submitList(newList: List<ProjectResponse>){
-        projectList = newList
-        notifyDataSetChanged() //todo
-    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -37,18 +34,24 @@ class ProjectAdapter(private val add: (Long) -> Unit):
         holder: ProjectViewHolder,
         position: Int
     ) {
-        val projects = projectList[position]
-        holder.title_value.text = projects.projectName
-        holder.description_value.text = projects.description
+        val project = getItem(position)
+        holder.title_value.text = project.projectName
+        holder.description_value.text = project.description
         holder.acceptBtn.setOnClickListener {
-            add(projects.id)
+            add(project.id)
+
         }
 
     }
 
-    override fun getItemCount(): Int {
-        return projectList.size
+
+    class DiffCallback : DiffUtil.ItemCallback<ProjectResponse>() {
+        override fun areItemsTheSame(oldItem: ProjectResponse, newItem: ProjectResponse): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: ProjectResponse, newItem: ProjectResponse): Boolean {
+            return oldItem == newItem
+        }
     }
-
-
 }

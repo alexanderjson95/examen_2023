@@ -5,7 +5,10 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +23,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class OpenChatFragment : Fragment(R.layout.fragment_inchat) {
-    private val vm: MessageViewModel by activityViewModels()
+    private val vm: MessageViewModel by viewModels()
 
     private var recipientId: Long = 0L
     private var fName: String= ""
@@ -40,12 +43,12 @@ class OpenChatFragment : Fragment(R.layout.fragment_inchat) {
 
         vm.openChat(recipientId)
         viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
             vm.messages.collect { m ->
                 if (m.isNotEmpty()) {
-                    val sender = m.map { it.senderFirstname }
-                    val recipient = m.map { it.recipientId }
-                    adapter.submitList(m){recyclerView.scrollToPosition(adapter.itemCount - 1)}
+                    adapter.submitList(m) { recyclerView.scrollToPosition(adapter.itemCount - 1) }
                 }
+            }
             }
 
         }
@@ -68,7 +71,6 @@ class OpenChatFragment : Fragment(R.layout.fragment_inchat) {
                 vm.sendMessage(recipientId, text)
                 val newList = vm.messages.value
                 adapter.submitList(newList?.toList()){recyclerView.scrollToPosition(adapter.itemCount - 1)}
-                // lägg på refresh UI här
             } else {
                 Log.d("Messages", "MESSAGE: TYPE IN TEXT!!!!")
             }

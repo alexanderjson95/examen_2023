@@ -33,7 +33,7 @@ class ProjectInvites : Fragment(R.layout.fragment_my_project_requests)
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.projectRequestRecycler)
         adapter = UserProjectRequestStatusAdapter(
-            remove = { p, u -> vm.remove(p) }, //
+            remove = { p, u -> vm.remove(p,u) }, //
             accept = { p, u -> vm.acceptInvite(p, u) }
         )
 
@@ -61,6 +61,7 @@ class ProjectInvites : Fragment(R.layout.fragment_my_project_requests)
                 }
             }
         }
+
 
         val toggleFilter = view.findViewById<ChipGroup>(R.id.filterToggleGroup)
         toggleFilter.setOnCheckedStateChangeListener { _, checkedIds ->

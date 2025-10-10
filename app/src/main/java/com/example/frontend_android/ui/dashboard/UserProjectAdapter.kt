@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontend_android.R
 import com.example.frontend_android.model.Projects.ProjectResponse
@@ -13,19 +15,16 @@ import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
 @FragmentScoped
-class UserProjectAdapter @Inject constructor(private val navigateOnClick: (Long) -> Unit):
-        RecyclerView.Adapter<UserProjectAdapter.UserProjectViewHolder>(){
+class UserProjectAdapter @Inject constructor(
+    private val navigateOnClick: (Long) -> Unit
+) : ListAdapter<UserProjectResponse, UserProjectAdapter.UserProjectViewHolder>(DiffCallback()) {
 
-            private var userProjectList: List<UserProjectResponse> = emptyList()
     class UserProjectViewHolder(view: View) : RecyclerView.ViewHolder(view){
         var project_key: TextView = view.findViewById(R.id.project_key)
         val openBtn: MaterialButton = view.findViewById(R.id.open_btn)
     }
 
-    fun submitList(newList: List<UserProjectResponse>){
-        userProjectList = newList
-        notifyDataSetChanged() //todo
-    }
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -36,23 +35,21 @@ class UserProjectAdapter @Inject constructor(private val navigateOnClick: (Long)
         return UserProjectViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(
-        holder: UserProjectViewHolder,
-        position: Int
-    ) {
-        val projects = userProjectList[position]
-        holder.project_key.text = "${projects.projectName}"
-        val projectId = projects.projectId ?: -1L
-        holder.openBtn.setOnClickListener {
-            navigateOnClick(projectId)
-        }
 
-    }
-
-    override fun getItemCount(): Int {
-        return userProjectList.size
+    override fun onBindViewHolder(holder: UserProjectViewHolder, position: Int) {
+        val project = getItem(position)
+        holder.project_key.text = project.projectName
+        val projectId = project.projectId
+        holder.openBtn.setOnClickListener { navigateOnClick(projectId) }
     }
 
 
+    class DiffCallback : DiffUtil.ItemCallback<UserProjectResponse>() {
+        override fun areItemsTheSame(oldItem: UserProjectResponse, newItem: UserProjectResponse) =
+            oldItem.projectId == newItem.projectId
+
+        override fun areContentsTheSame(oldItem: UserProjectResponse, newItem: UserProjectResponse) =
+            oldItem == newItem
+    }
 
 }

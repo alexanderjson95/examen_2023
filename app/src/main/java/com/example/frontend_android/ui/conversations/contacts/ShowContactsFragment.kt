@@ -20,7 +20,7 @@ import kotlin.getValue
 @AndroidEntryPoint
 class ShowContactsFragment : Fragment(R.layout.show_message) {
 
-    private val vm: MessageViewModel by activityViewModels()
+    private val vm: MessageViewModel by viewModels()
 
 
 

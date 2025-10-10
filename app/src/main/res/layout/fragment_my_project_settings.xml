@@ -39,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/admin_btn"
+            android:id="@+id/destroy_btn"
             android:layout_width="154dp"
             android:layout_height="154dp"
             android:layout_gravity="center_horizontal"

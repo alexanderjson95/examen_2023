@@ -25,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="58dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/theme_one_inactiveBtn"
+            android:backgroundTint="#4357AD"
             android:textColor="@color/white"
             android:text="@string/myProjects"
             android:textAllCaps="false"/>
@@ -72,7 +72,7 @@
             android:text="@string/noProjects"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:gravity="center"/>
+             android:gravity="center"/>
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.recyclerview.widget.RecyclerView

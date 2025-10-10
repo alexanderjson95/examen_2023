@@ -16,7 +16,6 @@ class TokenInterceptor @Inject constructor(private val sm : SessionManager) : In
         if (publicEndpoint) return chain.proceed(orgReq)
 
         val token = sm.getToken()
-        Log.d("LOGGING", "token $token")
         if (token.isNullOrBlank()) {
             return chain.proceed(orgReq)
         }

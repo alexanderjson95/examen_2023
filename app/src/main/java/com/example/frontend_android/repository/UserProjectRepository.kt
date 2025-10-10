@@ -59,19 +59,31 @@ class UserProjectRepository @Inject constructor(
         first: Long,
         second: Long
     ): Response<List<UserProjectResponse>> {
-        return apiInterface.getUserProject(
-            projectId = first,
-            userId = second,
-        )
+            TODO()
     }
 
     override suspend fun performRemove(
         api: API,
         toRemove: Long,
     ): Response<Unit> {
-        return apiInterface.removeUserFromProject(toRemove)
+        TODO()
     }
 
+    override suspend fun performRemovePair(
+        api: API,
+        toRemove: Long,
+        fromTable: Long,
+    ): Response<Unit> {
+        return apiInterface.removeUserFromProject(
+            projectId = toRemove,
+            userId = fromTable
+        )
+    }
+
+    suspend fun isAdmin(projectId: Long): Boolean =
+        withContext(Dispatchers.IO) {
+            return@withContext apiInterface.isUserAdmin(projectId)
+        }
 
     suspend fun getProjectInvites(projectId: Long): Result<List<UserProjectResponse>> =
         withContext(Dispatchers.IO) {
@@ -101,16 +113,15 @@ class UserProjectRepository @Inject constructor(
             }
         }
 
-    suspend fun getUserRequests(): Result<List<UserProjectResponse>> =
+    suspend fun getUserProject(projectId:Long, userId:Long): Result<UserProjectResponse> =
         withContext(Dispatchers.IO) {
             try {
-                val response = apiInterface.getRequestsForUser()
-                val raw = response.body()
-                Log.d("Invite", "REQUESTS RAW: $raw")
+                val response = apiInterface.getUserProject(projectId, userId)
                 if (response.isSuccessful) {
-                    Result.success(response.body().orEmpty())
-                } else {
-                    Result.failure(Exception("Invite Error: ${response.code()} - ${response.message()}"))
+                    response.body()?.let { body ->
+                        Result.success(body)
+                    } ?: Result.failure(Exception("Ingen data hämtad!"))                } else {
+                    Result.failure(Exception("Fetch  Error: ${response.code()} - ${response.message()}"))
                 }
             } catch (e: Exception) {
                 Result.failure(e)
@@ -122,7 +133,6 @@ class UserProjectRepository @Inject constructor(
             try {
                 val response = apiInterface.getInvitesFromUser()
                 val raw = response.body()
-                Log.d("Invite", "INVITES RAW: $raw")
                 if (response.isSuccessful) {
                     Result.success(response.body().orEmpty())
                 } else {
@@ -138,7 +148,6 @@ class UserProjectRepository @Inject constructor(
             try {
                 val response = apiInterface.getAcceptedUserProjects()
                 val raw = response.body()
-                Log.d("Invite", "ACCEPTED RAW: $raw")
                 if (response.isSuccessful) {
                     Result.success(response.body().orEmpty())
                 } else {

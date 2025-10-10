@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.frontend_android.ErrorMessages
 import com.example.frontend_android.model.Chat.MessageRequest
 import com.example.frontend_android.model.Chat.MessageResponse
 import com.example.frontend_android.model.Users.UserResponse
@@ -38,6 +39,10 @@ class MessageViewModel  @Inject constructor(
 
     private lateinit var request: MessageRequest
 
+    private val name = "MessageViewModel"
+    private val dataA = "Users"
+    private val dataB = "Messages"
+
 
 
     fun searchUsers(query: String, value: String){
@@ -50,6 +55,7 @@ class MessageViewModel  @Inject constructor(
                             },
                 onFailure = { e ->
                     Log.e("AllProjectsViewModel", "Error loading users: ", e)
+                    ErrorMessages.get_error(name, dataA)
                     false
                 }
             )
@@ -66,7 +72,7 @@ class MessageViewModel  @Inject constructor(
                     true
                 },
                 onFailure = { e ->
-                    Log.e("AllProjectsViewModel", "Error loading users: ", e)
+                    ErrorMessages.get_error(name, dataA)
                     false
                 }
             )
@@ -81,7 +87,10 @@ class MessageViewModel  @Inject constructor(
                     _contacts.value = contactList
                     true
                 },
-                onFailure = {false }
+                onFailure = {
+                    ErrorMessages.get_error(name, dataB)
+                    false
+                }
             )
         }
     }
@@ -89,36 +98,41 @@ class MessageViewModel  @Inject constructor(
 
 
     fun openChat(recipientId: Long) {
-        Log.d("Messages", "MESSAGE: TYPE IN TEXT!!!!")
         viewModelScope.launch {
             val result = repo.getDataById(recipientId)
             _status.value = result.fold(
                 onSuccess = { messageList ->
                     _messages.value = messageList
-                    Log.d("Messages", "MESSAGE: TYPE IN TEXT!!!!$messageList")
                     true
                 },
-                onFailure = {false }
+                onFailure = {
+                    ErrorMessages.get_error(name, dataB)
+                    false
+                }
             )
         }
     }
 
     fun sendMessage(recipientId: Long, text: String) {
-
         viewModelScope.launch {
             request = MessageRequest(
                 recipientId = recipientId,
                 encryptedValue = text
             )
-            Log.d("AddReportViewModel: ", "Sent text: ${request.encryptedValue} ")
-            Log.d("AddReportViewModel: ", "Sent to: ${request.recipientId} ")
             val result = repo.addData(request)
             _status.value = result.fold(
-                onSuccess = { true },
-                onFailure = { false }
+                onSuccess = {
+                    openChat(recipientId)
+                    true
+
+                            },
+                onFailure = {
+                    ErrorMessages.get_error(name, dataB)
+                    false }
             )
-            Log.d("AddReportViewModel: ", "Response: ${_status.value}")
         }
     }
+
+
 
 }

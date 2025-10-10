@@ -19,9 +19,12 @@ import com.example.frontend_android.repository.UserRepository
 import com.example.frontend_android.model.roles.UserRoleResponse
 import com.example.frontend_android.repository.UserRoleRepository
 import com.example.frontend_android.ui.schedule.BookingRepository
+import com.example.frontend_android.ui.schedule.UserBookingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,7 +32,8 @@ import javax.inject.Inject
 @HiltViewModel
 class BookingsViewModel  @Inject constructor(
     private val repo: BookingRepository,
-    private val userBookingRepository: BookingRepository,
+    private val ubRepo: UserBookingRepository,
+
     private val upRepo: UserProjectRepository,
     private val uRepo: UserRepository,
     private val userRoleRepo: UserRoleRepository,
@@ -55,9 +59,8 @@ class BookingsViewModel  @Inject constructor(
     val userroles: MutableLiveData<List<UserRoleResponse>> = _userroles
     private val _userMember = MutableLiveData<List<UserProjectResponse>>()
     val userMember: LiveData<List<UserProjectResponse>> = _userMember
-
-    private val _bookings = MutableLiveData<List<BookingResponse>>()
-    val bookings: LiveData<List<BookingResponse>> = _bookings
+    private val _bookings = MutableStateFlow<List<BookingResponse>>(emptyList())
+    val bookings: StateFlow<List<BookingResponse>> = _bookings.asStateFlow()
 
 
     fun getUserId(): Long{
@@ -75,6 +78,20 @@ class BookingsViewModel  @Inject constructor(
     }
 
 
+    fun removeBooking( bookingId: Long){
+        viewModelScope.launch {
+            val result = repo.deleteData(bookingId)
+            result.fold(
+                onSuccess = { list ->
+                    "success"
+                },
+                onFailure = { e ->
+                    Log.e("AllProjectsViewModel", "Error loading users: ", e)
+
+                }
+            )
+        }
+    }
 
 
     fun getAccepted( projectId: Long){
@@ -302,7 +319,7 @@ class BookingsViewModel  @Inject constructor(
             val result = repo.getDataById(targetId)
             result.fold(
                 onSuccess = { list ->
-                    _bookings.postValue(list)
+                    _bookings.value = list
                     Log.e("BookingsViewModel", "loaded bookings: ${bookings.value}")
                     _status.value = "success"
                 },

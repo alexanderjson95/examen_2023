@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.frontend_android.ErrorMessages
 import com.example.frontend_android.R
 import com.example.frontend_android.model.roles.RoleRequest
 import com.google.android.material.button.MaterialButton
@@ -26,7 +27,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       // val regBtn = view.findViewById<MaterialButton>(R.id.regBtn)
+        // val regBtn = view.findViewById<MaterialButton>(R.id.regBtn)
         val username = view.findViewById<EditText>(R.id.usernameEditText)
         val password = view.findViewById<EditText>(R.id.passwordEditText)
         val firstName = view.findViewById<EditText>(R.id.firstNameEditText)
@@ -44,7 +45,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                 Toast.makeText(requireContext(), "Registrering lyckades!", Toast.LENGTH_SHORT)
                     .show()
             } else {
-                Toast.makeText(requireContext(), "Registrering misslyckades!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), ErrorMessages.registration_error("Register: ", "Register"), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -52,7 +53,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             val adapter = ArrayAdapter(
                 requireContext(),
                 android.R.layout.simple_spinner_item,
-                roles.map { it.roleType ?: "Kunde inte hämta roller!" })
+                roles.map { it.roleType })
 
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             roleSpinner?.adapter = adapter

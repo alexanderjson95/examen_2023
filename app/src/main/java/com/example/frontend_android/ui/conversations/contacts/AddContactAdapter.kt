@@ -48,10 +48,6 @@ class AddContactAdapter  (
         }
     }
 
-    fun updateId(newMemberIds: Set<Long>) {
-        friendIds = newMemberIds
-        notifyDataSetChanged()
-    }
 
 
     class DiffCallback : DiffUtil.ItemCallback<UserResponse>() {

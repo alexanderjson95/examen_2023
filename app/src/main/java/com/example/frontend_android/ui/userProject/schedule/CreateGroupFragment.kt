@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,6 +22,7 @@ import com.example.frontend_android.ui.userProject.projectInvites.UserProjectReq
 
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -43,7 +45,6 @@ import kotlin.getValue
 @AndroidEntryPoint
 class CreateGroupFragment : Fragment(R.layout.create_group_dialog) {
     private val bvm: ProjectBookingsViewmodel by activityViewModels()
-    private val pvm: UserProjectRequestViewmodel by activityViewModels()
 
     private val groupMembers = mutableSetOf<Long>()
     private var projectId: Long = 0L
@@ -63,23 +64,50 @@ class CreateGroupFragment : Fragment(R.layout.create_group_dialog) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.messagesRecyclerView)
 
-        val titleInput = view.findViewById<TextInputEditText>(R.id.titleText)
         val timeEditText = view.findViewById<TextInputEditText>(R.id.timeEditText)
+        val timeInputLayout = view.findViewById<TextInputLayout>(R.id.timeInputLayout)
+
+
         val add_btn = view.findViewById<MaterialButton>(R.id.add_btn)
         val close_btn = view.findViewById<MaterialButton>(R.id.close_btn)
-        val loggedInUser = pvm.getId()
-        groupMembers.add(loggedInUser)
-
-          adapter = CreateGroupAdapter(
-            addUser = { userId -> groupMembers.add(userId)
-                      adapter.updateId(groupMembers)},
-            removeUser = {
-                userId -> groupMembers.remove(userId)
-                adapter.updateId(groupMembers)}
-        )
+        val loggedInUserId = bvm.getId()
+        groupMembers.add(loggedInUserId)
         projectId = args.projectId
         dateMillis = args.selectedDate
+//        pvm.getUserProjects(projectId)
+        bvm.getAvailableMembers(projectId,dateMillis)
+        adapter = CreateGroupAdapter(
+            addUser = { userId -> groupMembers.add(userId)
+                groupMembers.add(userId)
+                adapter.updateId(groupMembers)
+                      },
+            removeUser = {
+                    userId -> groupMembers.remove(userId)
+                groupMembers.remove(userId)
+                adapter.updateId(groupMembers)
+            }
+        )
+        lifecycleScope.launch {
+            bvm.available.collect { p ->
+                val filtered = p.filter { it.userId != loggedInUserId }
+                adapter.submitList(filtered)
+            }
+        }
 
+        lifecycleScope.launch {
+            bvm.stateAdd.collect { p ->
+                if(p==true){
+                    Toast.makeText(requireContext(), "Bokning skapad!", Toast.LENGTH_SHORT).show()
+                    val action = CreateGroupFragmentDirections.groupFragToProjectbookings(projectId)
+                    findNavController().navigate(action)
+                } else {
+                    Toast.makeText(requireContext(), "Bokningen kunde inte skapas!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
 
         val cal = Calendar.getInstance().apply { timeInMillis = dateMillis }
         dateText = "${cal.get(Calendar.MONTH)}/${cal.get(Calendar.DAY_OF_MONTH)}"
@@ -96,20 +124,13 @@ class CreateGroupFragment : Fragment(R.layout.create_group_dialog) {
             endMinute = bundle.getInt("endMinute")
             timeText =
                 String.format("%02d:%02d - %02d:%02d", startHour, startMinute, endHour, endMinute)
-            timeEditText.setText("$dateText $timeText")
+            timeInputLayout.setHint("$dateText $timeText")
 
         }
-        projectId = args.projectId
 
 
-
-
-
-        pvm.getUserProjects(projectId)
-        lifecycleScope.launch {
-            pvm.userprojects.collect { p ->
-                adapter.submitList(p)
-            }
+        close_btn.setOnClickListener {
+            findNavController().popBackStack()
         }
 
 
@@ -137,7 +158,6 @@ class CreateGroupFragment : Fragment(R.layout.create_group_dialog) {
 
 
 
-
             add_btn.setOnClickListener {
             bvm.addBooking(
                 projectId = projectId,
@@ -147,13 +167,9 @@ class CreateGroupFragment : Fragment(R.layout.create_group_dialog) {
                 endHour = endHour,
                 endMinute = endMinute,
                 dateMillis = dateMillis,
-                bookingTitle = titleInput.text.toString()
+                bookingTitle = dateMillis.toString()
             )
         }
-
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = adapter
-        pvm.getUsers()
 
     }
 }

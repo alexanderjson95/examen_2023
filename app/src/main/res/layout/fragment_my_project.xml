@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:text="@string/welcome">
         </com.google.android.material.textview.MaterialTextView>
         <com.google.android.material.textview.MaterialTextView
@@ -31,7 +31,7 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginStart="8dp"
-            android:textColor="@color/font_color_inactive"
+            android:textColor="@color/white"
             android:text="">
         </com.google.android.material.textview.MaterialTextView>
     </LinearLayout>
