@@ -24,14 +24,14 @@ public class MessageResponse {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime created;
 
-public static MessageResponse fromMessageResponse(UserMessages um) {
+public static MessageResponse fromMessageResponse(UserMessages um, String decrypted) {
     return MessageResponse.builder()
             .id(um.getId())
             .senderId(um.getSender().getId())
             .recipientId(um.getRecipient().getId())
             .senderFirstname(um.getSender().getFirstName())
-            .senderLastname(um.getRecipient().getLastName())
-            .content(um.getMessage().getEncryptedValue())
+            .senderLastname(um.getSender().getLastName())
+            .content(decrypted)
             .created(um.getMessage().getCreated())
             .build();
         }

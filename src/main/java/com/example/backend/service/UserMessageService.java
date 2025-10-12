@@ -14,6 +14,10 @@ import org.bouncycastle.util.encoders.UrlBase64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.List;
@@ -41,9 +45,21 @@ public class UserMessageService {
     /* READ */
 
     public List<MessageResponse> getConversation(Long userId, Long recipientId){
-        return userMessageRepository.getConvo(userId, recipientId)
-                .stream().map(MessageResponse::fromMessageResponse).toList();
+        Users loggedIn = uService.findUserById(userId);
+        Users otherUser = uService.findUserById(recipientId);
+        SecretKeySpec shared = crypto.derivesSharedSecret(loggedIn.getSecretKey(), otherUser.getPublicKey());
+
+        return userMessageRepository.getConvo(userId,recipientId)
+                .stream()
+                .map(um -> {
+                    String decrypted = crypto.decryptMessage(
+                            um.getMessage().getEncryptedValue(), shared
+                    );
+                    return MessageResponse.fromMessageResponse(um,decrypted);
+                })
+                .toList();
     }
+
 
     public List<UserResponse> getContacts(Long userId){
         List<Long> contactIds = userMessageRepository.getAllContacts(userId);
@@ -52,26 +68,34 @@ public class UserMessageService {
                 .toList();
     }
 
-    public List<MessageResponse> getSenderMessages(Long userId){
-        return userMessageRepository.findAllUsersMessages(userId)
-                .stream().map(MessageResponse::fromMessageResponse).toList();
-    }
-
-    public List<MessageResponse> getRecipientMessages(Long recipientId){
-        return userMessageRepository.findByRecipient_Id(recipientId)
-                .stream().map(MessageResponse::fromMessageResponse).toList();
-    }
-
-    public List<MessageResponse> getAllUsersMessages(Long userId){
-        return userMessageRepository.findAllUsersMessages(userId)
-                .stream().map(MessageResponse::fromMessageResponse).toList();
-    }
+//    public List<MessageResponse> getSenderMessages(Long userId){
+//        return userMessageRepository.findAllUsersMessages(userId)
+//                .stream().map(MessageResponse::fromMessageResponse).toList();
+//    }
+//
+//    public List<MessageResponse> getRecipientMessages(Long recipientId){
+//        return userMessageRepository.findByRecipient_Id(recipientId)
+//                .stream().map(MessageResponse::fromMessageResponse).toList();
+//    }
+//
+//    public List<MessageResponse> getAllUsersMessages(Long userId){
+//        return userMessageRepository.findAllUsersMessages(userId)
+//                .stream().map(MessageResponse::fromMessageResponse).toList();
+//    }
 
     @Transactional
     public void sendMessage(Users user, MessageRequest req){
         Users recipient = uService.findUserById(req.getRecipientId());
         Message msg = new Message();
-        msg.setEncryptedValue(req.getEncryptedValue());
+
+        SecretKeySpec shared = crypto.derivesSharedSecret(
+                user.getSecretKey(),
+                recipient.getPublicKey()
+        );
+        msg.setEncryptedValue(
+                crypto.encryptMessage(req.getEncryptedValue(),shared)
+        );
+
         messageRepository.save(msg);
         UserMessages uMsg = new UserMessages();
         uMsg.setMessage(msg);

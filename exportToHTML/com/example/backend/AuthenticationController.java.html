@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>AuthenticationController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AuthenticationController.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">;</span>
+
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Users</span><span class="s2">.</span><span class="s1">Users</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">service</span><span class="s2">.</span><span class="s1">JwtService</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">service</span><span class="s2">.</span><span class="s1">UserService</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">lombok</span><span class="s2">.</span><span class="s1">RequiredArgsConstructor</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">http</span><span class="s2">.</span><span class="s1">ResponseEntity</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">security</span><span class="s2">.</span><span class="s1">authentication</span><span class="s2">.</span><span class="s1">AuthenticationManager</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">security</span><span class="s2">.</span><span class="s1">authentication</span><span class="s2">.</span><span class="s1">UsernamePasswordAuthenticationToken</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">security</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">userdetails</span><span class="s2">.</span><span class="s1">UserDetails</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">web</span><span class="s2">.</span><span class="s1">bind</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.*;</span>
+
+<span class="s1">@RestController</span>
+<span class="s1">@RequestMapping</span><span class="s2">(</span><span class="s3">&quot;/&quot;</span><span class="s2">)</span>
+<span class="s1">@RequiredArgsConstructor</span>
+<span class="s0">public class </span><span class="s1">AuthenticationController </span><span class="s2">{</span>
+
+    <span class="s0">private final </span><span class="s1">JwtService jwtService</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">UserService service</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">AuthenticationManager authenticationManager</span><span class="s2">;</span>
+
+    <span class="s0">public void </span><span class="s1">Authenticate</span><span class="s2">(</span><span class="s1">String username</span><span class="s2">, </span><span class="s1">String password</span><span class="s2">) </span><span class="s0">throws </span><span class="s1">Exception </span><span class="s2">{</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">authenticationManager</span><span class="s2">.</span><span class="s1">authenticate</span><span class="s2">(</span><span class="s0">new </span><span class="s1">UsernamePasswordAuthenticationToken</span><span class="s2">(</span><span class="s1">username</span><span class="s2">, </span><span class="s1">password</span><span class="s2">));</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">Exception e</span><span class="s2">){</span>
+            <span class="s0">throw new </span><span class="s1">Exception</span><span class="s2">(</span><span class="s3">&quot;Invalid username or password&quot;</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+
+
+
+    <span class="s1">@PostMapping</span><span class="s2">(</span><span class="s3">&quot;/authenticate&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">AuthenticationResponse</span><span class="s2">&gt; </span><span class="s1">createJwTToken</span><span class="s2">(</span><span class="s1">@RequestBody AuthRequest req</span><span class="s2">) </span><span class="s0">throws </span><span class="s1">Exception </span><span class="s2">{</span>
+        <span class="s1">Authenticate</span><span class="s2">(</span><span class="s1">req</span><span class="s2">.</span><span class="s1">getUsername</span><span class="s2">(),</span><span class="s1">req</span><span class="s2">.</span><span class="s1">getPassword</span><span class="s2">());</span>
+        <span class="s1">Users u </span><span class="s2">= </span><span class="s1">service</span><span class="s2">.</span><span class="s1">findUserByUsername</span><span class="s2">(</span><span class="s1">req</span><span class="s2">.</span><span class="s1">getUsername</span><span class="s2">());</span>
+        <span class="s1">String token </span><span class="s2">= </span><span class="s1">jwtService</span><span class="s2">.</span><span class="s1">generateToken</span><span class="s2">(</span><span class="s1">u</span><span class="s2">);</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">ok</span><span class="s2">(</span><span class="s0">new </span><span class="s1">AuthenticationResponse</span><span class="s2">(</span><span class="s1">token</span><span class="s2">, </span><span class="s1">u</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">()));</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@PostMapping</span><span class="s2">(</span><span class="s3">&quot;/refresh&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">AuthenticationResponse</span><span class="s2">&gt; </span><span class="s1">refreshToken</span><span class="s2">(</span><span class="s1">@RequestBody AuthRequest req</span><span class="s2">) </span><span class="s0">throws </span><span class="s1">Exception </span><span class="s2">{</span>
+        <span class="s1">Users u </span><span class="s2">= </span><span class="s1">service</span><span class="s2">.</span><span class="s1">findUserByUsername</span><span class="s2">(</span><span class="s1">req</span><span class="s2">.</span><span class="s1">getUsername</span><span class="s2">());</span>
+        <span class="s1">String refreshedToken </span><span class="s2">= </span><span class="s1">jwtService</span><span class="s2">.</span><span class="s1">generateToken</span><span class="s2">(</span><span class="s1">u</span><span class="s2">);</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">ok</span><span class="s2">(</span><span class="s0">new </span><span class="s1">AuthenticationResponse</span><span class="s2">(</span><span class="s1">refreshedToken</span><span class="s2">, </span><span class="s1">u</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">()));</span>
+    <span class="s2">}}</span>
+</pre>
+</body>
+</html>

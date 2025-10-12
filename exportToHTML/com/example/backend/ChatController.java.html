@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>ChatController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ChatController.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">;</span>
+
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Chat</span><span class="s2">.</span><span class="s1">MessageRequest</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Chat</span><span class="s2">.</span><span class="s1">MessageResponse</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Users</span><span class="s2">.</span><span class="s1">UserResponse</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Users</span><span class="s2">.</span><span class="s1">Users</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">service</span><span class="s2">.</span><span class="s1">UserMessageService</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">service</span><span class="s2">.</span><span class="s1">UserService</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">fasterxml</span><span class="s2">.</span><span class="s1">jackson</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">JsonProcessingException</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">fasterxml</span><span class="s2">.</span><span class="s1">jackson</span><span class="s2">.</span><span class="s1">databind</span><span class="s2">.</span><span class="s1">ObjectMapper</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">lombok</span><span class="s2">.</span><span class="s1">RequiredArgsConstructor</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">lombok</span><span class="s2">.</span><span class="s1">extern</span><span class="s2">.</span><span class="s1">slf4j</span><span class="s2">.</span><span class="s1">Slf4j</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">beans</span><span class="s2">.</span><span class="s1">factory</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">Autowired</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">http</span><span class="s2">.</span><span class="s1">ResponseEntity</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">security</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">Authentication</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">security</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">context</span><span class="s2">.</span><span class="s1">SecurityContextHolder</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">web</span><span class="s2">.</span><span class="s1">bind</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.*;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">security</span><span class="s2">.</span><span class="s1">Principal</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+<span class="s1">@Slf4j</span>
+<span class="s1">@RestController</span>
+<span class="s1">@RequestMapping</span><span class="s2">(</span><span class="s3">&quot;/messages&quot;</span><span class="s2">)</span>
+<span class="s1">@RequiredArgsConstructor</span>
+<span class="s0">public class </span><span class="s1">ChatController </span><span class="s2">{</span>
+    <span class="s0">private final </span><span class="s1">UserMessageService service</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">UserService userService</span><span class="s2">;</span>
+    <span class="s1">@Autowired</span>
+    <span class="s0">private </span><span class="s1">ObjectMapper mapper</span><span class="s2">;</span>
+    <span class="s1">@GetMapping</span><span class="s2">(</span><span class="s3">&quot;/sent&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">MessageResponse</span><span class="s2">&gt;&gt; </span><span class="s1">getSent</span><span class="s2">(</span><span class="s1">Principal principal</span><span class="s2">){</span>
+        <span class="s1">String username </span><span class="s2">= </span><span class="s1">principal</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">();</span>
+        <span class="s1">Users user </span><span class="s2">= </span><span class="s1">userService</span><span class="s2">.</span><span class="s1">findUserByUsername</span><span class="s2">(</span><span class="s1">username</span><span class="s2">);</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">ok</span><span class="s2">(</span><span class="s1">service</span><span class="s2">.</span><span class="s1">getSenderMessages</span><span class="s2">(</span><span class="s1">user</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">()));}</span>
+
+
+    <span class="s1">@GetMapping</span><span class="s2">(</span><span class="s3">&quot;/convo/{recipientId}&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">MessageResponse</span><span class="s2">&gt;&gt; </span><span class="s1">openConvo</span><span class="s2">(</span><span class="s1">@PathVariable Long recipientId</span><span class="s2">, </span><span class="s1">Principal principal</span><span class="s2">){</span>
+        <span class="s1">String username </span><span class="s2">= </span><span class="s1">principal</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">();</span>
+        <span class="s1">Long user </span><span class="s2">= </span><span class="s1">userService</span><span class="s2">.</span><span class="s1">findUserByUsername</span><span class="s2">(</span><span class="s1">username</span><span class="s2">).</span><span class="s1">getId</span><span class="s2">();</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">ok</span><span class="s2">(</span><span class="s1">service</span><span class="s2">.</span><span class="s1">getConversation</span><span class="s2">(</span><span class="s1">user</span><span class="s2">,</span><span class="s1">recipientId</span><span class="s2">));</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@GetMapping</span><span class="s2">(</span><span class="s3">&quot;/recieved/{userId}&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">MessageResponse</span><span class="s2">&gt;&gt; </span><span class="s1">getRecieved</span><span class="s2">(</span><span class="s1">@PathVariable Long userId</span><span class="s2">){</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">ok</span><span class="s2">(</span><span class="s1">service</span><span class="s2">.</span><span class="s1">getRecipientMessages</span><span class="s2">(</span><span class="s1">userId</span><span class="s2">));</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@GetMapping</span><span class="s2">(</span><span class="s3">&quot;/user/{userId}&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">MessageResponse</span><span class="s2">&gt;&gt; </span><span class="s1">getAll</span><span class="s2">(</span><span class="s1">@PathVariable Long userId</span><span class="s2">) {</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">ok</span><span class="s2">(</span><span class="s1">service</span><span class="s2">.</span><span class="s1">getAllUsersMessages</span><span class="s2">(</span><span class="s1">userId</span><span class="s2">));</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@PostMapping</span><span class="s2">(</span><span class="s3">&quot;/send&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">Void</span><span class="s2">&gt; </span><span class="s1">send</span><span class="s2">(</span><span class="s1">@RequestBody MessageRequest req</span><span class="s2">, </span><span class="s1">Principal principal</span><span class="s2">) {</span>
+        <span class="s1">String username </span><span class="s2">= </span><span class="s1">principal</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">();</span>
+        <span class="s1">Users user </span><span class="s2">= </span><span class="s1">userService</span><span class="s2">.</span><span class="s1">findUserByUsername</span><span class="s2">(</span><span class="s1">username</span><span class="s2">);</span>
+        <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Recipient: &quot; </span><span class="s2">+ </span><span class="s1">req</span><span class="s2">.</span><span class="s1">getRecipientId</span><span class="s2">() + </span><span class="s3">&quot; Sender: &quot; </span><span class="s2">+ </span><span class="s1">user</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">());</span>
+        <span class="s1">service</span><span class="s2">.</span><span class="s1">sendMessage</span><span class="s2">(</span><span class="s1">user</span><span class="s2">, </span><span class="s1">req</span><span class="s2">);</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">ok</span><span class="s2">().</span><span class="s1">build</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@GetMapping</span><span class="s2">(</span><span class="s3">&quot;/contacts&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">UserResponse</span><span class="s2">&gt;&gt; </span><span class="s1">getContacts</span><span class="s2">(</span><span class="s1">Principal principal</span><span class="s2">) </span><span class="s0">throws </span><span class="s1">JsonProcessingException </span><span class="s2">{</span>
+        <span class="s1">String username </span><span class="s2">= </span><span class="s1">principal</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">();</span>
+        <span class="s1">Long user </span><span class="s2">= </span><span class="s1">userService</span><span class="s2">.</span><span class="s1">findUserByUsername</span><span class="s2">(</span><span class="s1">username</span><span class="s2">).</span><span class="s1">getId</span><span class="s2">();</span>
+        <span class="s1">Authentication auth </span><span class="s2">= </span><span class="s1">SecurityContextHolder</span><span class="s2">.</span><span class="s1">getContext</span><span class="s2">().</span><span class="s1">getAuthentication</span><span class="s2">();</span>
+        <span class="s1">log</span><span class="s2">.</span><span class="s1">info</span><span class="s2">(</span><span class="s3">&quot;User: {}&quot;</span><span class="s2">, </span><span class="s1">principal</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">());</span>
+        <span class="s1">log</span><span class="s2">.</span><span class="s1">info</span><span class="s2">(</span><span class="s3">&quot;Authorities: {}&quot;</span><span class="s2">, </span><span class="s1">auth</span><span class="s2">.</span><span class="s1">getAuthorities</span><span class="s2">());</span>
+        <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">UserResponse</span><span class="s2">&gt; </span><span class="s1">contacts </span><span class="s2">= </span><span class="s1">service</span><span class="s2">.</span><span class="s1">getContacts</span><span class="s2">(</span><span class="s1">user</span><span class="s2">);</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">ok</span><span class="s2">(</span><span class="s1">service</span><span class="s2">.</span><span class="s1">getContacts</span><span class="s2">(</span><span class="s1">user</span><span class="s2">));</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

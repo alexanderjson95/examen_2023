@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.security.KeyPair;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
 @Service
@@ -57,6 +58,21 @@ public class CryptoService {
             return EllipticalDiffieHellman.createSharedSecret(privateKey,publicKey);
         } catch (Exception e){
             throw new RuntimeException("Couldn't create secret", e);
+        }
+    }
+    public SecretKeySpec derivesSharedSecret(String privateKey, String publicKey){
+        try{
+            byte[] privateBytes = decodeBase64_secretKey(privateKey);
+            byte[] publicBytes = decodeBase64(publicKey);
+            KeyFactory kf = KeyFactory.getInstance("EC");
+            PrivateKey privateKey1 = kf.generatePrivate(new PKCS8EncodedKeySpec(privateBytes));
+            PublicKey publicKey1 = kf.generatePublic(new X509EncodedKeySpec(publicBytes));
+            return createSharedSecret(privateKey1,publicKey1);
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidKeySpecException e) {
+            throw new RuntimeException(e);
         }
     }
 }

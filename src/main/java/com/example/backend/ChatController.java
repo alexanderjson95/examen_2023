@@ -28,12 +28,12 @@ public class ChatController {
     private final UserService userService;
     @Autowired
     private ObjectMapper mapper;
-    @GetMapping("/sent")
-    public ResponseEntity<List<MessageResponse>> getSent(Principal principal){
-        String username = principal.getName();
-        Users user = userService.findUserByUsername(username);
-        return ResponseEntity.ok(service.getSenderMessages(user.getId()));}
-
+//    @GetMapping("/sent")
+//    public ResponseEntity<List<MessageResponse>> getSent(Principal principal){
+//        String username = principal.getName();
+//        Users user = userService.findUserByUsername(username);
+//        return ResponseEntity.ok(service.getSenderMessages(user.getId()));}
+//
 
     @GetMapping("/convo/{recipientId}")
     public ResponseEntity<List<MessageResponse>> openConvo(@PathVariable Long recipientId, Principal principal){
@@ -42,15 +42,15 @@ public class ChatController {
         return ResponseEntity.ok(service.getConversation(user,recipientId));
     }
 
-    @GetMapping("/recieved/{userId}")
-    public ResponseEntity<List<MessageResponse>> getRecieved(@PathVariable Long userId){
-        return ResponseEntity.ok(service.getRecipientMessages(userId));
-    }
-
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<MessageResponse>> getAll(@PathVariable Long userId) {
-        return ResponseEntity.ok(service.getAllUsersMessages(userId));
-    }
+//    @GetMapping("/recieved/{userId}")
+//    public ResponseEntity<List<MessageResponse>> getRecieved(@PathVariable Long userId){
+//        return ResponseEntity.ok(service.getRecipientMessages(userId));
+//    }
+//
+//    @GetMapping("/user/{userId}")
+//    public ResponseEntity<List<MessageResponse>> getAll(@PathVariable Long userId) {
+//        return ResponseEntity.ok(service.getAllUsersMessages(userId));
+//    }
 
     @PostMapping("/send")
     public ResponseEntity<Void> send(@RequestBody MessageRequest req, Principal principal) {

@@ -104,7 +104,7 @@ public class MessageTest {
             Users pelle = userService.findUserByUsername(username2);
 
             MessageRequest req = new MessageRequest();
-            req.setSenderId(alexander.getId());
+            req.setRecipientId(alexander.getId());
             req.setRecipientId(pelle.getId());
             req.setEncryptedValue(content);
             userMessageService.sendMessage(req);

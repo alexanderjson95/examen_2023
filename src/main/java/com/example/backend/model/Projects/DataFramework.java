@@ -1,3 +1,13 @@
+/**
+ *
+ * Denna klassen ska senare användas för att autogenerera och uppdatera controllrs/models i frontend klienter som tillåts kopplas
+ */
+
+
+
+
+
+
 //package com.example.backend.model.Projects;
 //
 //import com.example.backend.ToExport;

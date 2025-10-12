@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>BackendApplication.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+BackendApplication.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Projects</span><span class="s2">.</span><span class="s1">DataFramework</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Users</span><span class="s2">.</span><span class="s1">UserRequest</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Users</span><span class="s2">.</span><span class="s1">Users</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">security</span><span class="s2">.</span><span class="s1">configs</span><span class="s2">.</span><span class="s1">KeyConfig</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">boot</span><span class="s2">.</span><span class="s1">SpringApplication</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">boot</span><span class="s2">.</span><span class="s1">autoconfigure</span><span class="s2">.</span><span class="s1">SpringBootApplication</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">http</span><span class="s2">.</span><span class="s1">HttpEntity</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">http</span><span class="s2">.</span><span class="s1">HttpHeaders</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">http</span><span class="s2">.</span><span class="s1">MediaType</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">http</span><span class="s2">.</span><span class="s1">ResponseEntity</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">web</span><span class="s2">.</span><span class="s1">client</span><span class="s2">.</span><span class="s1">RestTemplate</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">io</span><span class="s2">.</span><span class="s1">IOException</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">security</span><span class="s2">.</span><span class="s1">NoSuchAlgorithmException</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">HashMap</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Map</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">Optional</span><span class="s2">;</span>
+
+<span class="s1">@SpringBootApplication</span>
+<span class="s0">public class </span><span class="s1">BackendApplication </span><span class="s2">{</span>
+
+	<span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) </span><span class="s0">throws </span><span class="s1">NoSuchAlgorithmException</span><span class="s2">, </span><span class="s1">InterruptedException</span><span class="s2">, </span><span class="s1">IOException </span><span class="s2">{</span>
+		<span class="s1">SpringApplication</span><span class="s2">.</span><span class="s1">run</span><span class="s2">(</span><span class="s1">BackendApplication</span><span class="s2">.</span><span class="s0">class</span><span class="s2">, </span><span class="s1">args</span><span class="s2">);</span>
+        <span class="s1">DataFramework f </span><span class="s2">= </span><span class="s0">new </span><span class="s1">DataFramework</span><span class="s2">();</span>
+        <span class="s1">f</span><span class="s2">.</span><span class="s1">findTableAnnotations</span><span class="s2">();</span>
+	<span class="s2">}</span>
+
+<span class="s2">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>BookingController.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+BookingController.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Bookings</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Users</span><span class="s2">.</span><span class="s1">Users</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">service</span><span class="s2">.</span><span class="s1">UserBookingService</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">backend</span><span class="s2">.</span><span class="s1">service</span><span class="s2">.</span><span class="s1">UserService</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">lombok</span><span class="s2">.</span><span class="s1">RequiredArgsConstructor</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">http</span><span class="s2">.</span><span class="s1">HttpStatus</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">http</span><span class="s2">.</span><span class="s1">ResponseEntity</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">org</span><span class="s2">.</span><span class="s1">springframework</span><span class="s2">.</span><span class="s1">web</span><span class="s2">.</span><span class="s1">bind</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.*;</span>
+
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">security</span><span class="s2">.</span><span class="s1">Principal</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">ArrayList</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+
+<span class="s1">@RestController</span>
+<span class="s1">@RequestMapping</span><span class="s2">(</span><span class="s3">&quot;/bookings&quot;</span><span class="s2">)</span>
+<span class="s1">@RequiredArgsConstructor</span>
+<span class="s0">public class </span><span class="s1">BookingController </span><span class="s2">{</span>
+
+
+    <span class="s0">private final </span><span class="s1">UserBookingService service</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">UserService userService</span><span class="s2">;</span>
+
+
+
+    <span class="s1">@PostMapping</span><span class="s2">()</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">BookingResponse</span><span class="s2">&gt;&gt; </span><span class="s1">createBooking</span><span class="s2">(</span><span class="s1">@RequestBody BookingRequest req</span><span class="s2">){</span>
+        <span class="s1">Bookings booking </span><span class="s2">= </span><span class="s1">service</span><span class="s2">.</span><span class="s1">createBooking</span><span class="s2">(</span><span class="s1">req</span><span class="s2">);</span>
+        <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">BookingResponse</span><span class="s2">&gt; </span><span class="s1">response </span><span class="s2">= </span><span class="s1">booking</span><span class="s2">.</span><span class="s1">getUserBookings</span><span class="s2">().</span><span class="s1">stream</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">map</span><span class="s2">(</span><span class="s1">BookingResponse::fromUserBooking</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">toList</span><span class="s2">();</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">status</span><span class="s2">(</span><span class="s1">HttpStatus</span><span class="s2">.</span><span class="s1">CREATED</span><span class="s2">).</span><span class="s1">body</span><span class="s2">(</span><span class="s1">response</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+
+    <span class="s1">@GetMapping</span><span class="s2">(</span><span class="s3">&quot;/user&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">BookingResponse</span><span class="s2">&gt;&gt; </span><span class="s1">getAllBookings</span><span class="s2">(</span><span class="s1">Principal principal</span><span class="s2">){</span>
+        <span class="s1">String username </span><span class="s2">= </span><span class="s1">principal</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">();</span>
+        <span class="s1">Users user </span><span class="s2">= </span><span class="s1">userService</span><span class="s2">.</span><span class="s1">findUserByUsername</span><span class="s2">(</span><span class="s1">username</span><span class="s2">);</span>
+
+        <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">UserBooking</span><span class="s2">&gt; </span><span class="s1">bookings </span><span class="s2">= </span><span class="s1">service</span><span class="s2">.</span><span class="s1">getBookingsByUser</span><span class="s2">(</span><span class="s1">user</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">());</span>
+        <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">BookingResponse</span><span class="s2">&gt; </span><span class="s1">response </span><span class="s2">= </span><span class="s1">bookings</span><span class="s2">.</span><span class="s1">stream</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">map</span><span class="s2">(</span><span class="s1">BookingResponse::fromUserBooking</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">toList</span><span class="s2">();</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">ok</span><span class="s2">(</span><span class="s1">response</span><span class="s2">);</span>
+
+    <span class="s2">}</span>
+
+    <span class="s1">@GetMapping</span><span class="s2">(</span><span class="s3">&quot;/{userId}/users&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">BookingResponse</span><span class="s2">&gt;&gt; </span><span class="s1">getBookingsByUserId</span><span class="s2">(</span><span class="s1">@PathVariable</span><span class="s2">(</span><span class="s3">&quot;userId&quot;</span><span class="s2">) </span><span class="s1">Long userId</span><span class="s2">){</span>
+        <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">UserBooking</span><span class="s2">&gt; </span><span class="s1">bookings </span><span class="s2">= </span><span class="s1">service</span><span class="s2">.</span><span class="s1">getBookingsByUser</span><span class="s2">(</span><span class="s1">userId</span><span class="s2">);</span>
+        <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">BookingResponse</span><span class="s2">&gt; </span><span class="s1">response </span><span class="s2">= </span><span class="s1">bookings</span><span class="s2">.</span><span class="s1">stream</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">map</span><span class="s2">(</span><span class="s1">BookingResponse::fromUserBooking</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">toList</span><span class="s2">();</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">ok</span><span class="s2">(</span><span class="s1">response</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@GetMapping</span><span class="s2">(</span><span class="s3">&quot;/{projectId}&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">BookingResponse</span><span class="s2">&gt;&gt; </span><span class="s1">getBookingsByProjectId</span><span class="s2">(</span><span class="s1">@PathVariable</span><span class="s2">(</span><span class="s3">&quot;projectId&quot;</span><span class="s2">) </span><span class="s1">Long projectId</span><span class="s2">){</span>
+        <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">UserBooking</span><span class="s2">&gt; </span><span class="s1">bookings </span><span class="s2">= </span><span class="s1">service</span><span class="s2">.</span><span class="s1">getUserBookingsByProject</span><span class="s2">(</span><span class="s1">projectId</span><span class="s2">);</span>
+        <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">BookingResponse</span><span class="s2">&gt; </span><span class="s1">response </span><span class="s2">= </span><span class="s1">bookings</span><span class="s2">.</span><span class="s1">stream</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">map</span><span class="s2">(</span><span class="s1">BookingResponse::fromUserBooking</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">toList</span><span class="s2">();</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">ok</span><span class="s2">(</span><span class="s1">response</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@PatchMapping</span><span class="s2">(</span><span class="s3">&quot;/{bookingId}/update&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">BookingResponse</span><span class="s2">&gt;&gt; </span><span class="s1">updateBookingsByUserId</span><span class="s2">(</span><span class="s1">@PathVariable</span><span class="s2">(</span><span class="s3">&quot;bookingId&quot;</span><span class="s2">) </span><span class="s1">Long bookingId</span><span class="s2">, </span><span class="s1">@RequestBody PatchBookingRequest req</span><span class="s2">){</span>
+        <span class="s1">Bookings booking </span><span class="s2">= </span><span class="s1">service</span><span class="s2">.</span><span class="s1">updateBooking</span><span class="s2">(</span><span class="s1">bookingId</span><span class="s2">,</span><span class="s1">req</span><span class="s2">);</span>
+        <span class="s1">List</span><span class="s2">&lt;</span><span class="s1">BookingResponse</span><span class="s2">&gt; </span><span class="s1">response </span><span class="s2">= </span><span class="s1">booking</span><span class="s2">.</span><span class="s1">getUserBookings</span><span class="s2">().</span><span class="s1">stream</span><span class="s2">()</span>
+                <span class="s2">.</span><span class="s1">map</span><span class="s2">(</span><span class="s1">BookingResponse::fromUserBooking</span><span class="s2">)</span>
+                <span class="s2">.</span><span class="s1">toList</span><span class="s2">();</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">status</span><span class="s2">(</span><span class="s1">HttpStatus</span><span class="s2">.</span><span class="s1">CREATED</span><span class="s2">).</span><span class="s1">body</span><span class="s2">(</span><span class="s1">response</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+
+    <span class="s1">@PatchMapping</span><span class="s2">(</span><span class="s3">&quot;/respond&quot;</span><span class="s2">)</span>
+    <span class="s0">public </span><span class="s1">ResponseEntity</span><span class="s2">&lt;</span><span class="s1">UserBooking</span><span class="s2">&gt; </span><span class="s1">respondBooking</span><span class="s2">(</span><span class="s1">Principal principal</span><span class="s2">, </span><span class="s1">@RequestBody PatchUserBookingRequest req</span><span class="s2">){</span>
+        <span class="s1">Long userId </span><span class="s2">= </span><span class="s1">userService</span><span class="s2">.</span><span class="s1">findUserByUsername</span><span class="s2">(</span><span class="s1">principal</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">()).</span><span class="s1">getId</span><span class="s2">();</span>
+        <span class="s1">UserBooking ub </span><span class="s2">= </span><span class="s1">service</span><span class="s2">.</span><span class="s1">updateUserBooking</span><span class="s2">(</span><span class="s1">req</span><span class="s2">.</span><span class="s1">getBookingId</span><span class="s2">(), </span><span class="s1">userId</span><span class="s2">, </span><span class="s1">String</span><span class="s2">.</span><span class="s1">valueOf</span><span class="s2">(</span><span class="s1">req</span><span class="s2">.</span><span class="s1">getStatus</span><span class="s2">()));</span>
+        <span class="s0">return </span><span class="s1">ResponseEntity</span><span class="s2">.</span><span class="s1">status</span><span class="s2">(</span><span class="s1">HttpStatus</span><span class="s2">.</span><span class="s1">OK</span><span class="s2">).</span><span class="s1">body</span><span class="s2">(</span><span class="s1">ub</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+
+<span class="s2">}</span>
+
+
+</pre>
+</body>
+</html>
