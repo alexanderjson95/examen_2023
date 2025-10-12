@@ -1,0 +1,101 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/message_form"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:elevation="4dp"
+    android:layout_marginTop="36dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/contact_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge.Emphasized"
+        android:textColor="@color/black"
+        android:padding="8dp"
+
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/header_divider"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:dividerThickness="1dp"
+        app:dividerColor="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/contact_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messagesRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/header_divider"
+        app:layout_constraintBottom_toTopOf="@id/chatbox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="28dp"
+        android:paddingBottom="180dp"
+        android:padding="16dp"
+        android:clipToPadding="false" />
+
+
+        <LinearLayout
+        android:id="@+id/chatbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        style="@style/CustomEditTextStyle"
+        android:gravity="end"
+        android:paddingTop="8dp"
+            android:backgroundTint="#17181B"
+
+            android:layout_marginBottom="88dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/message_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/msg_hint"
+            android:inputType="textMultiLine"
+            android:background="@null"
+            android:maxLines="5"
+            style="@style/ChatEditTextTwo"
+            android:padding="8dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sendBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="12dp"
+            android:backgroundTint="#5E6AD2"
+            app:icon="@drawable/outline_arrow_circle_right_24"
+            style="@style/SendMaterialBtn"/>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

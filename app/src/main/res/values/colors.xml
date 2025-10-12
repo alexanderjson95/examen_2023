@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="royal_blue">#5386E4</color>
+    <color name="card_layout_color">#F9F8F8</color>
+    <color name="background_layer_2">#F0EFF4</color>
+    <color name="background_color">#FFFFFF</color>
+    <color name="font_color_active">#353333</color>
+    <color name="font_color_inactive">#B4B4B5</color>
+    <color name="background_layer_1">#B4B4B5</color>
+
+
+
+    <color name="theme_one_yellow">#F0CF65</color>
+    <color name="theme_one_red">#E07A5F</color>
+
+    <color name="theme_one_activeBtn">#F1FAEE</color>
+    <color name="theme_one_inactiveBtn">#FF686B</color>
+    <color name="theme_one_backdrop">#382633</color>
+    <color name="theme_one_inactiveToggle">#F1FAEE</color>
+    <color name="theme_one_activeToggle">#d8e2dc</color>
+    <color name="theme_one_black">#1E1B18</color>
+
+    <color name="theme_three_activebtn">#17181B</color>
+    <color name="theme_three_inactiveBtn">#4357AD</color>
+
+</resources>

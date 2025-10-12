@@ -1,0 +1,48 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:mcv_selectionColor="#5E6AD2"
+        app:mcv_showOtherDates="all"
+        app:mcv_selectionMode="single"
+        app:mcv_firstDayOfWeek="monday"
+        app:mcv_dateTextAppearance="@style/ChatEditText"
+        app:mcv_headerTextAppearance="@style/ChatEditText" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/setTimeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@drawable/enabled_btn_selector"
+            android:text="Skapa bokning" />
+
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/removeTimeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#17181B"
+            android:textColor="@drawable/enabled_btn_selector"
+            android:text="Ta bort bokning" />
+
+    </LinearLayout>
+
+</LinearLayout>

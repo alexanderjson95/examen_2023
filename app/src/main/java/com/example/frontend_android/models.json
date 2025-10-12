@@ -1,0 +1,142 @@
+[ {
+  "name_class" : "ProjectResponse",
+  "fields" : [ {
+    "name_field" : "id",
+    "type" : "Long"
+  }, {
+    "name_field" : "projectName",
+    "type" : "String"
+  }, {
+    "name_field" : "description",
+    "type" : "String"
+  }, {
+    "name_field" : "isPublic",
+    "type" : "boolean"
+  }, {
+    "name_field" : "salary",
+    "type" : "double"
+  }, {
+    "name_field" : "type",
+    "type" : "String"
+  }, {
+    "name_field" : "created",
+    "type" : "LocalDateTime"
+  } ]
+}, {
+  "name_class" : "RegisterRequest",
+  "fields" : [ {
+    "name_field" : "username",
+    "type" : "String"
+  }, {
+    "name_field" : "password",
+    "type" : "String"
+  }, {
+    "name_field" : "email",
+    "type" : "String"
+  }, {
+    "name_field" : "publicKey",
+    "type" : "String"
+  } ]
+}, {
+  "name_class" : "UserProjectRequest",
+  "fields" : [ {
+    "name_field" : "role",
+    "type" : "String"
+  }, {
+    "name_field" : "isAdmin",
+    "type" : "Boolean"
+  }, {
+    "name_field" : "joined",
+    "type" : "Boolean"
+  } ]
+}, {
+  "name_class" : "ProjectRequest",
+  "fields" : [ {
+    "name_field" : "projectName",
+    "type" : "String"
+  }, {
+    "name_field" : "description",
+    "type" : "String"
+  }, {
+    "name_field" : "isPublic",
+    "type" : "Boolean"
+  }, {
+    "name_field" : "salary",
+    "type" : "double"
+  }, {
+    "name_field" : "type",
+    "type" : "String"
+  } ]
+}, {
+  "name_class" : "UserProjectResponse",
+  "fields" : [ {
+    "name_field" : "projectId",
+    "type" : "Long"
+  }, {
+    "name_field" : "userId",
+    "type" : "Long"
+  }, {
+    "name_field" : "role",
+    "type" : "String"
+  }, {
+    "name_field" : "isCreator",
+    "type" : "Boolean"
+  }, {
+    "name_field" : "isAdmin",
+    "type" : "Boolean"
+  }, {
+    "name_field" : "hasJoined",
+    "type" : "Boolean"
+  } ]
+}, {
+  "name_class" : "UserRequest",
+  "fields" : [ {
+    "name_field" : "username",
+    "type" : "String"
+  }, {
+    "name_field" : "email",
+    "type" : "String"
+  }, {
+    "name_field" : "password",
+    "type" : "String"
+  }, {
+    "name_field" : "publicKey",
+    "type" : "String"
+  }, {
+    "name_field" : "secretKey",
+    "type" : "String"
+  } ]
+}, {
+  "name_class" : "MessageResponse",
+  "fields" : [ {
+    "name_field" : "id",
+    "type" : "Long"
+  }, {
+    "name_field" : "senderName",
+    "type" : "Long"
+  }, {
+    "name_field" : "content",
+    "type" : "String"
+  }, {
+    "name_field" : "created",
+    "type" : "LocalDateTime"
+  } ]
+}, {
+  "name_class" : "UserController",
+  "fields" : [ {
+    "name_field" : "service",
+    "type" : "UserService"
+  } ]
+}, {
+  "name_class" : "MessageRequest",
+  "fields" : [ {
+    "name_field" : "senderId",
+    "type" : "Long"
+  }, {
+    "name_field" : "recipientId",
+    "type" : "Long"
+  }, {
+    "name_field" : "encryptedValue",
+    "type" : "String"
+  } ]
+} ]

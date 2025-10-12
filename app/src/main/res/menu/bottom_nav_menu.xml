@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/title_mypage" />
+
+    <item
+        android:id="@+id/navigation_messages"
+        android:icon="@drawable/chat_bubble_24px"
+        android:title="@string/title_messenges" />
+
+    <item
+        android:id="@+id/navigation_projects"
+        android:icon="@drawable/outline_movie_24"
+        android:title="@string/title_projects" />
+
+    <item
+        android:id="@+id/navigation_user_invites"
+        android:icon="@drawable/outline_calendar_clock_24"
+        android:title="@string/events" />
+
+
+    <item
+        android:id="@+id/navigation_user_settings"
+        android:icon="@drawable/outline_account_circle_24"
+        android:title="Profil" />
+
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_logout"
+        android:title="Logga ut" />
+
+
+</menu>

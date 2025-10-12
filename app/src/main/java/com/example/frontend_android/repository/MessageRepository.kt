@@ -1,0 +1,120 @@
+package com.example.frontend_android.repository
+
+import android.util.Log
+import com.example.frontend_android.api.API
+import com.example.frontend_android.api.RepositoryAbstract
+import com.example.frontend_android.model.Chat.MessageRequest
+import com.example.frontend_android.model.Chat.MessageRequestPatch
+import com.example.frontend_android.model.Chat.MessageResponse
+import com.example.frontend_android.model.Users.UserResponse
+import com.google.gson.Gson
+
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import retrofit2.Response
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class MessageRepository @Inject constructor(
+    override val apiInterface: API,
+) : RepositoryAbstract<MessageRequest, MessageResponse, MessageRequestPatch, API>(){
+
+
+    override suspend fun performAdd(
+        api: API,
+        data: MessageRequest
+    ): Response<Unit> {
+        return apiInterface.sendMessage(data)
+    }
+
+    override suspend fun performGet(
+        api: API
+    ): Response<List<MessageResponse>> {
+        return apiInterface.getAllMessages()
+    }
+
+    override suspend fun performPatch(
+        api: API,
+        data: MessageRequestPatch
+    ): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun performGetById(
+        api: API,
+        targetId: Long
+    ): Response<List<MessageResponse>> {
+        return apiInterface.openConvo(targetId)
+    }
+
+    override suspend fun performGetByPairs(
+        api: API,
+        first: Long,
+        second: Long
+    ): Response<List<MessageResponse>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun performRemove(
+        api: API,
+        toRemove: Long,
+    ): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun performRemovePair(
+        api: API,
+        toRemove: Long,
+        fromTable: Long,
+    ): Response<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    suspend fun getContacts()
+             = withContext(Dispatchers.IO){
+         try {
+             val response = apiInterface.getContacts()
+             val rawJson = response.body()?.let { Gson().toJson(it) }
+             Log.d("API_CONTACTS", "Raw JSON: $rawJson")
+             val body = response.body()
+             if (response.isSuccessful && body != null)
+                 Result.success(body)
+             else
+                 Result.failure(Exception("HTTP ${response.code()} ${response.message()}"))
+         } catch (t: Throwable) {
+             Result.failure(t)
+         }
+    }
+
+
+//
+//    suspend fun getAllMessages(): Result<List<MessageResponse>> =
+//        withContext(Dispatchers.IO){
+//            Log.d("MovieLike","hey2")
+//            try {
+//                val response = apiInterface.getAllMessages()
+//                if (response.isSuccessful) {
+//                    Result.success(response.body().orEmpty())
+//                }
+//                else{
+//                    Result.failure(Exception("Error ${response.code()} ${response.message()}"))
+//                }
+//            } catch (e: Exception) {
+//                Result.failure(e)
+//            }
+//        }
+//
+//    suspend fun sendMessage(req: MessageRequest): Result<Unit> =
+//        withContext(Dispatchers.IO) {
+//            try {
+//                val response = apiInterface.sendMessage(req)
+//                if (response.isSuccessful) Result.success(Unit)
+//                else Result.failure(Exception("Error ${response.code()} ${response.message()}"))
+//            } catch (e: Exception) {
+//                Result.failure(e)
+//            }
+//        }
+//
+
+}

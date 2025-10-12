@@ -1,0 +1,127 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/message_form"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:elevation="4dp"
+    android:background="@color/white"
+    android:layout_marginTop="36dp"
+    android:fitsSystemWindows="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/titleInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/bookingTitle"
+        app:errorEnabled="true"
+        app:expandedHintEnabled="false"
+        app:hintMaxLines="1"
+        app:boxBackgroundMode="outline"
+        app:boxBackgroundColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/aheader_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:dividerThickness="1dp"
+        app:dividerColor="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/titleInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/timeInputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/c_time"
+        app:endIconMode="custom"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        app:endIconDrawable="@drawable/outline_calendar_clock_24"
+        app:endIconTint="@color/theme_one_backdrop"
+        app:layout_constraintTop_toBottomOf="@id/aheader_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/timeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/bheader_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:dividerThickness="1dp"
+        app:dividerColor="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/timeInputLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messagesRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingBottom="80dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/bheader_divider"
+        app:layout_constraintBottom_toTopOf="@id/cheader_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/cheader_divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:dividerThickness="1dp"
+        app:dividerColor="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/messagesRecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/close_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/close"
+        android:textSize="14sp"
+        android:padding="8dp"
+        android:textStyle="bold"
+        style="@style/Theme_Two_Button"
+        android:backgroundTint="@android:color/transparent"
+        android:textColor="@color/font_color_inactive"
+        android:layout_marginBottom="64dp"
+        app:layout_constraintTop_toBottomOf="@id/cheader_divider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/add_btn"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/add_btn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/create_book"
+        android:textSize="12sp"
+        android:padding="8dp"
+        android:layout_marginBottom="64dp"
+        style="@style/CustomMaterialButton"
+        app:layout_constraintTop_toBottomOf="@id/cheader_divider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/close_btn"
+        app:layout_constraintEnd_toEndOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
