@@ -1,6 +1,5 @@
 package com.example.backend;
 
-import com.example.backend.model.Projects.DataFramework;
 import com.example.backend.model.Users.UserRequest;
 import com.example.backend.model.Users.Users;
 import com.example.backend.security.configs.KeyConfig;
@@ -23,8 +22,7 @@ public class BackendApplication {
 
 	public static void main(String[] args) throws NoSuchAlgorithmException, InterruptedException, IOException {
 		SpringApplication.run(BackendApplication.class, args);
-        DataFramework f = new DataFramework();
-        f.findTableAnnotations();
+
 	}
 
 }
