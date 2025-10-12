@@ -28,16 +28,7 @@ class MyProjectFragment : Fragment(R.layout.fragment_my_project){
         val projectId = args.projectId
         vm.getLoggedInUserProject(projectId)
 
-        vm.userProject.observe(viewLifecycleOwner) { u ->
-            Toast.makeText(requireContext(), "Admin result: ${u.firstName}  is:  ${u.isAdmin}", Toast.LENGTH_LONG)
-                .show()
-        }
 
-
-        vm.admin.observe(viewLifecycleOwner) { u ->
-            Toast.makeText(requireContext(), "Admin result: $u", Toast.LENGTH_LONG)
-                .show()
-        }
 
 
             vm.roless.observe(viewLifecycleOwner) { roles ->

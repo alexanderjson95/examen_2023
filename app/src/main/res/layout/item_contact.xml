@@ -35,9 +35,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:layout_column="1"
-            android:text="Benjamin"
+            android:text=""
             android:textSize="16sp"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
         <TextView
             android:id="@+id/lname_value"
             android:layout_width="wrap_content"
@@ -45,9 +45,9 @@
             android:layout_marginStart="8dp"
             android:singleLine="true"
             android:layout_column="2"
-            android:text="Giordano"
+            android:text=""
             android:textSize="16sp"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/date_value"
@@ -59,7 +59,7 @@
             android:layout_gravity="end"
             android:text=""
             android:textSize="16sp"
-            android:textColor="@color/font_color_inactive" />
+            android:textColor="@color/white" />
 
     </GridLayout>
 

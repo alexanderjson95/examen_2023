@@ -189,12 +189,7 @@ class BookingsViewModel  @Inject constructor(
     }
 
 
-//    fun removeUserRequest(userId: Long,projectId: Long){
-//        viewModelScope.launch {
-//            val response = upRepo.deleteData(userId,projectId)
-//            //TODO
-//        }
-//    }
+
 
     private val _users = MutableLiveData<List<UserResponse>>()
     val users: LiveData<List<UserResponse>> = _users

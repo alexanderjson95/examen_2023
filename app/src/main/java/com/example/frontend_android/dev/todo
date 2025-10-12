@@ -1,0 +1,54 @@
+- ta bort user
+- ta bort projekt (om admin)
+- admin check i frontend
+- admincheck måste blockera att bjuda in och acceptera medlem, och ta bort
+- kryptering läggas på
+- uppdatera livedata direkt (tablehastabell)
+- logout knapp
+- lägg till "lämna grupp om admin och sigb sjävlk"
+- ta bort projekt
+- lämna projekt
+- ändra "neka inbjudan/request" så det bara tar bort UP
+- tömma textsfields efter skcikad
+
+
+
+- lägg till toastbar för success/fail
+- lägg till "skickat meddelande"
+
+
+
+
+
+
+BUGGAR:
+
+
+Overall:
+Stäng resurser +  flows ordentligt
+
+
+USERPROJECT
+
+UP DASH:
+- admin ska hämtas rätt
+- admin checks ska finnas vid: ta bort projekt, kasta ut, bjud in, acceptera
+
+Bjud in fragment:
+inbjuden ska endast visas vid medlem, annars visas endast ta bort
+ta bort ska ej kunna tryckas på om en medlem
+ta bort ska ej kunna tryckas när någon är inbjuden
+om inbjudan är tryckt och tryckls på igen - ta bort inbjudan
+om borttagen - rensa och förnya listan utan
+fixa så man kan ta bort
+
+
+
+DASHBOARD:
+Ska kunna ta bort förfrågan / neka
+
+
+
+
+
+

@@ -1,10 +1,12 @@
 package com.example.frontend_android.api.sec
 
+import android.content.SharedPreferences
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SessionManager @Inject constructor() {
+class SessionManager @Inject constructor(
+) {
 
     private var jwt: String? = null
     private var userId: Long? = null

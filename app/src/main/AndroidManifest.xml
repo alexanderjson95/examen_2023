@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Frontend_android">
 
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

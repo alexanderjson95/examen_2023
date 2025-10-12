@@ -1,0 +1,100 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+
+    tools:context=".ui.dashboard.DashboardFragment">
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/header_divider"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:dividerThickness="1dp"
+        app:dividerColor="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/filterToggleGroup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/no_invite_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardElevation="4dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/header_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/card_layout_color">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/no_data_found"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/projectRequestRecycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="16dp"
+        android:paddingBottom="180dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filterToggleGroup"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/filterToggleGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/header_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fInvite"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:text="Inbjudna">
+        </com.google.android.material.chip.Chip>
+
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fRequest"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:text="Vill gå med">
+        </com.google.android.material.chip.Chip>
+
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fDeclined"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:text="Nekade">
+        </com.google.android.material.chip.Chip>
+        <com.google.android.material.chip.Chip
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/fAccepted"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:text="Godkända">
+        </com.google.android.material.chip.Chip>
+    </com.google.android.material.chip.ChipGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

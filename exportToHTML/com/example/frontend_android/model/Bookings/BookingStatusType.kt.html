@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>BookingStatusType.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+BookingStatusType.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">frontend_android</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Bookings</span>
+
+    <span class="s1">enum </span><span class="s0">class </span><span class="s1">BookingStatusType </span><span class="s2">{</span>
+        <span class="s1">INVITE</span><span class="s2">,  </span><span class="s3">//Admin till user</span>
+        <span class="s1">AVAILABLE</span><span class="s2">,  </span><span class="s3">// AKA request</span>
+        <span class="s1">ACCEPTED</span><span class="s2">,</span>
+        <span class="s1">DECLINED</span><span class="s2">,  </span><span class="s3">// om user/admin nekar andra part, behåller vi dem som nekad i db</span>
+        <span class="s1">REMOVED</span>
+    <span class="s2">}</span>
+
+</pre>
+</body>
+</html>

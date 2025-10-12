@@ -39,9 +39,7 @@ class DashboardViewModel  @Inject constructor(
     val text: LiveData<String> = _text
 
 
-    init {
-        getAllUserProjects()
-    }
+
 
     fun getId(): Long? {
         return  sessionManager.getId()

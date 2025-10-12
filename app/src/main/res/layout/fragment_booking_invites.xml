@@ -4,7 +4,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:padding="16dp"
     tools:context=".ui.dashboard.DashboardFragment">
 
@@ -37,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="58dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/theme_one_inactiveBtn"
+            android:backgroundTint="@color/bluepurple_button_active"
             android:textColor="@color/white"
             android:text="@string/canWork"
             android:textAllCaps="false"/>

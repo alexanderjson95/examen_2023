@@ -5,13 +5,19 @@ import android.view.View
 import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.frontend_android.api.sec.SessionManager
 import com.example.frontend_android.databinding.ActivityMainBinding
 import com.example.frontend_android.ui.login.LoginViewModel
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.navigationrail.NavigationRailView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -19,6 +25,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     @Inject
     lateinit var sessionManager: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,17 +34,36 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
 
-
+        val menuBtn = findViewById<MaterialButton>(R.id.menuBtn)
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
+        val navView = findViewById<NavigationBarView>(R.id.nav_view)
+        NavigationUI.setupWithNavController(navView, navController)
+        supportActionBar?.hide()
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_myProject, R.id.navigation_dashboard, R.id.navigation_projects,R.id.nav_logout
+                R.id.navigation_myProject,
+                R.id.navigation_dashboard,
+                R.id.navigation_projects,
+                R.id.nav_logout
             )
         )
+
+        menuBtn.setOnClickListener {
+            if (navView.isVisible) {
+                navView.animate()
+                    .translationX(-navView.width.toFloat())
+                    .setDuration(200)
+                    .withEndAction { navView.isGone = true }
+            } else {
+                navView.isVisible = true
+                navView.translationX = -navView.width.toFloat()
+                navView.animate()
+                    .translationX(0f)
+                    .setDuration(200)
+            }
+        }
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
@@ -47,24 +73,30 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_success_register,
                 R.id.navigation_init,
                 R.id.navigation_register,
-                R.id.navigation_login -> {
+                R.id.navigation_login
+                    -> {
                     navView.visibility = View.GONE
+                    menuBtn.visibility = View.GONE
                     supportActionBar?.hide()
                 }
 
                 else -> {
                     navView.visibility = View.VISIBLE
+                    menuBtn.visibility = View.VISIBLE
+
                 }
             }
         }
 
         navView.setOnItemSelectedListener { item ->
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.nav_logout -> {
                     sessionManager.clear()
                     navController.popBackStack(R.id.navigation_init, false)
                     true
-                } else-> {
+                }
+
+                else -> {
                     navController.navigate(item.itemId)
                     true
                 }
