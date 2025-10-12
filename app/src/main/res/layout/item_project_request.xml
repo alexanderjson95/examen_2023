@@ -6,6 +6,7 @@
     android:layout_margin="16dp"
     android:elevation="4dp"
     android:padding="16dp"
+    android:backgroundTint="#17181B"
     android:background="?android:attr/selectableItemBackground"
     app:cardCornerRadius="8dp">
 
@@ -30,7 +31,7 @@
                 android:text=""
                 android:maxLines="1"
                 android:textSize="22sp"
-                android:textColor="@color/black" />
+                android:textColor="@color/white" />
 
         </LinearLayout>
         <LinearLayout
@@ -47,10 +48,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="jjjkjk"
+                android:text=""
                 android:maxLines="1"
                 android:textSize="16sp"
-                android:textColor="@color/font_color_inactive"
+                android:textColor="@color/white"
                  />
 
             <TextView
@@ -60,6 +61,7 @@
                 android:layout_weight="1"
                 android:text=""
                 android:maxLines="1"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:gravity="start" />
 

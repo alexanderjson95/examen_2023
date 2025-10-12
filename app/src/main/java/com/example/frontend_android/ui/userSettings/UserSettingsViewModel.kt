@@ -53,7 +53,6 @@ class UserSettingsViewModel  @Inject constructor(
             result.fold(
                 onSuccess = { user ->
                     _user.postValue(user)
-                    Log.d("GetMemberUser", "Member function works: Fetched:  ${user?.id}", )
 
                 },
                 onFailure = { e ->

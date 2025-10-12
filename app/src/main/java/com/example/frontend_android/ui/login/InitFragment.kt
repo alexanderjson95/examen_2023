@@ -22,12 +22,16 @@ class InitFragment : Fragment(R.layout.fragment_init){
 
 
             loginBtn.setOnClickListener {
-                val actionReg = InitFragmentDirections.actionInitToLogin()
-                findNavController().navigate(actionReg)
+                val action = InitFragmentDirections.actionInitToLogin()
+                view.post {
+                    findNavController().navigate(action)
+                }
             }
             regBtn.setOnClickListener {
                 val actionReg = InitFragmentDirections.actionInitToReg()
-                findNavController().navigate(actionReg)
+                view.post {
+                    findNavController().navigate(actionReg)
+                }
             }
 
         }

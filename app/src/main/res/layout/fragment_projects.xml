@@ -5,7 +5,6 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:elevation="4dp"
-    android:layout_marginTop="36dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -20,8 +19,9 @@
         android:textAppearance="@style/TextAppearance.Material3.TitleLarge.Emphasized"
         android:padding="8dp"
         android:gravity="center_vertical"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:text="@string/title_projects"
+
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -88,7 +88,7 @@
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="12dp"
-            android:backgroundTint="@color/theme_one_inactiveBtn"
+            android:backgroundTint="@color/bluepurple_button_active"
             app:icon="@drawable/outline_arrow_circle_right_24"
             style="@style/SendMaterialBtn"/>
     </LinearLayout>

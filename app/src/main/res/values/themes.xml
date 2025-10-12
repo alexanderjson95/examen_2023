@@ -23,6 +23,18 @@
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:padding">8dp</item>
     </style>
+    <style name="CalendarHeaderTextDark" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CalendarWeekTextDark" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="CalendarDateTextDark" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/white</item>
+    </style>
 
     <style name="CustomEditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/edit_text_draw</item>
@@ -34,13 +46,15 @@
     <style name="ChatEditText" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/edit_text_draw_str</item>
         <item name="android:padding">12dp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/light_gray_1</item>
         <item name="android:textColorHint">#17181B</item>
     </style>
 
     <style name="ChatEditTextTwo" parent="Widget.AppCompat.EditText">
         <item name="android:padding">12dp</item>
         <item name="android:textColor">@color/font_color_active</item>
+        <item name="android:strokeColor">@color/light_gray_1</item>
+        <item name="strokeWidth">3dp</item>
         <item name="android:textColorHint">@color/font_color_inactive</item>
     </style>
 
@@ -74,7 +88,7 @@
         <item name="android:stateListAnimator">@null</item>
         <item name="android:elevation">0dp</item>
         <item name="rippleColor">@android:color/transparent</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/main_background</item>
     </style>
 
 
@@ -83,7 +97,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
         <item name="android:backgroundTint">@color/theme_one_activeBtn</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/main_background</item>
         <item name="cornerRadius">5dp</item>
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">0dp</item>
@@ -117,6 +131,16 @@
     <style name="Theme_One_Card_Wide" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:background">@color/theme_one_red</item>
         <item name="backgroundTint">@color/theme_one_red</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:elevation">0dp</item>
+        <item name="rippleColor">@android:color/transparent</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Theme_Main_Card_Wide" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:background">@color/dark_gray_1</item>
+        <item name="backgroundTint">@color/dark_gray_1</item>
         <item name="strokeWidth">0dp</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:elevation">0dp</item>

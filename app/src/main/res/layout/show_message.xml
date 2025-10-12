@@ -27,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="58dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/theme_one_inactiveBtn"
+            android:backgroundTint="@color/bluepurple_button_active"
             android:textColor="@color/white"
             android:text="@string/convos"
             android:textAllCaps="false"/>
@@ -38,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="58dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/theme_one_activeBtn"
+            android:backgroundTint="@color/white"
             android:textColor="@color/black"
             android:text="@string/send"
             android:textAllCaps="false"/>

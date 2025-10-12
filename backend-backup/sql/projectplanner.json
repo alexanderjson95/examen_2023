@@ -1,0 +1,215 @@
+[
+{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
+{"type":"database","name":"projectplanner"},
+{"type":"table","name":"bookings","database":"projectplanner","data":
+[
+{"id":"1","startHour":"12","startMinute":"0","endHour":"16","endMinute":"0","date_millis":"1761177600504","created":"2025-10-08 16:10:38","booking_title":null,"booking_description":null},
+{"id":"2","startHour":"21","startMinute":"0","endHour":"17","endMinute":"0","date_millis":"1761696000081","created":"2025-10-08 16:33:43","booking_title":null,"booking_description":null},
+{"id":"5","startHour":"4","startMinute":"32","endHour":"4","endMinute":"29","date_millis":"1761782400483","created":"2025-10-08 18:24:56","booking_title":null,"booking_description":null},
+{"id":"11","startHour":"2","startMinute":"0","endHour":"12","endMinute":"22","date_millis":"1761264000762","created":"2025-10-08 20:00:03","booking_title":null,"booking_description":null}
+]
+}
+,{"type":"table","name":"messages","database":"projectplanner","data":
+[
+{"id":"1","encryptedValue":"ej","created":"2025-10-09 03:39:51"},
+{"id":"2","encryptedValue":"ej","created":"2025-10-09 03:39:54"},
+{"id":"3","encryptedValue":"d","created":"2025-10-09 03:41:44"},
+{"id":"4","encryptedValue":"hej","created":"2025-10-09 03:51:59"},
+{"id":"5","encryptedValue":"gXlMFJbdtcGhP8YoPhkHexGj9zHSdbObZlufy4Mylg==","created":"2025-10-12 19:09:59"},
+{"id":"6","encryptedValue":"YLs+mX4gtLO1W+c2kkkOP8unYblulzG5wOjTzdwE6K0=","created":"2025-10-12 19:10:50"}
+]
+}
+,{"type":"table","name":"projects","database":"projectplanner","data":
+[
+{"id":"1","projectName":"Lord of the Rings","description":"Film trilogy project","created":"2025-10-08 15:13:09","request_rule":"MANUAL"},
+{"id":"3","projectName":"ddd","description":"dd","created":"2025-10-09 03:46:30","request_rule":"MANUAL"},
+{"id":"4","projectName":"dd","description":"dd","created":"2025-10-09 03:50:14","request_rule":"MANUAL"},
+{"id":"5","projectName":"Alexanders Film","description":"Coolt","created":"2025-10-09 05:20:01","request_rule":"MANUAL"},
+{"id":"10","projectName":"cd","description":"dd","created":"2025-10-09 07:31:34","request_rule":"MANUAL"},
+{"id":"12","projectName":"xdxx","description":"xxxx","created":"2025-10-09 07:55:40","request_rule":"MANUAL"},
+{"id":"13","projectName":"ynyf","description":"sdsd","created":"2025-10-09 08:31:49","request_rule":"MANUAL"},
+{"id":"15","projectName":"ssss","description":"sss","created":"2025-10-09 09:05:46","request_rule":"MANUAL"},
+{"id":"16","projectName":"zzxc","description":"dccdd","created":"2025-10-09 09:20:20","request_rule":"MANUAL"},
+{"id":"17","projectName":"ZccczcxczxcS","description":"ss","created":"2025-10-09 09:41:46","request_rule":"MANUAL"}
+]
+}
+,{"type":"table","name":"users","database":"projectplanner","data":
+[
+{"id":"96","username":"tomcruise","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Tom","last_name":"Cruise","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"97","username":"bradpitt","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Brad","last_name":"Pitt","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"98","username":"leodicaprio","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Leonardo","last_name":"DiCaprio","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"99","username":"margotrobb","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Margot","last_name":"Robbie","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"100","username":"mattdamon","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Matt","last_name":"Damon","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"101","username":"benaffleck","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Ben","last_name":"Affleck","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"102","username":"jlawrence","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Jennifer","last_name":"Lawrence","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"103","username":"angelinaj","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Angelina","last_name":"Jolie","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"104","username":"scarlettj","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Scarlett","last_name":"Johansson","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"105","username":"chrishemsw","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Chris","last_name":"Hemsworth","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"106","username":"chrispratt","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Chris","last_name":"Pratt","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"107","username":"chrisevans","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Chris","last_name":"Evans","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"108","username":"rdowneyjr","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Robert","last_name":"DowneyJr","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"109","username":"markruffalo","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Mark","last_name":"Ruffalo","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"110","username":"tomholland","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Tom","last_name":"Holland","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"111","username":"zendaya","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Zendaya","last_name":"Coleman","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"112","username":"natalieport","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Natalie","last_name":"Portman","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"113","username":"keanureeves","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Keanu","last_name":"Reeves","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"114","username":"winonaryder","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Winona","last_name":"Ryder","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"115","username":"samuelljack","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Samuel","last_name":"Jackson","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"116","username":"morganfreem","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Morgan","last_name":"Freeman","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"117","username":"denzelwash","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Denzel","last_name":"Washington","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"118","username":"tomhanks","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Tom","last_name":"Hanks","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"119","username":"emmastonex","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Emma","last_name":"Stone","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"120","username":"ryangosling","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Ryan","last_name":"Gosling","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"121","username":"ryanreynolds","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Ryan","last_name":"Reynolds","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"122","username":"sandrabull","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Sandra","last_name":"Bullock","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"123","username":"georgecloon","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"George","last_name":"Clooney","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"124","username":"brucewillis","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Bruce","last_name":"Willis","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"125","username":"nicholascage","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Nicolas","last_name":"Cage","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"126","username":"johntravolt","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"John","last_name":"Travolta","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"127","username":"umathurman","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Uma","last_name":"Thurman","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"128","username":"harrisonf","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Harrison","last_name":"Ford","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"129","username":"carriefishe","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Carrie","last_name":"Fisher","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"130","username":"markhamill","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Mark","last_name":"Hamill","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"131","username":"daisyridley","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Daisy","last_name":"Ridley","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"132","username":"adamdriver","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Adam","last_name":"Driver","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"133","username":"oscarisaac","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Oscar","last_name":"Isaac","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"134","username":"pedropascal","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Pedro","last_name":"Pascal","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"135","username":"bellaramsey","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Bella","last_name":"Ramsey","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"136","username":"christianb","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Christian","last_name":"Bale","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"137","username":"heathledger","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Heath","last_name":"Ledger","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"138","username":"joaquinpho","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Joaquin","last_name":"Phoenix","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"139","username":"robertpatts","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Robert","last_name":"Pattinson","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"140","username":"kristenstew","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Kristen","last_name":"Stewart","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"141","username":"annehathaway","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Anne","last_name":"Hathaway","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"142","username":"merylstreep","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Meryl","last_name":"Streep","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"143","username":"amyadams","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Amy","last_name":"Adams","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"144","username":"juliaroberts","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Julia","last_name":"Roberts","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"145","username":"nicolekidman","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Nicole","last_name":"Kidman","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"146","username":"charlizether","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Charlize","last_name":"Theron","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"147","username":"galgadot","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Gal","last_name":"Gadot","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"148","username":"henrycavill","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Henry","last_name":"Cavill","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"149","username":"jasonmomoa","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Jason","last_name":"Momoa","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"150","username":"dwaynejohns","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Dwayne","last_name":"Johnson","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"151","username":"vindiesel","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Vin","last_name":"Diesel","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"152","username":"paulwalker","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Paul","last_name":"Walker","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"153","username":"michellerodr","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Michelle","last_name":"Rodriguez","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"154","username":"jordanabrew","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Jordana","last_name":"Brewster","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"155","username":"emiliaclarke","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Emilia","last_name":"Clarke","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"156","username":"kitharingto","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Kit","last_name":"Harington","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"157","username":"sophiaturner","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Sophie","last_name":"Turner","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"158","username":"maisiewillia","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Maisie","last_name":"Williams","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"159","username":"seanbean","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Sean","last_name":"Bean","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"160","username":"ianmckellen","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Ian","last_name":"McKellen","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"161","username":"patrickstewa","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Patrick","last_name":"Stewart","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"162","username":"hughjackman","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Hugh","last_name":"Jackman","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"163","username":"taronedgert","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Taron","last_name":"Egerton","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"164","username":"colinfirth","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Colin","last_name":"Firth","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"165","username":"keiraknight","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Keira","last_name":"Knightley","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"166","username":"danielcraig","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Daniel","last_name":"Craig","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"167","username":"ralphfiennes","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Ralph","last_name":"Fiennes","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"168","username":"benedictc","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Benedict","last_name":"Cumberbatch","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"169","username":"martinfreem","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Martin","last_name":"Freeman","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"170","username":"andyserkis","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Andy","last_name":"Serkis","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"171","username":"orlandobloo","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Orlando","last_name":"Bloom","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"172","username":"viggomorten","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Viggo","last_name":"Mortensen","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"173","username":"seanastin","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Sean","last_name":"Astin","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"174","username":"elijahwood","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Elijah","last_name":"Wood","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"175","username":"katewinslet","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Kate","last_name":"Winslet","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"176","username":"cateblanche","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Cate","last_name":"Blanchett","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"177","username":"rooneymara","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Rooney","last_name":"Mara","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"178","username":"brielarson","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Brie","last_name":"Larson","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"179","username":"tessathomps","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Tessa","last_name":"Thompson","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"180","username":"anthonymack","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Anthony","last_name":"Mackie","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"181","username":"sebastianst","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Sebastian","last_name":"Stan","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"182","username":"paulrudd","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Paul","last_name":"Rudd","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"183","username":"evangelinel","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Evangeline","last_name":"Lilly","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"184","username":"tomhardy","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Tom","last_name":"Hardy","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"185","username":"michaelfass","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Michael","last_name":"Fassbender","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"186","username":"aliciavikand","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Alicia","last_name":"Vikander","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"187","username":"jakegyllen","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Jake","last_name":"Gyllenhaal","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"188","username":"naomiwatts","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Naomi","last_name":"Watts","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"189","username":"ewanmcgreg","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Ewan","last_name":"McGregor","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"190","username":"liamneeson","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Liam","last_name":"Neeson","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"191","username":"andrewgarf","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Andrew","last_name":"Garfield","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"192","username":"emmabluntx","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Emily","last_name":"Blunt","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"193","username":"johnkrasins","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"John","last_name":"Krasinski","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"194","username":"florencepug","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Florence","last_name":"Pugh","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"195","username":"austinbutle","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Austin","last_name":"Butler","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"196","username":"zendesdaya","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Zendaya","last_name":"Coleman2","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"197","username":"timoshalame","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Timothée","last_name":"Chalamet","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"198","username":"anyataylorj","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Anya","last_name":"Taylor-Joy","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"199","username":"anasophiar","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Ana","last_name":"deArmas","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"200","username":"rosaperezx","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Rosie","last_name":"Perez","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"201","username":"salmahayekx","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Salma","last_name":"Hayek","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"202","username":"penelopecru","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Penélope","last_name":"Cruz","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"203","username":"sofiavergax","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Sofía","last_name":"Vergara","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"204","username":"javierbardx","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Javier","last_name":"Bardem","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"205","username":"monicabellx","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Monica","last_name":"Bellucci","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"206","username":"rdgosling2","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Ryan","last_name":"Gosling2","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"207","username":"nportman2","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Natalie","last_name":"Portman2","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"208","username":"cblanchet2","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Cate","last_name":"Blanchett2","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"209","username":"kjameswoods","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"James","last_name":"Woods","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"210","username":"peterjackson","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Peter","last_name":"Jackson","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"248","username":"alexander01","password":"11111111","email":null,"publicKey":null,"secretKey":null,"first_name":"Alexander","last_name":"Andersson","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"249","username":"Samuel","password":"$2a$12$R6ZSIVucaVIumoaXCzKm7ufyu5VG.nWJOilATJ9Ww..IcvlYOi.Ry","email":"ssss@gmail.com","publicKey":null,"secretKey":"t3fvWIL\/8YQrqo9EkCPnHtM18Mj04L0x79BQW2P2Nk0=","first_name":"Samuel","last_name":"Bromee","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"250","username":"Benjamin","password":"$2a$12$oyeddo13vs2j4HlMM8bnE.ndkrW3JVvdV6pW8HYigseDFmUxtMHje","email":"benjamin@gmail.com","publicKey":null,"secretKey":"t8GqTMhpPkNEBfc4z\/k7Z8psLIVvtBreEaKizaIOgDM=","first_name":"Benjamin","last_name":"Giordano","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"252","username":"Alexander","password":"$2a$12$Qa0qqoKAHMxCsQD.RaBoh.F0Y.jdsgxwtr8fauddg8g8od5quSyYK","email":"alex@jansson","publicKey":null,"secretKey":"MmI3mG0MNVOdvkizWGKS\/drIkNHNx\/V7XO2XteXZVuE=","first_name":"Alexander","last_name":"Jansson","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"253","username":"Alexander1","password":"$2a$12$CIRJQ1QaslhAIg111il5zOxGg1qFgAfpBZDThd6h3MmvHSQxZoKmC","email":"alexanderjsn@l","publicKey":"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEvqtzhWeTdxszaQY\/+QOiqC1RpAOUzNM6mUNjqjg2bJbWLvkYRQ1pFhmtMJKpZHxI9o9j4vV2qaOoBxGZgWjfUg==","secretKey":"MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCAUpMwLmMQsquS097LsutGlV81rXT45M5O2J8JptT3fTA==","first_name":"Alexander","last_name":"Jansson","role":null,"work_role":null,"roles":null,"film_role":null},
+{"id":"254","username":"Benjamin1","password":"$2a$12$iIbezuD.zoMuDt9KEW3FsuGfwlqb\/gwKeTuXh8ffsrpBAbbOWePm.","email":"benjamin@gmaillcom","publicKey":"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEeSZY+H4GczURi1bLXQZD3PlQOaQsIGxxw\/MzSHvByUNa137pdfSM6n0\/a2O0KOI4jPhEPGXLrdNEx5RZ1cT7hA==","secretKey":"MEECAQAwEwYHKoZIzj0CAQYIKoZIzj0DAQcEJzAlAgEBBCCU6eO3ayxpvJWh+jyq1WOdcWVK72cpZ\/0EnGIfskueEg==","first_name":"Benjamin","last_name":"Giordano","role":null,"work_role":null,"roles":null,"film_role":null}
+]
+}
+,{"type":"table","name":"user_bookings","database":"projectplanner","data":
+[
+{"id":"3","booking_id":"2","user_id":"171","project_id":"1","status":"INVITE"},
+{"id":"10","booking_id":"5","user_id":"174","project_id":"1","status":"INVITE"}
+]
+}
+,{"type":"table","name":"user_messages","database":"projectplanner","data":
+[
+{"id":"5","isRead":"0","sender_id":"254","recipient_id":"253","message_id":"5"},
+{"id":"6","isRead":"0","sender_id":"253","recipient_id":"254","message_id":"6"}
+]
+}
+,{"type":"table","name":"user_project","database":"projectplanner","data":
+[
+{"id":"4","user_id":"160","project_id":"1","role":null,"isCreator":"0","isAdmin":"0","hasJoined":"1","isBlocked":null,"requestedDate":"2025-10-08 15:13:09","join_status":"ACCEPTED"},
+{"id":"5","user_id":"171","project_id":"1","role":null,"isCreator":"0","isAdmin":"0","hasJoined":"1","isBlocked":null,"requestedDate":"2025-10-08 15:13:09","join_status":"ACCEPTED"},
+{"id":"6","user_id":"173","project_id":"1","role":null,"isCreator":"0","isAdmin":"0","hasJoined":"1","isBlocked":null,"requestedDate":"2025-10-08 15:13:09","join_status":"ACCEPTED"},
+{"id":"7","user_id":"159","project_id":"1","role":null,"isCreator":"0","isAdmin":"0","hasJoined":"1","isBlocked":null,"requestedDate":"2025-10-08 15:13:09","join_status":"ACCEPTED"},
+{"id":"10","user_id":"248","project_id":"1","role":null,"isCreator":"0","isAdmin":"1","hasJoined":"1","isBlocked":null,"requestedDate":"2025-10-08 15:17:24","join_status":"ACCEPTED"},
+{"id":"28","user_id":"250","project_id":"10","role":null,"isCreator":"1","isAdmin":"1","hasJoined":"1","isBlocked":null,"requestedDate":"2025-10-09 07:31:34","join_status":"ACCEPTED"},
+{"id":"30","user_id":"252","project_id":"12","role":null,"isCreator":"1","isAdmin":"1","hasJoined":"1","isBlocked":null,"requestedDate":"2025-10-09 07:55:40","join_status":"ACCEPTED"},
+{"id":"31","user_id":"249","project_id":"12","role":null,"isCreator":"0","isAdmin":"0","hasJoined":"0","isBlocked":null,"requestedDate":"2025-10-09 07:55:57","join_status":"ACCEPTED"},
+{"id":"32","user_id":"250","project_id":"12","role":null,"isCreator":"0","isAdmin":"0","hasJoined":"0","isBlocked":null,"requestedDate":"2025-10-09 07:56:01","join_status":"INVITE"},
+{"id":"35","user_id":"250","project_id":"13","role":null,"isCreator":"0","isAdmin":"0","hasJoined":"0","isBlocked":null,"requestedDate":"2025-10-09 08:32:03","join_status":"INVITE"},
+{"id":"36","user_id":"249","project_id":"13","role":null,"isCreator":"0","isAdmin":"0","hasJoined":"0","isBlocked":null,"requestedDate":"2025-10-09 08:40:18","join_status":"ACCEPTED"},
+{"id":"41","user_id":"252","project_id":"15","role":null,"isCreator":"1","isAdmin":"1","hasJoined":"1","isBlocked":null,"requestedDate":"2025-10-09 09:05:46","join_status":"ACCEPTED"},
+{"id":"43","user_id":"250","project_id":"15","role":null,"isCreator":"0","isAdmin":"0","hasJoined":"0","isBlocked":null,"requestedDate":"2025-10-09 09:05:59","join_status":"INVITE"},
+{"id":"44","user_id":"249","project_id":"15","role":null,"isCreator":"0","isAdmin":"0","hasJoined":"0","isBlocked":null,"requestedDate":"2025-10-09 09:07:04","join_status":"REQUEST"},
+{"id":"45","user_id":"252","project_id":"16","role":null,"isCreator":"1","isAdmin":"1","hasJoined":"1","isBlocked":null,"requestedDate":"2025-10-09 09:20:20","join_status":"ACCEPTED"},
+{"id":"46","user_id":"252","project_id":"17","role":null,"isCreator":"1","isAdmin":"1","hasJoined":"1","isBlocked":null,"requestedDate":"2025-10-09 09:41:46","join_status":"ACCEPTED"}
+]
+}
+,{"type":"table","name":"user_roles","database":"projectplanner","data":
+[
+{"id":"2","user_id":"249","role_id":"31","y_o_e":null,"yoe":null},
+{"id":"3","user_id":"250","role_id":"29","y_o_e":null,"yoe":null},
+{"id":"7","user_id":"252","role_id":"35","y_o_e":null,"yoe":null},
+{"id":"8","user_id":"253","role_id":"29","y_o_e":null,"yoe":null},
+{"id":"9","user_id":"254","role_id":"33","y_o_e":null,"yoe":null}
+]
+}
+,{"type":"table","name":"workroles","database":"projectplanner","data":
+[
+{"id":"29","roletype":"regissör"},
+{"id":"30","roletype":"statist"},
+{"id":"31","roletype":"producent"},
+{"id":"32","roletype":"fotograf"},
+{"id":"33","roletype":"skådespelare"},
+{"id":"34","roletype":"ljudtekniker"},
+{"id":"35","roletype":"redigerare"},
+{"id":"36","roletype":"manusförfattare"},
+{"id":"37","roletype":"Övrigt"}
+]
+}
+]

@@ -42,6 +42,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
+        projectVM.getAllUserProjects()
 
         parentFragmentManager.setFragmentResultListener(
             "addProjectRequest",

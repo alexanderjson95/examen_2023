@@ -72,27 +72,6 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             }
 
 
-
-//            regBtn.setOnClickListener {
-//                if(!checkInputs(inputs)) {
-//                    Toast.makeText(requireContext(), "GÖR OM GÖR RÄTT!", Toast.LENGTH_SHORT).show()
-//                } else {
-//                    val selectedRole = roleSpinner.selectedItem.toString()
-//                    val roleList = listOfNotNull(
-//                        RoleRequest(selectedRole)
-//                    )
-//
-//                    registerViewModel.register(
-//                        username = username.text.toString(),
-//                        firstName = firstName.text.toString(),
-//                        lastName = lastName.text.toString(),
-//                        password = password.text.toString(),
-//                        email = email.text.toString(),
-//                        publicKey = null,
-//                        roles = roleList
-//                    )
-//                }
-//            }
         }
     }
     fun checkInputs(list: List<EditText>): Boolean {

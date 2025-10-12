@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>BookingResponse.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+BookingResponse.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">frontend_android</span><span class="s2">.</span><span class="s1">model</span><span class="s2">.</span><span class="s1">Bookings</span>
+
+<span class="s1">data </span><span class="s0">class </span><span class="s1">BookingResponse</span><span class="s2">(</span>
+    <span class="s0">val </span><span class="s1">id: Long</span><span class="s2">,</span>
+    <span class="s0">val </span><span class="s1">dateMillis: Long?</span><span class="s2">,</span>
+    <span class="s0">val </span><span class="s1">startHour: Int</span><span class="s2">,</span>
+    <span class="s0">val </span><span class="s1">startMinute: Int</span><span class="s2">,</span>
+    <span class="s0">val </span><span class="s1">endHour: Int</span><span class="s2">,</span>
+    <span class="s0">val </span><span class="s1">endMinute: Int</span><span class="s2">,</span>
+    <span class="s0">val </span><span class="s1">bookingTitle: String</span><span class="s2">,</span>
+    <span class="s0">val </span><span class="s1">bookingDescription: String</span><span class="s2">,</span>
+    <span class="s0">val </span><span class="s1">userBookings: List</span><span class="s2">&lt;</span><span class="s1">UserBookingResponse</span><span class="s2">&gt; = </span><span class="s1">emptyList</span><span class="s2">(),</span>
+    <span class="s0">val </span><span class="s1">created: String</span>
+<span class="s2">)</span></pre>
+</body>
+</html>

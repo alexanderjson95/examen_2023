@@ -14,14 +14,11 @@
 
         <action
             android:id="@+id/action_init_to_reg"
-            app:destination="@id/navigation_register"
-            app:popUpToInclusive="true"/>
+            app:destination="@id/navigation_register" />
 
         <action
             android:id="@+id/action_init_to_login"
-            app:destination="@id/navigation_login"
-            app:popUpTo="@id/navigation_login"
-            app:popUpToInclusive="true" />
+            app:destination="@id/navigation_login" />
     </fragment>
 
 
@@ -29,7 +26,6 @@
     <fragment
         android:id="@+id/navigation_login"
         android:name="com.example.frontend_android.ui.login.LoginFragment"
-        android:label="@string/login"
         tools:layout="@layout/fragment_login">
 
         <action
@@ -41,8 +37,7 @@
         <action
             android:id="@+id/action_login_to_dashboard"
             app:destination="@id/navigation_dashboard"
-            app:popUpTo="@id/navigation_login"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/navigation_login"/>
     </fragment>
 
 
@@ -80,7 +75,6 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.frontend_android.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard">
         <action
             android:id="@+id/dash_to_myProject"
@@ -97,12 +91,13 @@
     <fragment
         android:id="@+id/navigation_create_project_dialog"
         android:name="com.example.frontend_android.ui.projects.AddProjectDialog"
-        android:label="@string/skapa_projekt"
         tools:layout="@layout/add_project_form">
 
         <action
             android:id="@+id/dash_to_userProject"
-            app:destination="@id/navigation_dashboard" />
+            app:destination="@id/navigation_dashboard"
+            app:popUpTo="@id/navigation_create_project_dialog"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 
@@ -165,7 +160,9 @@
 
         <action
             android:id="@+id/dash_to_showMessages"
-            app:destination="@id/navigation_messages" />
+            app:destination="@id/navigation_messages"
+            app:popUpTo="@id/navigation_addConvo"
+            app:popUpToInclusive="true"/>
 
         <action
             android:id="@+id/dash_to_writeMessage"
@@ -200,7 +197,6 @@
     <fragment
         android:id="@+id/navigation_myProject"
         android:name="com.example.frontend_android.ui.userProject.projectDashboard.MyProjectFragment"
-        android:label="@string/title_home"
         tools:layout="@layout/fragment_my_project">
 <!--        <action-->
 <!--            android:id="@+id/myProject_to_bookings"-->
@@ -283,27 +279,14 @@
 
 
 
-    <fragment
-        android:id="@+id/navigation_projectbooking_invites"
-        android:name="com.example.frontend_android.ui.userProject.bookingInvites.UserBookingInvites"
-        tools:layout="@layout/fragment_booking_invites">
 
-        <action
-            android:id="@+id/projectbookingInv_to_projectInv"
-            app:destination="@id/navigation_userproject_invites" />
-
-
-
-    </fragment>
 
     <!-- Se användarens inbjudningar/förfrågningar till projekt -->
     <fragment
         android:id="@+id/navigation_userproject_invites"
         android:name="com.example.frontend_android.ui.userProject.projectInvites.UserProjectInvites"
         tools:layout="@layout/fragment_my_project_requests">
-        <action
-            android:id="@+id/userproject_to_bookingproject"
-            app:destination="@id/navigation_projectbooking_invites" />
+
         <argument
             android:name="projectId"
             app:argType="long" />
@@ -315,7 +298,6 @@
     <fragment
         android:id="@+id/navigation_projectBookings"
         android:name="com.example.frontend_android.ui.userProject.schedule.ProjectBookings"
-        android:label="Calendar"
         tools:layout="@layout/fragment_booking">
 
         <argument
@@ -349,7 +331,6 @@
     <fragment
         android:id="@+id/navigation_user_settings"
         android:name="com.example.frontend_android.ui.userSettings.UserSettingsFragment"
-        android:label="@string/username"
         tools:layout="@layout/fragment_user_settings">
     </fragment>
 

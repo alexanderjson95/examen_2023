@@ -47,7 +47,9 @@ import androidx.core.graphics.toColorInt
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.work.Configuration
 import com.example.frontend_android.ui.userProject.bookingInvites.ProjectBookingsViewmodel
+import com.prolificinteractive.materialcalendarview.CalendarMode
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
@@ -132,6 +134,13 @@ class ProjectBookings : Fragment(R.layout.fragment_booking) {
             }
         }
 
+        val orientation = resources.configuration.orientation
+        if (orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE){
+            calendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit()
+        }
+        else if (orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT){
+            calendarView.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS).commit()
+        }
 
 
 //        upVM.getUserProjects(projectId)

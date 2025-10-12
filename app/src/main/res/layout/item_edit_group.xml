@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="16dp"
+    android:padding="16dp"
+    app:cardElevation="0dp"
+    app:cardUseCompatPadding="false"
+    android:id="@+id/contactCard"
+    app:cardPreventCornerOverlap="false"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardCornerRadius="0dp"
+    style="@style/ChatCard"
+
+    android:background="?android:attr/selectableItemBackground">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="5"
+        android:rowCount="5">
+
+        <TextView
+            android:id="@+id/bookingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_column="1"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/white" />
+        <TextView
+            android:id="@+id/bookingTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:singleLine="true"
+            android:layout_column="2"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/white">
+
+        </TextView>
+" /
+        <TextView
+            android:id="@+id/bookingStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:singleLine="true"
+            android:layout_column="2"
+            android:text=""
+            android:textSize="16sp"
+            android:textColor="@color/white" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_columnSpan="4"
+            android:layout_gravity="end">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/add_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/addd"
+                style="@style/Theme_Two_Button"
+                android:backgroundTint="#FF5964"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/remove_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remove"
+                style="@style/Theme_Two_Button"
+                android:backgroundTint="#5964FF"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/bheader_divider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_columnSpan="4"
+            android:layout_row="3"
+            app:dividerThickness="1dp"
+            app:dividerColor="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/timeInputLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </GridLayout>
+
+
+</androidx.cardview.widget.CardView>
